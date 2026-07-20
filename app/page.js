@@ -29,10 +29,10 @@ export default function Home() {
         {/* ── LEFT: dark steel panel that colour-matches the video edges ── */}
         {/* The right edge fades to transparent so it melts into the video */}
         <div
-          className="relative z-10 flex w-full max-w-[38%] flex-col justify-center px-8 py-16 lg:px-12"
+          className="relative z-10 flex w-full max-w-[52%] flex-col justify-center px-8 py-16 lg:px-16"
           style={{
             background:
-              "linear-gradient(to right, #0e1215 0%, #0e1215 60%, rgba(14,18,21,0) 100%)",
+              "linear-gradient(to right, #0e1215 0%, #0e1215 55%, rgba(14,18,21,0) 100%)",
           }}
         >
           {/* Amber top accent bar */}
@@ -51,7 +51,7 @@ export default function Home() {
           </h1>
 
           {/* Body */}
-          <p className="mt-4 max-w-[320px] text-[13px] leading-[1.7] text-white/60">
+          <p className="mt-4 max-w-[460px] text-[14px] leading-[1.7] text-white/60">
             Manufacturing, repair, welding, electrical, plumbing, painting, and
             product design services — delivered with precision.
           </p>
