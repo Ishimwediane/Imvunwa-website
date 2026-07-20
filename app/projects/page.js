@@ -1,82 +1,276 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
-const shell = "relative mx-auto w-full max-w-[1180px]";
-const eyebrow = "mb-3.5 text-xs font-black uppercase tracking-normal text-signal";
-
-const projects = [
-  { category: "Welding", image: "/image/project4.jpg" },
-  { category: "Welding", image: "/image/project2.jpg" },
-  { category: "Welding", image: "/image/project5.jpg" },
-  { category: "Product Design", image: "/image/product.jpg" }
+/* ── Data: categories → sub-categories → sample images ── */
+const PORTFOLIO = [
+  {
+    id: "welding",
+    label: "Welding",
+    icon: "🔥",
+    desc: "Precision welding for structural, decorative, and industrial applications.",
+    subs: [
+      {
+        name: "Doors & Gates",
+        images: [
+          { src: "/image/project1.jpg", caption: "Steel security door" },
+          { src: "/image/project2.jpg", caption: "Ornamental gate" },
+          { src: "/image/project4.jpg", caption: "Sliding compound gate" },
+        ],
+      },
+      {
+        name: "Roofing Frames",
+        images: [
+          { src: "/image/project5.jpg", caption: "Steel roof truss" },
+          { src: "/image/welding1.png", caption: "Industrial roofing frame" },
+          { src: "/image/project6.jpg", caption: "Commercial roof structure" },
+        ],
+      },
+      {
+        name: "Structural Frames",
+        images: [
+          { src: "/image/execution.jpg", caption: "Building steel frame" },
+          { src: "/image/manufacturing.jpg", caption: "Steel structure assembly" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "manufacturing",
+    label: "Manufacturing",
+    icon: "⚙️",
+    desc: "Custom industrial machines precision-built to your exact specifications.",
+    subs: [
+      {
+        name: "Industrial Machines",
+        images: [
+          { src: "/image/manifa.jpg", caption: "Custom production machine" },
+          { src: "/image/mman.png", caption: "Production line equipment" },
+          { src: "/image/manufacturing.jpg", caption: "Factory machine installation" },
+        ],
+      },
+      {
+        name: "Product Fabrication",
+        images: [
+          { src: "/image/ppic (1).jpg", caption: "Fabricated metal product" },
+          { src: "/image/product1.jpg", caption: "Custom fabricated part" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "repair",
+    label: "Machine Repair",
+    icon: "🔧",
+    desc: "Diagnostics and restoration to keep your equipment at peak performance.",
+    subs: [
+      {
+        name: "Heavy Equipment",
+        images: [
+          { src: "/image/repaire.jpg", caption: "Heavy equipment overhaul" },
+          { src: "/image/repairement.jpg", caption: "Machine component restoration" },
+        ],
+      },
+      {
+        name: "Precision Repair",
+        images: [
+          { src: "/image/pic1.jpg", caption: "Precision part repair" },
+          { src: "/image/pic11.jpeg", caption: "Component calibration" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "painting",
+    label: "Painting",
+    icon: "🎨",
+    desc: "Industrial-grade coatings and finishes for long-lasting protection.",
+    subs: [
+      {
+        name: "Anti-Corrosion Coating",
+        images: [
+          { src: "/image/painting.jpg", caption: "Anti-corrosion surface coat" },
+          { src: "/image/paint.jpg", caption: "Industrial paint application" },
+        ],
+      },
+      {
+        name: "Decorative Finishes",
+        images: [
+          { src: "/image/abou.jpg", caption: "Decorative interior finish" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "electrical",
+    label: "Electrical",
+    icon: "⚡",
+    desc: "Complete electrical installations for industrial and commercial buildings.",
+    subs: [
+      {
+        name: "Industrial Wiring",
+        images: [
+          { src: "/image/electricity.jpg", caption: "Industrial electrical system" },
+          { src: "/image/light bulb.jpeg", caption: "Lighting installation" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "plumbing",
+    label: "Plumbing",
+    icon: "🔩",
+    desc: "Heavy-duty piping and plumbing for factories and commercial buildings.",
+    subs: [
+      {
+        name: "Industrial Piping",
+        images: [
+          { src: "/image/plumb.jpg", caption: "Commercial plumbing network" },
+          { src: "/image/plumbling.jpg", caption: "Industrial piping system" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "design",
+    label: "Product Design",
+    icon: "✏️",
+    desc: "Engineering design and prototyping for custom industrial products.",
+    subs: [
+      {
+        name: "Design & Prototyping",
+        images: [
+          { src: "/image/design.jpg", caption: "Product engineering design" },
+          { src: "/image/product.jpg", caption: "Prototype fabrication" },
+          { src: "/image/product2.jpeg", caption: "Custom product design" },
+        ],
+      },
+    ],
+  },
 ];
 
-const categories = ["All", "Welding", "Product Design"];
+/* ── Image card ── */
+function ImgCard({ src, caption }) {
+  return (
+    <div className="group relative overflow-hidden rounded-xl aspect-[4/3] cursor-pointer">
+      <img
+        src={src}
+        alt={caption}
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <p className="absolute bottom-0 left-0 right-0 translate-y-2 px-4 py-3 text-[12px] font-bold text-white opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+        {caption}
+      </p>
+    </div>
+  );
+}
 
+/* ── Sub-category block ── */
+function SubCategory({ name, images }) {
+  return (
+    <div className="mb-10">
+      <div className="mb-4 flex items-center gap-3">
+        <div className="h-[3px] w-6 rounded-full bg-[#F5A623]" />
+        <h3 className="text-[15px] font-black uppercase tracking-widest text-[#F5A623]">{name}</h3>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {images.map((img, i) => (
+          <ImgCard key={i} src={img.src} caption={img.caption} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Page ── */
 export default function ProjectsPage() {
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const filteredProjects = useMemo(() => {
-    if (activeCategory === "All") return projects;
-    return projects.filter((p) => p.category === activeCategory);
-  }, [activeCategory]);
+  const [active, setActive] = useState("welding");
+  const current = PORTFOLIO.find((c) => c.id === active);
 
   return (
-    <div className="overflow-hidden">
-      {/* Page Hero */}
-      <section className="bg-ink px-4 py-20 text-white sm:px-6">
-        <div className={`${shell} text-center`}>
-          <p className={eyebrow}>Selected work</p>
-          <h1 className="m-0 text-[44px] font-black leading-[1.04] sm:text-[60px] lg:text-[72px]">Our Projects</h1>
-          <p className="mx-auto mt-5 max-w-[600px] text-lg leading-[1.7] text-white/75">
-            Real work, real results. Browse our portfolio of fabrication, welding, and product design projects across Rwanda.
+    <div className="overflow-hidden" style={{ background: "#0e1215" }}>
+
+      {/* ── Hero ── */}
+      <section className="relative px-4 py-24 sm:px-6" style={{ background: "#0e1215" }}>
+        <div className="mx-auto max-w-[1180px] text-center">
+          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#F5A623]">
+            Our Portfolio
+          </p>
+          <h1 className="text-[40px] font-black leading-[1.06] text-white sm:text-[56px] lg:text-[68px]">
+            Projects & Work
+          </h1>
+          <p className="mx-auto mt-5 max-w-[580px] text-[15px] leading-[1.7] text-white/55">
+            Browse our completed projects by service category. Each category shows the specific types of work we deliver.
           </p>
         </div>
       </section>
 
-      {/* Projects Grid */}
-      <section className="bg-panel px-4 py-[70px] sm:px-6 lg:py-24">
-        <div className={shell}>
-          <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
-            <h2 className="m-0 max-w-[760px] text-[34px] font-black leading-[1.02] text-ink sm:text-[44px]">
-              Projects that show the finish, strength, and practical detail.
-            </h2>
-            <div className="flex w-full gap-2 overflow-x-auto rounded-lg border border-line bg-white p-1.5 lg:w-auto" aria-label="Project filters">
-              {categories.map((category) => (
-                <button
-                  className={`min-h-[38px] rounded-md px-3.5 font-extrabold transition-colors ${activeCategory === category ? "bg-ink text-white" : "text-muted hover:text-ink"}`}
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  type="button"
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="mt-11 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {filteredProjects.map((project) => (
-              <article className="group relative min-h-[330px] overflow-hidden rounded-lg bg-ink" key={`${project.category}-${project.image}`}>
-                <img className="h-full min-h-[330px] w-full object-cover opacity-[.86] transition duration-300 group-hover:scale-105" src={project.image} alt={`${project.category} project`} />
-                <span className="absolute bottom-4 left-4 rounded-[5px] bg-ink/80 px-2.5 py-2 text-xs font-black uppercase text-white">{project.category}</span>
-              </article>
+      {/* ── Category Tabs + Content ── */}
+      <section className="px-4 pb-24 sm:px-6">
+        <div className="mx-auto max-w-[1180px]">
+
+          {/* Scrollable category tab bar */}
+          <div className="mb-10 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+            {PORTFOLIO.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActive(cat.id)}
+                className={`flex-shrink-0 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[12px] font-black uppercase tracking-wider transition-all duration-200 ${
+                  active === cat.id
+                    ? "bg-[#F5A623] text-white shadow-lg shadow-[#F5A623]/30"
+                    : "border border-white/15 text-white/60 hover:border-[#F5A623]/50 hover:text-white"
+                }`}
+              >
+                <span>{cat.icon}</span>
+                {cat.label}
+              </button>
             ))}
           </div>
+
+          {/* Active category header */}
+          <div className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-8">
+            <div>
+              <h2 className="text-[28px] font-black text-white sm:text-[36px]">
+                {current.icon} {current.label}
+              </h2>
+              <p className="mt-2 max-w-[520px] text-[14px] leading-[1.7] text-white/50">
+                {current.desc}
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="inline-flex min-h-[44px] items-center rounded-full bg-[#F5A623] px-7 text-[13px] font-black text-white hover:bg-[#e09212] transition-colors"
+            >
+              Request This Service
+            </Link>
+          </div>
+
+          {/* Sub-categories */}
+          {current.subs.map((sub, i) => (
+            <SubCategory key={i} name={sub.name} images={sub.images} />
+          ))}
+
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="px-4 py-[70px] sm:px-6 lg:py-24">
-        <div className={`${shell} text-center`}>
-          <h2 className="text-[34px] font-black text-ink sm:text-[48px]">Have a project in mind?</h2>
-          <p className="mx-auto mt-4 max-w-[520px] text-lg text-muted">Share your idea with us and we'll bring it to life.</p>
-          <Link href="/contact" className="mt-8 inline-flex min-h-[56px] items-center justify-center rounded-full bg-[#F5A623] px-10 font-black text-white hover:opacity-90 transition-opacity">
+      {/* ── CTA ── */}
+      <section className="px-4 py-20 sm:px-6" style={{ background: "#f8f6f1" }}>
+        <div className="mx-auto max-w-[1180px] text-center">
+          <h2 className="text-[32px] font-black text-black sm:text-[44px]">Have a project in mind?</h2>
+          <p className="mx-auto mt-4 max-w-[500px] text-[15px] leading-[1.7] text-black/50">
+            Share your idea with us and we&apos;ll bring it to life with precision and quality.
+          </p>
+          <Link
+            href="/contact"
+            className="mt-8 inline-flex min-h-[52px] items-center justify-center rounded-full bg-[#F5A623] px-10 text-[14px] font-black text-white hover:bg-[#e09212] transition-colors"
+          >
             Start a Project
           </Link>
         </div>
       </section>
+
     </div>
   );
 }
