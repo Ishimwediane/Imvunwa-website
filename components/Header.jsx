@@ -33,7 +33,7 @@ export default function Header() {
     return (
       <Link
         href={href}
-        className={`transition-colors hover:text-[#F5A623] ${isActive ? "text-[#F5A623] font-black" : "text-[#1a1a1a]"}`}
+        className={`transition-colors hover:text-[#F5A623] ${isActive ? "text-[#F5A623] font-black" : "text-white/80"}`}
         onClick={() => setMobileMenuOpen(false)}
       >
         {label}
@@ -43,7 +43,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="relative z-20 bg-white text-[#1a1a1a] shadow-md">
+      <header className="relative z-20 bg-[#08090a] text-white shadow-md">
         {/* Top bar marquee */}
         <div className="overflow-hidden border-b border-white/10 bg-[#F5A623] py-2 text-[12px] font-semibold text-white">
           <div className="flex w-max animate-marquee whitespace-nowrap">
@@ -57,13 +57,13 @@ export default function Header() {
         </div>
 
         {/* Main navbar */}
-        <div className="mx-auto flex min-h-[80px] w-full max-w-[1440px] items-center justify-between border-b border-gray-100 px-4 py-3 sm:px-8 lg:px-10">
+        <div className="mx-auto flex min-h-[80px] w-full max-w-[1440px] items-center justify-between border-b border-white/10 px-4 py-3 sm:px-8 lg:px-10">
           {/* Logo */}
           <Link className="flex shrink-0 items-center gap-3" href="/" aria-label="Imvunwa home">
             <img src="/image/logo.jpg" alt="Imvunwa Business Group Ltd logo" className="h-[72px] w-auto object-contain" />
             <span className="hidden flex-col lg:flex">
-              <span className="text-[16px] font-black uppercase leading-none tracking-wider text-[#1a1a1a]">Imvunwa</span>
-              <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">Business Group Ltd</span>
+              <span className="text-[16px] font-black uppercase leading-none tracking-wider text-white">Imvunwa</span>
+              <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40">Business Group Ltd</span>
             </span>
           </Link>
 
@@ -79,7 +79,7 @@ export default function Header() {
             >
               <Link
                 href="/services"
-                className={`inline-flex items-center gap-1.5 transition-colors hover:text-[#F5A623] uppercase font-bold text-[13px] ${pathname.startsWith("/services") ? "text-[#F5A623]" : "text-[#1a1a1a]"}`}
+                className={`inline-flex items-center gap-1.5 transition-colors hover:text-[#F5A623] uppercase font-bold text-[13px] ${pathname.startsWith("/services") ? "text-[#F5A623]" : "text-white/80"}`}
               >
                 Services
                 <svg
@@ -139,15 +139,15 @@ export default function Header() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            <span className={`h-0.5 w-6 bg-[#1a1a1a] transition-transform duration-300 ${mobileMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`h-0.5 w-6 bg-[#1a1a1a] transition-opacity duration-300 ${mobileMenuOpen ? "opacity-0" : ""}`} />
-            <span className={`h-0.5 w-6 bg-[#1a1a1a] transition-transform duration-300 ${mobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""}`} />
+            <span className={`h-0.5 w-6 bg-white transition-transform duration-300 ${mobileMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`h-0.5 w-6 bg-white transition-opacity duration-300 ${mobileMenuOpen ? "opacity-0" : ""}`} />
+            <span className={`h-0.5 w-6 bg-white transition-transform duration-300 ${mobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""}`} />
           </button>
         </div>
 
         {/* Mobile nav */}
         {mobileMenuOpen && (
-          <nav className="flex flex-col gap-4 border-t border-gray-100 bg-white px-6 py-4 text-[13px] font-bold uppercase text-[#1a1a1a] lg:hidden" aria-label="Mobile navigation">
+          <nav className="flex flex-col gap-4 border-t border-white/10 bg-[#08090a] px-6 py-4 text-[13px] font-bold uppercase text-white/80 lg:hidden" aria-label="Mobile navigation">
             <Link onClick={() => setMobileMenuOpen(false)} className="hover:text-[#F5A623]" href="/">Home</Link>
 
             {/* Mobile Services */}
@@ -181,7 +181,7 @@ export default function Header() {
                       key={service.name}
                       href={service.href}
                       onClick={() => { setMobileServicesOpen(false); setMobileMenuOpen(false); }}
-                      className="py-2 text-[#1a1a1a] hover:text-[#F5A623] transition-colors"
+                      className="py-2 text-white/70 hover:text-[#F5A623] transition-colors"
                     >
                       {service.name}
                     </Link>
