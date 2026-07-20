@@ -1,25 +1,11 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
 
 const shell = "relative mx-auto w-full max-w-[1180px]";
 
 
 export default function Home() {
-  const sliderRef = useRef(null);
-
-  const scrollLeft = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: -360, behavior: "smooth" });
-    }
-  };
-
-  const scrollRight = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: 360, behavior: "smooth" });
-    }
-  };
   return (
     <div className="overflow-hidden">
       {/* Hero — split layout: dark left panel bleeds into full-screen video */}
@@ -245,7 +231,7 @@ export default function Home() {
       <section className="px-4 py-[70px] sm:px-6 lg:py-24" style={{ background: "#0e1215" }}>
         <div className={shell}>
           {/* Header */}
-          <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#F5A623]">
                 Our Work
@@ -257,55 +243,28 @@ export default function Home() {
                 A showcase of precision-engineered products and completed projects spanning all our service categories.
               </p>
             </div>
-            
-            {/* Slider Navigation Controls */}
-            <div className="flex items-center gap-3">
-              <button
-                onClick={scrollLeft}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white hover:bg-white hover:text-black transition-all duration-300"
-                aria-label="Previous Project"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={scrollRight}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white hover:bg-white hover:text-black transition-all duration-300"
-                aria-label="Next Project"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
           </div>
 
-          {/* Portfolio Slider container */}
-          <div 
-            ref={sliderRef}
-            className="mt-12 flex gap-5 overflow-x-auto pb-8 scrollbar-none snap-x snap-mandatory scroll-smooth"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
+          {/* Portfolio Grid — 3 items per row on desktop */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { type: "orange", src: "/image/manifa.jpg",       alt: "Machine manufacturing",        tag: "Manufacturing",   title: "Custom Industrial Machine",       desc: "Precision-built industrial equipment for local manufacturing plants." },
-              { type: "black",  src: "/image/repaire.jpg",      alt: "Machine repair",              tag: "Repair",          title: "Heavy Equipment Overhaul",         desc: "Full diagnostics and restoration of production-critical machinery." },
-              { type: "orange", src: "/image/welding1.png",     alt: "Welding project",             tag: "Welding",         title: "Structural Steel Fabrication",     desc: "Custom welded steel frameworks for industrial and commercial builds." },
-              { type: "black",  src: "/image/electricity.jpg",  alt: "Electrical installation",     tag: "Electrical",      title: "Industrial Electrical System",     desc: "Complete wiring and electrical fit-out for manufacturing facilities." },
-              { type: "orange", src: "/image/painting.jpg",     alt: "Painting project",            tag: "Painting",        title: "Anti-Corrosion Coating",           desc: "Industrial-grade protective coating for long-lasting metal surfaces." },
-              { type: "black",  src: "/image/plumb.jpg",        alt: "Plumbing network",            tag: "Plumbing",        title: "Commercial Plumbing Network",      desc: "Full plumbing infrastructure for industrial and commercial buildings." },
-              { type: "orange", src: "/image/repairement.jpg",  alt: "Machine repairement",         tag: "Repair",          title: "Precision Machine Restoration",    desc: "Component-level repair and calibration of complex industrial equipment." },
-              { type: "black",  src: "/image/paint.jpg",        alt: "Paint finish project",        tag: "Painting",        title: "Industrial Paint Finish",          desc: "High-durability surface coating for steel structures and equipment." },
-              { type: "orange", src: "/image/plumbling.jpg",    alt: "Plumbing installation",       tag: "Plumbing",        title: "Industrial Piping System",         desc: "Heavy-duty pipe installation for factories and production facilities." },
-              { type: "black",  src: "/image/design.jpg",       alt: "Product design",              tag: "Design",          title: "Product Design & Prototyping",     desc: "Engineering drawings and prototype fabrication for custom products." },
-              { type: "orange", src: "/image/mman.png",         alt: "Manufacturing process",       tag: "Manufacturing",   title: "Production Line Equipment",        desc: "End-to-end fabrication of machinery for production line integration." },
-              { type: "black",  src: "/image/manufacturing.jpg",alt: "Manufacturing facility",      tag: "Manufacturing",   title: "Factory Setup & Installation",     desc: "Turnkey manufacturing setup including installation and commissioning." },
+              { src: "/image/manifa.jpg",       alt: "Machine manufacturing",        tag: "Manufacturing",   title: "Custom Industrial Machine",       desc: "Precision-built industrial equipment for local manufacturing plants." },
+              { src: "/image/repaire.jpg",      alt: "Machine repair",              tag: "Repair",          title: "Heavy Equipment Overhaul",         desc: "Full diagnostics and restoration of production-critical machinery." },
+              { src: "/image/welding1.png",     alt: "Welding project",             tag: "Welding",         title: "Structural Steel Fabrication",     desc: "Custom welded steel frameworks for industrial and commercial builds." },
+              { src: "/image/electricity.jpg",  alt: "Electrical installation",     tag: "Electrical",      title: "Industrial Electrical System",     desc: "Complete wiring and electrical fit-out for manufacturing facilities." },
+              { src: "/image/painting.jpg",     alt: "Painting project",            tag: "Painting",        title: "Anti-Corrosion Coating",           desc: "Industrial-grade protective coating for long-lasting metal surfaces." },
+              { src: "/image/plumb.jpg",        alt: "Plumbing network",            tag: "Plumbing",        title: "Commercial Plumbing Network",      desc: "Full plumbing infrastructure for industrial and commercial buildings." },
+              { src: "/image/repairement.jpg",  alt: "Machine repairement",         tag: "Repair",          title: "Precision Machine Restoration",    desc: "Component-level repair and calibration of complex industrial equipment." },
+              { src: "/image/paint.jpg",        alt: "Paint finish project",        tag: "Painting",        title: "Industrial Paint Finish",          desc: "High-durability surface coating for steel structures and equipment." },
+              { src: "/image/plumbling.jpg",    alt: "Plumbing installation",       tag: "Plumbing",        title: "Industrial Piping System",         desc: "Heavy-duty pipe installation for factories and production facilities." },
+              { src: "/image/design.jpg",       alt: "Product design",              tag: "Design",          title: "Product Design & Prototyping",     desc: "Engineering drawings and prototype fabrication for custom products." },
+              { src: "/image/mman.png",         alt: "Manufacturing process",       tag: "Manufacturing",   title: "Production Line Equipment",        desc: "End-to-end fabrication of machinery for production line integration." },
+              { src: "/image/manufacturing.jpg",alt: "Manufacturing facility",      tag: "Manufacturing",   title: "Factory Setup & Installation",     desc: "Turnkey manufacturing setup including installation and commissioning." },
             ].map((item, i) => {
-              const isOrange = item.type === "orange";
               return (
                 <div 
                   key={i} 
-                  className="group relative h-[380px] w-[310px] flex-shrink-0 overflow-hidden rounded-3xl snap-start cursor-pointer border border-white/5"
+                  className="group relative h-[380px] w-full overflow-hidden rounded-3xl cursor-pointer border border-white/5"
                 >
                   {/* Background Image */}
                   <img
@@ -316,16 +275,12 @@ export default function Home() {
                   
                   {/* Curved Overlay Shape - expands to full card on hover */}
                   <div 
-                    className={`absolute bottom-0 left-0 w-[82%] h-[70%] rounded-tr-full transition-all duration-500 ease-in-out group-hover:w-full group-hover:h-full group-hover:rounded-none ${
-                      isOrange ? "bg-[#F5A623]" : "bg-black/90 border-t border-r border-white/10 group-hover:border-none"
-                    }`}
+                    className="absolute bottom-0 left-0 w-[82%] h-[70%] rounded-tr-full transition-all duration-500 ease-in-out group-hover:w-full group-hover:h-full group-hover:rounded-none bg-[#F5A623]"
                   />
                   
                   {/* Arrow Button - slides to bottom-left on hover */}
                   <div 
-                    className={`absolute left-[68%] bottom-[58%] flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-in-out group-hover:left-6 group-hover:bottom-6 group-hover:scale-110 group-hover:rotate-45 ${
-                      isOrange ? "bg-white text-[#F5A623]" : "bg-[#F5A623] text-white"
-                    }`}
+                    className="absolute left-[68%] bottom-[58%] flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-in-out group-hover:left-6 group-hover:bottom-6 group-hover:scale-110 group-hover:rotate-45 bg-white text-[#F5A623]"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -335,27 +290,21 @@ export default function Home() {
                   {/* Text Container - Absolute full height wrapper for slide-up effect */}
                   <div className="absolute inset-0 p-6 flex flex-col justify-start z-10 pointer-events-none">
                     <span 
-                      className={`text-[9px] font-black uppercase tracking-wider mb-2 transition-colors duration-500 ${
-                        isOrange ? "text-black/60" : "text-[#F5A623]"
-                      }`}
+                      className="text-[9px] font-black uppercase tracking-wider mb-2 transition-colors duration-500 text-black/60"
                     >
                       {item.tag}
                     </span>
                     
                     {/* Sliding Title */}
                     <h3 
-                      className={`text-[19px] font-black leading-tight transition-all duration-500 ease-in-out translate-y-[140px] group-hover:translate-y-0 ${
-                        isOrange ? "text-black" : "text-white"
-                      }`}
+                      className="text-[19px] font-black leading-tight transition-all duration-500 ease-in-out translate-y-[140px] group-hover:translate-y-0 text-black"
                     >
                       {item.title}
                     </h3>
                     
                     {/* Sliding & Fading Description */}
                     <p 
-                      className={`mt-3 text-[11px] leading-relaxed transition-all duration-500 ease-in-out opacity-0 translate-y-[150px] group-hover:opacity-100 group-hover:translate-y-0 delay-75 max-w-[90%] ${
-                        isOrange ? "text-black/80" : "text-white/70"
-                      }`}
+                      className="mt-3 text-[11px] leading-relaxed transition-all duration-500 ease-in-out opacity-0 translate-y-[150px] group-hover:opacity-100 group-hover:translate-y-0 delay-75 max-w-[90%] text-black/80"
                     >
                       {item.desc}
                     </p>
@@ -364,6 +313,7 @@ export default function Home() {
               );
             })}
           </div>
+
 
           {/* Bottom CTA */}
           <div className="mt-8 flex justify-center">
