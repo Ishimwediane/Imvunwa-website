@@ -127,7 +127,7 @@ export default function Home() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
             {/* Card 1 — Machine Manufacturing */}
-            <div className="group flex flex-col rounded-2xl p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer" style={{ background: "#fdfbf8" }}>
+            <div className="group flex flex-col rounded-2xl bg-[#fdfbf8] p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer">
               <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5A623]/10 group-hover:bg-white/10 transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#F5A623]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -144,7 +144,7 @@ export default function Home() {
             </div>
 
             {/* Card 2 — Machine Repair */}
-            <div className="group flex flex-col rounded-2xl p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer" style={{ background: "#fdfbf8" }}>
+            <div className="group flex flex-col rounded-2xl bg-[#fdfbf8] p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer">
               <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5A623]/10 group-hover:bg-white/10 transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#F5A623]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -160,7 +160,7 @@ export default function Home() {
             </div>
 
             {/* Card 3 — Welding Services */}
-            <div className="group flex flex-col rounded-2xl p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer" style={{ background: "#fdfbf8" }}>
+            <div className="group flex flex-col rounded-2xl bg-[#fdfbf8] p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer">
               <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5A623]/10 group-hover:bg-white/10 transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#F5A623]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -176,7 +176,7 @@ export default function Home() {
             </div>
 
             {/* Card 4 — Project Management */}
-            <div className="group flex flex-col rounded-2xl p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer" style={{ background: "#fdfbf8" }}>
+            <div className="group flex flex-col rounded-2xl bg-[#fdfbf8] p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer">
               <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5A623]/10 group-hover:bg-white/10 transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#F5A623]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -192,7 +192,7 @@ export default function Home() {
             </div>
 
             {/* Card 5 — Design & Fabrication */}
-            <div className="group flex flex-col rounded-2xl p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer" style={{ background: "#fdfbf8" }}>
+            <div className="group flex flex-col rounded-2xl bg-[#fdfbf8] p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer">
               <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5A623]/10 group-hover:bg-white/10 transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#F5A623]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
@@ -208,7 +208,7 @@ export default function Home() {
             </div>
 
             {/* Card 6 — Electrical & Plumbing */}
-            <div className="group flex flex-col rounded-2xl p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer" style={{ background: "#fdfbf8" }}>
+            <div className="group flex flex-col rounded-2xl bg-[#fdfbf8] p-7 shadow-sm border border-black/10 hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 cursor-pointer">
               <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5A623]/10 group-hover:bg-white/10 transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#F5A623]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
