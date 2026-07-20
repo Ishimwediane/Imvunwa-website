@@ -386,10 +386,13 @@ export default function Home() {
       </section>
 
       {/* ── Manufacturing Journey Section ── */}
-      <section style={{ background: "#2b2b2b" }} className="overflow-hidden pl-4 pr-0 py-[70px] sm:pl-6 lg:py-20">
+      <section style={{ background: "#ffffff" }} className="overflow-hidden pl-4 pr-0 py-[70px] sm:pl-6 lg:py-20">
         {/* Centered heading */}
         <div className="mx-auto mb-10 max-w-[820px] text-center">
-          <h2 className="text-[28px] font-black leading-[1.1] text-white sm:text-[36px] lg:text-[44px]">
+          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#F5A623]">
+            Our Process
+          </p>
+          <h2 className="text-[28px] font-black leading-[1.1] text-black sm:text-[36px] lg:text-[44px]">
             From Concept to Creation: Our Manufacturing Journey
           </h2>
         </div>
@@ -398,31 +401,31 @@ export default function Home() {
         <div className="mx-auto max-w-[1180px]">
           <div className="relative flex items-center">
 
-            {/* Image — wider, strong right-edge dark fade for text readability */}
+            {/* Image — wider, right-edge light fade blends into white bg */}
             <div className="relative w-[58%] flex-shrink-0 overflow-hidden rounded-2xl">
               <img
                 src="/image/manufacturing.jpg"
                 alt="Imvunwa team collaborating on a project"
                 className="h-[420px] w-full object-cover lg:h-[480px]"
-                style={{ filter: "grayscale(50%) brightness(0.55)" }}
+                style={{ filter: "grayscale(30%) brightness(0.75)" }}
               />
-              {/* Heavy dark fade on right so overlapping text is readable */}
+              {/* Fade right into white background */}
               <div
                 className="absolute inset-0"
                 style={{
                   background:
-                    "linear-gradient(to right, rgba(20,20,20,0.15) 0%, rgba(20,20,20,0.1) 40%, rgba(20,20,20,0.75) 80%, rgba(20,20,20,0.92) 100%)",
+                    "linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0.97) 100%)",
                 }}
               />
             </div>
 
-            {/* Text — pulled left so it overlaps the image's right edge, no card */}
+            {/* Text — pulled left so it overlaps the image's right edge */}
             <div className="relative z-10 -ml-[18%] flex flex-col items-center gap-10 text-center lg:gap-12">
 
               {/* Block 1 — How we do things */}
               <div className="flex flex-col items-center">
-                <h3 className="text-[20px] font-black text-white sm:text-[24px]">How we do things</h3>
-                <p className="mt-3 text-[14px] leading-[1.85] text-white/70 whitespace-nowrap">
+                <h3 className="text-[20px] font-black text-black sm:text-[24px]">How we do things</h3>
+                <p className="mt-3 text-[14px] leading-[1.85] text-black/55 whitespace-nowrap">
                   Dive into our structured manufacturing journey that blends innovation with precision, resulting in exceptional products.
                 </p>
                 <Link
@@ -434,21 +437,21 @@ export default function Home() {
               </div>
 
               {/* Divider */}
-              <div className="w-full h-px bg-white/15" />
+              <div className="w-full h-px bg-black/10" />
 
               {/* Block 2 — The team */}
               <div className="flex flex-col items-center">
-                <h3 className="text-[20px] font-black text-white sm:text-[24px]">
+                <h3 className="text-[20px] font-black text-black sm:text-[24px]">
                   The Minds and Hands Behind Our Work
                 </h3>
-                <p className="mt-3 text-[14px] leading-[1.85] text-white/70 whitespace-nowrap">
+                <p className="mt-3 text-[14px] leading-[1.85] text-black/55 whitespace-nowrap">
                   Meet the people who turn ideas into reality with their unparalleled skills.
                 </p>
                 <Link
                   href="/about"
                   className="mt-5 inline-flex min-h-[42px] items-center justify-center rounded-md bg-[#F5A623] px-8 font-bold text-white text-[13px] hover:bg-[#e09212] transition-colors"
                 >
-                  meet expert
+                  Meet the Team
                 </Link>
               </div>
 
