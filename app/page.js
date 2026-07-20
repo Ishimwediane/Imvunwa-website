@@ -251,123 +251,38 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Portfolio Grid */}
+          {/* Portfolio Grid — 12 items */}
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-
-            {/* Item 1 — Machine Manufacturing */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
-              <img
-                src="/image/manifa.jpg"
-                alt="Machine manufacturing project"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
-                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
-                  Manufacturing
-                </span>
-                <h3 className="text-[18px] font-black text-white leading-tight">Custom Industrial Machine</h3>
-                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
-                  Precision-built industrial equipment for local manufacturing plants.
-                </p>
+            {[
+              { src: "/image/manifa.jpg",       alt: "Machine manufacturing",        tag: "Manufacturing",   title: "Custom Industrial Machine",       desc: "Precision-built industrial equipment for local manufacturing plants." },
+              { src: "/image/repaire.jpg",      alt: "Machine repair",              tag: "Repair",          title: "Heavy Equipment Overhaul",         desc: "Full diagnostics and restoration of production-critical machinery." },
+              { src: "/image/welding1.png",     alt: "Welding project",             tag: "Welding",         title: "Structural Steel Fabrication",     desc: "Custom welded steel frameworks for industrial and commercial builds." },
+              { src: "/image/electricity.jpg",  alt: "Electrical installation",     tag: "Electrical",      title: "Industrial Electrical System",     desc: "Complete wiring and electrical fit-out for manufacturing facilities." },
+              { src: "/image/painting.jpg",     alt: "Painting project",            tag: "Painting",        title: "Anti-Corrosion Coating",           desc: "Industrial-grade protective coating for long-lasting metal surfaces." },
+              { src: "/image/plumb.jpg",        alt: "Plumbing network",            tag: "Plumbing",        title: "Commercial Plumbing Network",      desc: "Full plumbing infrastructure for industrial and commercial buildings." },
+              { src: "/image/repairement.jpg",  alt: "Machine repairement",         tag: "Repair",          title: "Precision Machine Restoration",    desc: "Component-level repair and calibration of complex industrial equipment." },
+              { src: "/image/paint.jpg",        alt: "Paint finish project",        tag: "Painting",        title: "Industrial Paint Finish",          desc: "High-durability surface coating for steel structures and equipment." },
+              { src: "/image/plumbling.jpg",    alt: "Plumbing installation",       tag: "Plumbing",        title: "Industrial Piping System",         desc: "Heavy-duty pipe installation for factories and production facilities." },
+              { src: "/image/design.jpg",       alt: "Product design",              tag: "Design",          title: "Product Design & Prototyping",     desc: "Engineering drawings and prototype fabrication for custom products." },
+              { src: "/image/mman.png",         alt: "Manufacturing process",       tag: "Manufacturing",   title: "Production Line Equipment",        desc: "End-to-end fabrication of machinery for production line integration." },
+              { src: "/image/manufacturing.jpg",alt: "Manufacturing facility",      tag: "Manufacturing",   title: "Factory Setup & Installation",     desc: "Turnkey manufacturing setup including installation and commissioning." },
+            ].map((item, i) => (
+              <div key={i} className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
+                  <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
+                    {item.tag}
+                  </span>
+                  <h3 className="text-[18px] font-black text-white leading-tight">{item.title}</h3>
+                  <p className="mt-1 text-[12px] text-white/70 leading-relaxed">{item.desc}</p>
+                </div>
               </div>
-            </div>
-
-            {/* Item 2 — Machine Repair */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
-              <img
-                src="/image/repaire.jpg"
-                alt="Machine repair project"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
-                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
-                  Repair
-                </span>
-                <h3 className="text-[18px] font-black text-white leading-tight">Heavy Equipment Overhaul</h3>
-                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
-                  Full diagnostics and restoration of production-critical machinery.
-                </p>
-              </div>
-            </div>
-
-            {/* Item 3 — Welding */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
-              <img
-                src="/image/welding1.png"
-                alt="Welding project"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
-                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
-                  Welding
-                </span>
-                <h3 className="text-[18px] font-black text-white leading-tight">Structural Steel Fabrication</h3>
-                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
-                  Custom welded steel frameworks for industrial and commercial builds.
-                </p>
-              </div>
-            </div>
-
-            {/* Item 4 — Electrical */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
-              <img
-                src="/image/electricity.jpg"
-                alt="Electrical installation project"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
-                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
-                  Electrical
-                </span>
-                <h3 className="text-[18px] font-black text-white leading-tight">Industrial Electrical System</h3>
-                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
-                  Complete wiring and electrical fit-out for manufacturing facilities.
-                </p>
-              </div>
-            </div>
-
-            {/* Item 5 — Painting */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
-              <img
-                src="/image/painting.jpg"
-                alt="Painting project"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
-                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
-                  Painting
-                </span>
-                <h3 className="text-[18px] font-black text-white leading-tight">Anti-Corrosion Coating</h3>
-                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
-                  Industrial-grade protective coating for long-lasting metal surfaces.
-                </p>
-              </div>
-            </div>
-
-            {/* Item 6 — Plumbing */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
-              <img
-                src="/image/plumb.jpg"
-                alt="Plumbing project"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
-                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
-                  Plumbing
-                </span>
-                <h3 className="text-[18px] font-black text-white leading-tight">Commercial Plumbing Network</h3>
-                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
-                  Full plumbing infrastructure for industrial and commercial buildings.
-                </p>
-              </div>
-            </div>
-
+            ))}
           </div>
 
           {/* Bottom CTA */}
@@ -376,7 +291,7 @@ export default function Home() {
               href="/contact"
               className="group inline-flex min-h-[50px] items-center gap-3 rounded-full border border-white/20 px-8 text-[13px] font-black text-white/70 hover:border-[#F5A623] hover:text-[#F5A623] transition-all duration-300"
             >
-              View All Projects
+              Start Your Project
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -384,6 +299,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
 
 
       {/* ── Testimonials Section ── */}
