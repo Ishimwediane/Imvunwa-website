@@ -227,6 +227,164 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Portfolio Section ── */}
+      <section className="px-4 py-[70px] sm:px-6 lg:py-24" style={{ background: "#0e1215" }}>
+        <div className={shell}>
+          {/* Header */}
+          <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#F5A623]">
+                Our Work
+              </p>
+              <h2 className="m-0 text-[34px] font-black leading-[1.06] text-white sm:text-[46px]">
+                Portfolio &amp; Projects
+              </h2>
+              <p className="mt-3 max-w-[500px] text-[15px] leading-[1.7] text-white/50">
+                A showcase of precision-engineered products and completed projects spanning all our service categories.
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="inline-flex min-h-[44px] items-center rounded-full bg-[#F5A623] px-7 font-black text-white text-sm shadow-md hover:bg-[#e09212] transition-colors"
+            >
+              Start a Project
+            </Link>
+          </div>
+
+          {/* Portfolio Grid */}
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+            {/* Item 1 — Machine Manufacturing */}
+            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
+              <img
+                src="/image/manifa.jpg"
+                alt="Machine manufacturing project"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
+                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
+                  Manufacturing
+                </span>
+                <h3 className="text-[18px] font-black text-white leading-tight">Custom Industrial Machine</h3>
+                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                  Precision-built industrial equipment for local manufacturing plants.
+                </p>
+              </div>
+            </div>
+
+            {/* Item 2 — Machine Repair */}
+            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
+              <img
+                src="/image/repaire.jpg"
+                alt="Machine repair project"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
+                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
+                  Repair
+                </span>
+                <h3 className="text-[18px] font-black text-white leading-tight">Heavy Equipment Overhaul</h3>
+                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                  Full diagnostics and restoration of production-critical machinery.
+                </p>
+              </div>
+            </div>
+
+            {/* Item 3 — Welding */}
+            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
+              <img
+                src="/image/welding1.png"
+                alt="Welding project"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
+                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
+                  Welding
+                </span>
+                <h3 className="text-[18px] font-black text-white leading-tight">Structural Steel Fabrication</h3>
+                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                  Custom welded steel frameworks for industrial and commercial builds.
+                </p>
+              </div>
+            </div>
+
+            {/* Item 4 — Electrical */}
+            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
+              <img
+                src="/image/electricity.jpg"
+                alt="Electrical installation project"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
+                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
+                  Electrical
+                </span>
+                <h3 className="text-[18px] font-black text-white leading-tight">Industrial Electrical System</h3>
+                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                  Complete wiring and electrical fit-out for manufacturing facilities.
+                </p>
+              </div>
+            </div>
+
+            {/* Item 5 — Painting */}
+            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
+              <img
+                src="/image/painting.jpg"
+                alt="Painting project"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
+                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
+                  Painting
+                </span>
+                <h3 className="text-[18px] font-black text-white leading-tight">Anti-Corrosion Coating</h3>
+                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                  Industrial-grade protective coating for long-lasting metal surfaces.
+                </p>
+              </div>
+            </div>
+
+            {/* Item 6 — Plumbing */}
+            <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer">
+              <img
+                src="/image/plumb.jpg"
+                alt="Plumbing project"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+              <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
+                <span className="mb-2 inline-block rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white w-fit">
+                  Plumbing
+                </span>
+                <h3 className="text-[18px] font-black text-white leading-tight">Commercial Plumbing Network</h3>
+                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                  Full plumbing infrastructure for industrial and commercial buildings.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="mt-12 flex justify-center">
+            <Link
+              href="/contact"
+              className="group inline-flex min-h-[50px] items-center gap-3 rounded-full border border-white/20 px-8 text-[13px] font-black text-white/70 hover:border-[#F5A623] hover:text-[#F5A623] transition-all duration-300"
+            >
+              View All Projects
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── Manufacturing Journey Section ── */}
       <section style={{ background: "#2b2b2b" }} className="overflow-hidden pl-4 pr-0 py-[70px] sm:pl-6 lg:py-20">
         {/* Centered heading */}
@@ -295,6 +453,221 @@ export default function Home() {
               </div>
 
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Testimonials Section ── */}
+      <section
+        className="relative overflow-hidden py-[90px]"
+        style={{
+          backgroundImage: "url('/image/testimoni.jpg')",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/72" />
+
+        {/* Inject float keyframe */}
+        <style>{`
+          @keyframes float-up {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-10px); }
+          }
+          .tcard-1 { animation: float-up 5s ease-in-out infinite; }
+          .tcard-2 { animation: float-up 6.5s ease-in-out 1s infinite; }
+          .tcard-3 { animation: float-up 5.8s ease-in-out 0.5s infinite; }
+        `}</style>
+
+        <div className="relative z-10 mx-auto max-w-[1180px] px-4 sm:px-6">
+          {/* Header */}
+          <div className="mb-14 text-center">
+            <p className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#F5A623]">
+              Client Voices
+            </p>
+            <h2 className="text-[34px] font-black leading-[1.06] text-white sm:text-[46px]">
+              What Our Clients Say
+            </h2>
+            <p className="mt-3 text-[15px] leading-[1.7] text-white/55 max-w-[500px] mx-auto">
+              Real results, real clients — here&apos;s what they experienced working with Imvunwa.
+            </p>
+          </div>
+
+          {/* 3 Testimonial Cards */}
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+            {/* ── Card 1 ── */}
+            <div
+              className="tcard-1 flex flex-col overflow-hidden rounded-3xl"
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                backdropFilter: "blur(18px)",
+                border: "1px solid rgba(255,255,255,0.13)",
+              }}
+            >
+              {/* Product image */}
+              <div className="relative h-[200px] w-full overflow-hidden">
+                <img
+                  src="/image/manifa.jpg"
+                  alt="Custom machine manufactured for Jean-Pierre"
+                  className="h-full w-full object-cover"
+                />
+                {/* Gradient fade into card body */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/60" />
+                {/* Service badge */}
+                <span className="absolute bottom-3 left-4 rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white">
+                  Machine Manufacturing
+                </span>
+              </div>
+
+              {/* Card body */}
+              <div className="flex flex-col flex-1 p-6">
+                {/* Stars */}
+                <div className="mb-4 flex gap-0.5">
+                  {[1,2,3,4,5].map(s => (
+                    <svg key={s} className="h-4 w-4 text-[#F5A623]" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                  ))}
+                </div>
+
+                {/* Quote mark */}
+                <svg className="mb-3 h-7 w-7 text-[#F5A623]/40" fill="currentColor" viewBox="0 0 32 32">
+                  <path d="M10 8C5.6 8 2 11.6 2 16v8h8v-8H5.9C6.4 13.5 8 11.5 10 11V8zm12 0c-4.4 0-8 3.6-8 8v8h8v-8h-4.1c.5-2.5 2.1-4.5 4.1-5V8z"/>
+                </svg>
+
+                <p className="flex-1 text-[14px] leading-[1.85] text-white/80">
+                  Imvunwa fabricated the custom machines for our production line on time and within budget. The quality is exceptional — we&apos;ve had zero downtime since installation. Truly world-class work.
+                </p>
+
+                {/* Divider */}
+                <div className="my-5 h-px bg-white/10" />
+
+                {/* Author */}
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#F5A623] text-[13px] font-black text-white">
+                    J
+                  </div>
+                  <div>
+                    <div className="text-[14px] font-bold text-white">Jean-Pierre Nkurunziza</div>
+                    <div className="text-[11px] text-white/50">Factory Manager, Kigali</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Card 2 ── */}
+            <div
+              className="tcard-2 flex flex-col overflow-hidden rounded-3xl"
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                backdropFilter: "blur(18px)",
+                border: "1px solid rgba(255,255,255,0.13)",
+              }}
+            >
+              {/* Product image */}
+              <div className="relative h-[200px] w-full overflow-hidden">
+                <img
+                  src="/image/welding1.png"
+                  alt="Steel structure welded for Emmanuel"
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/60" />
+                <span className="absolute bottom-3 left-4 rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white">
+                  Welding Services
+                </span>
+              </div>
+
+              {/* Card body */}
+              <div className="flex flex-col flex-1 p-6">
+                {/* Stars */}
+                <div className="mb-4 flex gap-0.5">
+                  {[1,2,3,4,5].map(s => (
+                    <svg key={s} className="h-4 w-4 text-[#F5A623]" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                  ))}
+                </div>
+
+                <svg className="mb-3 h-7 w-7 text-[#F5A623]/40" fill="currentColor" viewBox="0 0 32 32">
+                  <path d="M10 8C5.6 8 2 11.6 2 16v8h8v-8H5.9C6.4 13.5 8 11.5 10 11V8zm12 0c-4.4 0-8 3.6-8 8v8h8v-8h-4.1c.5-2.5 2.1-4.5 4.1-5V8z"/>
+                </svg>
+
+                <p className="flex-1 text-[14px] leading-[1.85] text-white/80">
+                  The welding work on our steel structure was absolutely flawless. Clean welds, precise measurements, and they finished two days ahead of schedule. I would not trust anyone else for structural work.
+                </p>
+
+                <div className="my-5 h-px bg-white/10" />
+
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#F5A623] text-[13px] font-black text-white">
+                    E
+                  </div>
+                  <div>
+                    <div className="text-[14px] font-bold text-white">Emmanuel Habimana</div>
+                    <div className="text-[11px] text-white/50">Construction Contractor, Kigali</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Card 3 ── */}
+            <div
+              className="tcard-3 flex flex-col overflow-hidden rounded-3xl"
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                backdropFilter: "blur(18px)",
+                border: "1px solid rgba(255,255,255,0.13)",
+              }}
+            >
+              {/* Product image */}
+              <div className="relative h-[200px] w-full overflow-hidden">
+                <img
+                  src="/image/painting.jpg"
+                  alt="Painting project done for Vestine"
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/60" />
+                <span className="absolute bottom-3 left-4 rounded-full bg-[#F5A623] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white">
+                  Painting Services
+                </span>
+              </div>
+
+              {/* Card body */}
+              <div className="flex flex-col flex-1 p-6">
+                {/* Stars */}
+                <div className="mb-4 flex gap-0.5">
+                  {[1,2,3,4,5].map(s => (
+                    <svg key={s} className="h-4 w-4 text-[#F5A623]" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                  ))}
+                </div>
+
+                <svg className="mb-3 h-7 w-7 text-[#F5A623]/40" fill="currentColor" viewBox="0 0 32 32">
+                  <path d="M10 8C5.6 8 2 11.6 2 16v8h8v-8H5.9C6.4 13.5 8 11.5 10 11V8zm12 0c-4.4 0-8 3.6-8 8v8h8v-8h-4.1c.5-2.5 2.1-4.5 4.1-5V8z"/>
+                </svg>
+
+                <p className="flex-1 text-[14px] leading-[1.85] text-white/80">
+                  The painting finish on our hotel facility is simply stunning. Very durable, applied with great care and attention to detail. Our guests always compliment how well-maintained the building looks.
+                </p>
+
+                <div className="my-5 h-px bg-white/10" />
+
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#F5A623] text-[13px] font-black text-white">
+                    V
+                  </div>
+                  <div>
+                    <div className="text-[14px] font-bold text-white">Vestine Iradukunda</div>
+                    <div className="text-[11px] text-white/50">Hotel Manager, Rubavu</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
