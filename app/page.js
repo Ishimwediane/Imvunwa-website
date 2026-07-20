@@ -305,7 +305,7 @@ export default function Home() {
               return (
                 <div 
                   key={i} 
-                  className="group relative h-[360px] w-[320px] flex-shrink-0 overflow-hidden rounded-2xl snap-start cursor-pointer border border-white/5"
+                  className="group relative h-[380px] w-[310px] flex-shrink-0 overflow-hidden rounded-3xl snap-start cursor-pointer border border-white/5"
                 >
                   {/* Background Image */}
                   <img
@@ -314,16 +314,16 @@ export default function Home() {
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   
-                  {/* Curved Overlay Shape */}
+                  {/* Curved Overlay Shape - expands to full card on hover */}
                   <div 
-                    className={`absolute bottom-0 left-0 w-[84%] h-[72%] rounded-tr-full transition-transform duration-500 origin-bottom-left group-hover:scale-[1.03] ${
-                      isOrange ? "bg-[#F5A623]" : "bg-black/90 border-t border-r border-white/10"
+                    className={`absolute bottom-0 left-0 w-[82%] h-[70%] rounded-tr-full transition-all duration-500 ease-in-out group-hover:w-full group-hover:h-full group-hover:rounded-none ${
+                      isOrange ? "bg-[#F5A623]" : "bg-black/90 border-t border-r border-white/10 group-hover:border-none"
                     }`}
                   />
                   
-                  {/* Floating Action Arrow Button on the curve boundary */}
+                  {/* Arrow Button - slides to bottom-left on hover */}
                   <div 
-                    className={`absolute left-[70%] bottom-[60%] flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-45 ${
+                    className={`absolute left-[68%] bottom-[58%] flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-in-out group-hover:left-6 group-hover:bottom-6 group-hover:scale-110 group-hover:rotate-45 ${
                       isOrange ? "bg-white text-[#F5A623]" : "bg-[#F5A623] text-white"
                     }`}
                   >
@@ -332,25 +332,29 @@ export default function Home() {
                     </svg>
                   </div>
                   
-                  {/* Text Details */}
-                  <div className="absolute bottom-0 left-0 z-10 w-[72%] p-6 text-left flex flex-col justify-end h-full">
+                  {/* Text Container - Absolute full height wrapper for slide-up effect */}
+                  <div className="absolute inset-0 p-6 flex flex-col justify-start z-10 pointer-events-none">
                     <span 
-                      className={`text-[9px] font-black uppercase tracking-wider mb-1 ${
+                      className={`text-[9px] font-black uppercase tracking-wider mb-2 transition-colors duration-500 ${
                         isOrange ? "text-black/60" : "text-[#F5A623]"
                       }`}
                     >
                       {item.tag}
                     </span>
+                    
+                    {/* Sliding Title */}
                     <h3 
-                      className={`text-[17px] font-black leading-tight ${
+                      className={`text-[19px] font-black leading-tight transition-all duration-500 ease-in-out translate-y-[140px] group-hover:translate-y-0 ${
                         isOrange ? "text-black" : "text-white"
                       }`}
                     >
                       {item.title}
                     </h3>
+                    
+                    {/* Sliding & Fading Description */}
                     <p 
-                      className={`mt-2 text-[11px] leading-relaxed transition-opacity duration-300 ${
-                        isOrange ? "text-black/85" : "text-white/70"
+                      className={`mt-3 text-[11px] leading-relaxed transition-all duration-500 ease-in-out opacity-0 translate-y-[150px] group-hover:opacity-100 group-hover:translate-y-0 delay-75 max-w-[90%] ${
+                        isOrange ? "text-black/80" : "text-white/70"
                       }`}
                     >
                       {item.desc}
