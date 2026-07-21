@@ -24,8 +24,7 @@ const NAV_LINKS = [
 const SERVICE_LINKS = [
   {
     name: "Manufacturing of Machines",
-    href: "/services#manufacturing",
-    icon: "⚙️",
+    href: "/services/manufacturing",
     subs: [
       { label: "Industrial Machines",  href: "/projects?cat=manufacturing" },
       { label: "Product Fabrication",  href: "/projects?cat=manufacturing" },
@@ -33,8 +32,7 @@ const SERVICE_LINKS = [
   },
   {
     name: "Repairment of Machines",
-    href: "/services#repair",
-    icon: "🔧",
+    href: "/services/repair",
     subs: [
       { label: "Heavy Equipment",  href: "/projects?cat=repair" },
       { label: "Precision Repair", href: "/projects?cat=repair" },
@@ -42,8 +40,7 @@ const SERVICE_LINKS = [
   },
   {
     name: "Welding Services",
-    href: "/services#welding",
-    icon: "🔥",
+    href: "/services/welding",
     subs: [
       { label: "Doors & Gates",      href: "/projects?cat=welding" },
       { label: "Roofing Frames",     href: "/projects?cat=welding" },
@@ -52,8 +49,7 @@ const SERVICE_LINKS = [
   },
   {
     name: "Painting Services",
-    href: "/services#painting",
-    icon: "🎨",
+    href: "/services/painting",
     subs: [
       { label: "Anti-Corrosion Coating", href: "/projects?cat=painting" },
       { label: "Decorative Finishes",    href: "/projects?cat=painting" },
@@ -61,29 +57,27 @@ const SERVICE_LINKS = [
   },
   {
     name: "Electricity Installation & Repair",
-    href: "/services#electricity",
-    icon: "⚡",
+    href: "/services/electrical",
     subs: [
       { label: "Industrial Wiring", href: "/projects?cat=electrical" },
     ],
   },
   {
     name: "Plumbing Services",
-    href: "/services#plumbing",
-    icon: "🔩",
+    href: "/services/plumbing",
     subs: [
       { label: "Industrial Piping", href: "/projects?cat=plumbing" },
     ],
   },
   {
     name: "Product Design",
-    href: "/services#design",
-    icon: "✏️",
+    href: "/services/design",
     subs: [
       { label: "Design & Prototyping", href: "/projects?cat=design" },
     ],
   },
 ];
+
 
 /* ── Sub-components ──────────────────────────────────────────── */
 function NavLink({ href, label, exact = false, onClick }) {

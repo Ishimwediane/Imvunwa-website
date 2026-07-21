@@ -9,20 +9,20 @@ import Eyebrow from "../../components/ui/Eyebrow";
 
 /* ── Data ────────────────────────────────────────────────────── */
 const SERVICES = [
-  { title: "Machine Manufacturing", text: "Custom machines engineered for industrial use, built with durable materials, practical controls, and dependable performance.",              image: "/image/manufacturing.jpg", tag: "Fabrication",  id: "manufacturing" },
-  { title: "Machine Repair",        text: "Diagnostics, restoration, and maintenance services that reduce downtime and return equipment to working condition.",                      image: "/image/repairement.jpg",   tag: "Maintenance",  id: "repair" },
-  { title: "Welding Services",      text: "Structural and custom welding for fabrication, repair, installation, and field service projects.",                                       image: "/image/welding1.png",      tag: "Metalwork",    id: "welding" },
-  { title: "Painting Services",     text: "Professional residential, commercial, interior, and exterior painting services delivering a fresh look and surface protection.",         image: "/image/paint.jpg",         tag: "Finishing",    id: "painting" },
-  { title: "Electrical Works",      text: "Safe electrical installation, repair, and maintenance for residential, commercial, and industrial spaces.",                              image: "/image/electricity.jpg",   tag: "Installation", id: "electricity" },
-  { title: "Plumbing Services",     text: "Water system installation, repair, and maintenance of water systems for homes, businesses, and project sites.",                         image: "/image/plumb.jpg",         tag: "Utilities",    id: "plumbing" },
-  { title: "Product Design",        text: "Practical product concepts, prototypes, and build-ready design support for teams turning ideas into products.",                          image: "/image/product1.jpg",      tag: "Design",       id: "design" },
+  { title: "Machine Manufacturing", text: "Custom machines engineered for industrial use, built with durable materials, practical controls, and dependable performance.",              image: "/image/manufacturing.jpg", tag: "Fabrication",  id: "manufacturing", href: "/services/manufacturing" },
+  { title: "Machine Repair",        text: "Diagnostics, restoration, and maintenance services that reduce downtime and return equipment to working condition.",                      image: "/image/repairement.jpg",   tag: "Maintenance",  id: "repair",         href: "/services/repair" },
+  { title: "Welding Services",      text: "Structural and custom welding for fabrication, repair, installation, and field service projects.",                                       image: "/image/welding1.png",      tag: "Metalwork",    id: "welding",        href: "/services/welding" },
+  { title: "Painting Services",     text: "Professional residential, commercial, interior, and exterior painting services delivering a fresh look and surface protection.",         image: "/image/paint.jpg",         tag: "Finishing",    id: "painting",       href: "/services/painting" },
+  { title: "Electrical Works",      text: "Safe electrical installation, repair, and maintenance for residential, commercial, and industrial spaces.",                              image: "/image/electricity.jpg",   tag: "Installation", id: "electricity",    href: "/services/electrical" },
+  { title: "Plumbing Services",     text: "Water system installation, repair, and maintenance of water systems for homes, businesses, and project sites.",                         image: "/image/plumb.jpg",         tag: "Utilities",    id: "plumbing",       href: "/services/plumbing" },
+  { title: "Product Design",        text: "Practical product concepts, prototypes, and build-ready design support for teams turning ideas into products.",                          image: "/image/product1.jpg",      tag: "Design",       id: "design",         href: "/services/design" },
 ];
 
 /* ── Image-based service card (services page layout) ─────────── */
-function ServiceArticle({ id, title, text, image, tag }) {
+function ServiceArticle({ id, title, text, image, tag, href }) {
   return (
     <article id={id} className="group flex min-h-[440px] flex-col overflow-hidden rounded-lg border border-line bg-white shadow-card scroll-mt-28">
-      <div className="relative h-[210px] w-full overflow-hidden shrink-0">
+      <Link href={href} className="relative h-[210px] w-full overflow-hidden shrink-0 block">
         <Image
           className="h-full w-full object-cover contrast-105 saturate-[.86] transition-transform duration-500 group-hover:scale-110"
           src={image}
@@ -32,15 +32,15 @@ function ServiceArticle({ id, title, text, image, tag }) {
           quality={75}
         />
         <div className="absolute inset-0 flex items-center justify-center bg-signal/85 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="text-[16px] font-black text-ink">Read more</span>
+          <span className="text-[16px] font-black text-ink">Learn more</span>
         </div>
-      </div>
+      </Link>
       <div className="flex flex-1 flex-col p-6">
         <span className="inline-flex text-[10px] font-black uppercase text-signal-dark">{tag}</span>
         <h2 className="my-3 text-[19px] font-extrabold text-ink">{title}</h2>
         <p className="mb-6 flex-1 text-[13px] leading-[1.65] text-muted">{text}</p>
         <Link
-          href="/contact"
+          href={href}
           className="mt-auto inline-flex h-11 w-max items-center justify-center rounded-md bg-signal px-6 text-[12px] font-bold text-white transition-colors hover:bg-signal-hover"
         >
           More details
