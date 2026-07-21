@@ -70,11 +70,11 @@ export default function ServicesPage() {
       </section>
 
       <SectionCta
-        dark
         heading="Need a custom solution?"
         body="Tell us about your project and we'll tailor the right service for you."
         href="/contact"
         label="Get in Touch"
+        videoSrc="/video-imvunwa/Create_an_second_cinematic_v.mp4"
       />
     </div>
   );

@@ -12,13 +12,35 @@ import Container from "./Container";
  *  - label     string   button label text
  *  - dark      boolean  dark bg (ink) vs cream bg (warm) — default: false (cream)
  */
-export default function SectionCta({ heading, body, href = "/contact", label = "Get in Touch", dark = false }) {
+export default function SectionCta({
+  heading,
+  body,
+  href = "/contact",
+  label = "Get in Touch",
+  dark = false,
+  videoSrc = null,
+}) {
+  const isVideo = !!videoSrc;
   return (
-    <section className={`px-4 py-[70px] sm:px-6 lg:py-24 ${dark ? "bg-base text-white" : "bg-warm text-ink"}`}>
-      <Container className="text-center">
+    <section className={`relative overflow-hidden px-4 py-[70px] sm:px-6 lg:py-24 ${isVideo || dark ? "bg-base text-white" : "bg-warm text-ink"}`}>
+      {isVideo && (
+        <>
+          <video
+            className="absolute inset-0 h-full w-full object-cover z-0 pointer-events-none"
+            src={videoSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-black/72 z-0" />
+        </>
+      )}
+      <Container className="relative z-10 text-center">
         <h2 className="text-[24px] font-black sm:text-[32px]">{heading}</h2>
         {body && (
-          <p className={`mx-auto mt-4 max-w-[520px] text-[14px] leading-[1.7] ${dark ? "text-white/70" : "text-ink/50"}`}>
+          <p className={`mx-auto mt-4 max-w-[520px] text-[14px] leading-[1.7] ${isVideo || dark ? "text-white/70" : "text-ink/50"}`}>
             {body}
           </p>
         )}
