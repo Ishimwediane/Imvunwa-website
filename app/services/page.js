@@ -5,6 +5,7 @@ import Image from "next/image";
 import Container from "../../components/ui/Container";
 import PageHero from "../../components/ui/PageHero";
 import SectionCta from "../../components/ui/SectionCta";
+import Eyebrow from "../../components/ui/Eyebrow";
 
 /* ── Data ────────────────────────────────────────────────────── */
 const SERVICES = [
@@ -49,6 +50,26 @@ function ServiceArticle({ title, text, image, tag }) {
   );
 }
 
+/* ── Process Data & Component ────────────────────────────────── */
+const STEPS = [
+  ["01", "Consultation", "We listen to the project goals, site needs, budget, and technical constraints."],
+  ["02", "Design",       "We prepare the practical plan, material approach, and build method before production begins."],
+  ["03", "Execution",    "Our technicians fabricate, install, repair, or finish the work with close quality control."],
+  ["04", "Delivery",     "We test, refine, and hand over the finished result with support for next steps."],
+];
+
+function ProcessStep({ number, title, text }) {
+  return (
+    <article className="grid grid-cols-[46px_1fr] gap-4 border-t border-white/10 py-5 lg:grid-cols-[64px_1fr]">
+      <strong className="text-[22px] font-black text-signal">{number}</strong>
+      <div>
+        <h3 className="m-0 text-[18px] font-extrabold text-white">{title}</h3>
+        <p className="mt-2 text-[13px] leading-[1.65] text-white/60">{text}</p>
+      </div>
+    </article>
+  );
+}
+
 /* ── Page ─────────────────────────────────────────────────────── */
 export default function ServicesPage() {
   return (
@@ -65,6 +86,36 @@ export default function ServicesPage() {
             {SERVICES.map((s) => (
               <ServiceArticle key={s.title} {...s} />
             ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Our Process Section ── */}
+      <section className="bg-base px-4 py-[70px] text-white sm:px-6 lg:py-24 border-t border-white/5">
+        <Container className="grid items-center gap-16 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="relative after:absolute after:-bottom-5 after:-right-5 after:-z-10 after:h-[44%] after:w-[44%] after:rounded-lg after:border after:border-signal">
+            <Image
+              src="/image/teamm.png"
+              alt="Imvunwa team at work"
+              width={500}
+              height={620}
+              quality={80}
+              className="h-[360px] w-full rounded-lg object-cover shadow-industrial lg:h-[620px]"
+            />
+          </div>
+          <div>
+            <Eyebrow>How we work</Eyebrow>
+            <h2 className="m-0 max-w-[760px] text-[26px] font-black leading-[1.02] tracking-normal text-white sm:text-[34px] lg:text-[42px]">
+              Our Process
+            </h2>
+            <p className="mt-4 max-w-[500px] text-[13px] leading-[1.7] text-white/60">
+              A clear, structured route from first conversation to final handover.
+            </p>
+            <div className="mt-8 grid gap-3.5">
+              {STEPS.map(([number, title, text]) => (
+                <ProcessStep key={title} number={number} title={title} text={text} />
+              ))}
+            </div>
           </div>
         </Container>
       </section>

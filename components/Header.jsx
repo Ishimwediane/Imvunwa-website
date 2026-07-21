@@ -17,7 +17,6 @@ const MARQUEE_ITEMS = [
 
 const NAV_LINKS = [
   { href: "/",        label: "Home",       exact: true },
-  { href: "/process", label: "How We Work" },
   { href: "/projects",label: "Projects" },
   { href: "/contact", label: "Contact" },
 ];
@@ -201,7 +200,6 @@ export default function Header() {
               )}
             </div>
 
-            <Link onClick={closeMobile} className="hover:text-signal transition-colors" href="/process">How We Work</Link>
             <Link onClick={closeMobile} className="hover:text-signal transition-colors" href="/projects">Projects</Link>
             <Link onClick={closeMobile} className="hover:text-signal transition-colors" href="/contact">Contact</Link>
 
