@@ -9,19 +9,19 @@ import Eyebrow from "../../components/ui/Eyebrow";
 
 /* ── Data ────────────────────────────────────────────────────── */
 const SERVICES = [
-  { title: "Machine Manufacturing", text: "Custom machines engineered for industrial use, built with durable materials, practical controls, and dependable performance.",              image: "/image/manufacturing.jpg", tag: "Fabrication" },
-  { title: "Machine Repair",        text: "Diagnostics, restoration, and maintenance services that reduce downtime and return equipment to working condition.",                      image: "/image/repairement.jpg",   tag: "Maintenance" },
-  { title: "Welding Services",      text: "Structural and custom welding for fabrication, repair, installation, and field service projects.",                                       image: "/image/welding1.png",      tag: "Metalwork" },
-  { title: "Painting Services",     text: "Professional residential, commercial, interior, and exterior painting services delivering a fresh look and surface protection.",         image: "/image/paint.jpg",         tag: "Finishing" },
-  { title: "Electrical Works",      text: "Safe electrical installation, repair, and maintenance for residential, commercial, and industrial spaces.",                              image: "/image/electricity.jpg",   tag: "Installation" },
-  { title: "Plumbing Services",     text: "Water system installation, repair, and maintenance of water systems for homes, businesses, and project sites.",                         image: "/image/plumb.jpg",         tag: "Utilities" },
-  { title: "Product Design",        text: "Practical product concepts, prototypes, and build-ready design support for teams turning ideas into products.",                          image: "/image/product1.jpg",      tag: "Design" },
+  { title: "Machine Manufacturing", text: "Custom machines engineered for industrial use, built with durable materials, practical controls, and dependable performance.",              image: "/image/manufacturing.jpg", tag: "Fabrication",  id: "manufacturing" },
+  { title: "Machine Repair",        text: "Diagnostics, restoration, and maintenance services that reduce downtime and return equipment to working condition.",                      image: "/image/repairement.jpg",   tag: "Maintenance",  id: "repair" },
+  { title: "Welding Services",      text: "Structural and custom welding for fabrication, repair, installation, and field service projects.",                                       image: "/image/welding1.png",      tag: "Metalwork",    id: "welding" },
+  { title: "Painting Services",     text: "Professional residential, commercial, interior, and exterior painting services delivering a fresh look and surface protection.",         image: "/image/paint.jpg",         tag: "Finishing",    id: "painting" },
+  { title: "Electrical Works",      text: "Safe electrical installation, repair, and maintenance for residential, commercial, and industrial spaces.",                              image: "/image/electricity.jpg",   tag: "Installation", id: "electricity" },
+  { title: "Plumbing Services",     text: "Water system installation, repair, and maintenance of water systems for homes, businesses, and project sites.",                         image: "/image/plumb.jpg",         tag: "Utilities",    id: "plumbing" },
+  { title: "Product Design",        text: "Practical product concepts, prototypes, and build-ready design support for teams turning ideas into products.",                          image: "/image/product1.jpg",      tag: "Design",       id: "design" },
 ];
 
 /* ── Image-based service card (services page layout) ─────────── */
-function ServiceArticle({ title, text, image, tag }) {
+function ServiceArticle({ id, title, text, image, tag }) {
   return (
-    <article className="group flex min-h-[440px] flex-col overflow-hidden rounded-lg border border-line bg-white shadow-card">
+    <article id={id} className="group flex min-h-[440px] flex-col overflow-hidden rounded-lg border border-line bg-white shadow-card scroll-mt-28">
       <div className="relative h-[210px] w-full overflow-hidden shrink-0">
         <Image
           className="h-full w-full object-cover contrast-105 saturate-[.86] transition-transform duration-500 group-hover:scale-110"
@@ -78,6 +78,7 @@ export default function ServicesPage() {
         eyebrow="Capabilities"
         title="Our Services"
         subtitle="We deliver reliable, high-quality engineering and trade services across Rwanda — from fabrication to finishing."
+        bgImage="/image/manufacturing.jpg"
       />
 
       <section className="bg-panel px-4 py-[70px] sm:px-6 lg:py-24">

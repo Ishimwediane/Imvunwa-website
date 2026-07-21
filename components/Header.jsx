@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -22,13 +22,67 @@ const NAV_LINKS = [
 ];
 
 const SERVICE_LINKS = [
-  { name: "Manufacturing of Machines",       href: "/services#manufacturing" },
-  { name: "Repairment of Machines",          href: "/services#repair" },
-  { name: "Welding Services",                href: "/services#welding" },
-  { name: "Painting Services",               href: "/services#painting" },
-  { name: "Electricity Installation & Repair", href: "/services#electricity" },
-  { name: "Plumbing Services",               href: "/services#plumbing" },
-  { name: "Product Design",                  href: "/services#design" },
+  {
+    name: "Manufacturing of Machines",
+    href: "/services#manufacturing",
+    icon: "⚙️",
+    subs: [
+      { label: "Industrial Machines",  href: "/projects?cat=manufacturing" },
+      { label: "Product Fabrication",  href: "/projects?cat=manufacturing" },
+    ],
+  },
+  {
+    name: "Repairment of Machines",
+    href: "/services#repair",
+    icon: "🔧",
+    subs: [
+      { label: "Heavy Equipment",  href: "/projects?cat=repair" },
+      { label: "Precision Repair", href: "/projects?cat=repair" },
+    ],
+  },
+  {
+    name: "Welding Services",
+    href: "/services#welding",
+    icon: "🔥",
+    subs: [
+      { label: "Doors & Gates",      href: "/projects?cat=welding" },
+      { label: "Roofing Frames",     href: "/projects?cat=welding" },
+      { label: "Structural Frames",  href: "/projects?cat=welding" },
+    ],
+  },
+  {
+    name: "Painting Services",
+    href: "/services#painting",
+    icon: "🎨",
+    subs: [
+      { label: "Anti-Corrosion Coating", href: "/projects?cat=painting" },
+      { label: "Decorative Finishes",    href: "/projects?cat=painting" },
+    ],
+  },
+  {
+    name: "Electricity Installation & Repair",
+    href: "/services#electricity",
+    icon: "⚡",
+    subs: [
+      { label: "Industrial Wiring", href: "/projects?cat=electrical" },
+    ],
+  },
+  {
+    name: "Plumbing Services",
+    href: "/services#plumbing",
+    icon: "🔩",
+    subs: [
+      { label: "Industrial Piping", href: "/projects?cat=plumbing" },
+    ],
+  },
+  {
+    name: "Product Design",
+    href: "/services#design",
+    icon: "✏️",
+    subs: [
+      { label: "Design & Prototyping", href: "/projects?cat=design" },
+    ],
+  },
 ];
 
 /* ── Sub-components ──────────────────────────────────────────── */
@@ -46,14 +100,100 @@ function NavLink({ href, label, exact = false, onClick }) {
   );
 }
 
+/* One row in the main dropdown — hovering opens its sub-panel */
+function ServiceItem({ service, onClose }) {
+  const [subOpen, setSubOpen] = useState(false);
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setSubOpen(true)}
+      onMouseLeave={() => setSubOpen(false)}
+    >
+      {/* Single-line row: name · arrow — all on one line */}
+      <Link
+        href={service.href}
+        onClick={onClose}
+        className="services-dropdown-item flex w-full items-center whitespace-nowrap pr-4"
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        <span className="flex-1 truncate">{service.name}</span>
+        {service.subs.length > 0 && (
+          <svg
+            className="ml-auto shrink-0 h-3 w-3 opacity-40"
+            fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        )}
+      </Link>
+
+      {/* Sub-panel to the right — stays open while hovering either the row or the panel */}
+      {subOpen && service.subs.length > 0 && (
+        <div
+          className="services-dropdown absolute left-full top-0 z-[60] rounded-md"
+          style={{
+            minWidth: "200px",
+            marginLeft: "2px",
+            background: "#ffffff",
+            borderTop: "4px solid var(--color-brand)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
+            paddingTop: "8px",
+            paddingBottom: "8px",
+          }}
+        >
+          <p className="px-4 pb-1 pt-0.5 text-[9px] font-black uppercase tracking-[0.14em] text-signal-dark">
+            Projects by category
+          </p>
+          {service.subs.map((sub) => (
+            <Link
+              key={sub.label}
+              href={sub.href}
+              onClick={onClose}
+              className="services-dropdown-item whitespace-nowrap text-[12px] font-semibold"
+            >
+              {sub.label}
+            </Link>
+          ))}
+          <div className="mt-1 border-t border-line/30 pt-1">
+            <Link
+              href="/projects"
+              onClick={onClose}
+              className="services-dropdown-item whitespace-nowrap text-[11px] font-bold text-signal-dark hover:text-signal"
+            >
+              View all projects →
+            </Link>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ── Header ──────────────────────────────────────────────────── */
 export default function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileOpen,   setMobileOpen]   = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const pathname = usePathname();
+  const [mobileSubOpen, setMobileSubOpen] = useState(null);
+  const pathname  = usePathname();
+  const wrapperRef = useRef(null); // ref around the whole Services button + dropdown
 
-  const closeMobile = () => { setMobileOpen(false); setMobileServicesOpen(false); };
+  /* ── Click-outside: close dropdown when user clicks anywhere else ── */
+  useEffect(() => {
+    function handleOutsideClick(e) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    if (dropdownOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [dropdownOpen]);
+
+  const closeAll    = () => setDropdownOpen(false);
+  const closeMobile = () => { setMobileOpen(false); setMobileServicesOpen(false); setMobileSubOpen(null); };
 
   return (
     <>
@@ -95,27 +235,22 @@ export default function Header() {
 
             <NavLink href="/" label="Home" exact />
 
-            {/* Services dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setDropdownOpen(true)}
-              onMouseLeave={() => setDropdownOpen(false)}
-            >
-              <Link
-                href="/services"
+            {/* Services dropdown — click to open, click outside to close */}
+            <div ref={wrapperRef} className="relative">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
                 className={`inline-flex items-center gap-1.5 transition-colors hover:text-signal ${pathname.startsWith("/services") ? "font-black text-signal" : "text-white/80"}`}
               >
                 Services
                 <ChevronIcon open={dropdownOpen} />
-              </Link>
+              </button>
 
               {dropdownOpen && (
                 <div
-                  className="services-dropdown absolute left-0 z-50 overflow-y-auto rounded-b-md"
+                  className="services-dropdown absolute left-0 z-50 rounded-b-md"
                   style={{
                     top: "calc(100% + 12px)",
-                    minWidth: "260px",
-                    maxHeight: "70vh",
+                    minWidth: "280px",
                     background: "#ffffff",
                     borderTop: "4px solid var(--color-brand)",
                     boxShadow: "0 8px 32px rgba(0,0,0,0.13)",
@@ -124,15 +259,17 @@ export default function Header() {
                   }}
                 >
                   {SERVICE_LINKS.map((s) => (
-                    <Link
-                      key={s.name}
-                      href={s.href}
-                      onClick={() => setDropdownOpen(false)}
-                      className="services-dropdown-item"
-                    >
-                      {s.name}
-                    </Link>
+                    <ServiceItem key={s.name} service={s} onClose={closeAll} />
                   ))}
+                  <div className="mt-1.5 border-t border-line/40 pt-1">
+                    <Link
+                      href="/services"
+                      onClick={closeAll}
+                      className="services-dropdown-item font-bold text-signal-dark hover:text-signal"
+                    >
+                      All Services →
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>
@@ -173,7 +310,7 @@ export default function Header() {
             {/* Mobile services accordion */}
             <div>
               <button
-                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                onClick={() => { setMobileServicesOpen(!mobileServicesOpen); setMobileSubOpen(null); }}
                 className="flex w-full items-center justify-between hover:text-signal transition-colors"
                 aria-expanded={mobileServicesOpen}
               >
@@ -184,17 +321,37 @@ export default function Header() {
               {mobileServicesOpen && (
                 <div
                   className="mt-2 flex flex-col overflow-y-auto normal-case font-semibold"
-                  style={{ borderLeft: "3px solid var(--color-brand)", paddingLeft: "12px", maxHeight: "240px" }}
+                  style={{ borderLeft: "3px solid var(--color-brand)", paddingLeft: "12px", maxHeight: "340px" }}
                 >
                   {SERVICE_LINKS.map((s) => (
-                    <Link
-                      key={s.name}
-                      href={s.href}
-                      onClick={closeMobile}
-                      className="py-2 text-white/70 hover:text-signal transition-colors"
-                    >
-                      {s.name}
-                    </Link>
+                    <div key={s.name}>
+                      <button
+                        onClick={() => setMobileSubOpen(mobileSubOpen === s.name ? null : s.name)}
+                        className="flex w-full items-center justify-between py-2 text-white/70 hover:text-signal transition-colors"
+                      >
+                        <span className="truncate">{s.name}</span>
+                        <ChevronIcon open={mobileSubOpen === s.name} />
+                      </button>
+
+                      {mobileSubOpen === s.name && (
+                        <div
+                          className="mb-2 flex flex-col"
+                          style={{ borderLeft: "2px solid #e09212", paddingLeft: "10px" }}
+                        >
+                          <p className="pt-1 pb-0.5 text-[9px] font-black uppercase tracking-widest text-signal/70">Projects</p>
+                          {s.subs.map((sub) => (
+                            <Link
+                              key={sub.label}
+                              href={sub.href}
+                              onClick={closeMobile}
+                              className="py-1.5 text-[11px] text-white/60 hover:text-signal transition-colors"
+                            >
+                              {sub.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               )}

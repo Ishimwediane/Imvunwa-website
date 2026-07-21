@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Container from "../../components/ui/Container";
@@ -100,9 +101,18 @@ function SubCategory({ name, images }) {
   );
 }
 
-/* ── Page ─────────────────────────────────────────────────────── */
-export default function ProjectsPage() {
+/* ── Inner component (uses useSearchParams — must be inside Suspense) ── */
+function ProjectsContent() {
+  const searchParams = useSearchParams();
   const [active, setActive] = useState("welding");
+
+  /* Sync ?cat= query param to active tab */
+  useEffect(() => {
+    const cat = searchParams.get("cat");
+    const valid = PORTFOLIO.find((c) => c.id === cat);
+    if (valid) setActive(valid.id);
+  }, [searchParams]);
+
   const current = PORTFOLIO.find((c) => c.id === active);
 
   return (
@@ -111,6 +121,7 @@ export default function ProjectsPage() {
         eyebrow="Our Portfolio"
         title="Projects & Work"
         subtitle="Browse our completed projects by service category. Each category shows the specific types of work we deliver."
+        bgImage="/image/execution.jpg"
       />
 
       <section className="px-4 pb-24 sm:px-6">
@@ -165,5 +176,18 @@ export default function ProjectsPage() {
         label="Start a Project"
       />
     </div>
+  );
+}
+
+/* ── Page (wraps content in Suspense for useSearchParams) ─────── */
+export default function ProjectsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-base">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-signal border-t-transparent" />
+      </div>
+    }>
+      <ProjectsContent />
+    </Suspense>
   );
 }

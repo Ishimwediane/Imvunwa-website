@@ -47,6 +47,7 @@ export default function ContactPage() {
         eyebrow="Get in touch"
         title="Contact Us"
         subtitle="Share your machine, fabrication, repair, utility, or finishing need and the team will help shape the next step."
+        bgImage="/image/consultation.jpg"
       />
 
       <section className="bg-base px-4 py-[70px] text-white sm:px-6 lg:py-24">
