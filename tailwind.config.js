@@ -7,26 +7,51 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: "#111316",
-        steel: "#263039",
-        muted: "#69737d",
-        line: "#d9dee3",
-        panel: "#f3f5f7",
-        signal: "#f28c28",
-        "signal-dark": "#bd5d11",
-        workshop: "#647b66"
+        // ── Backgrounds ──────────────────────────────────────────
+        ink:           "#111316",    // deepest dark (header, dark sections)
+        base:          "#0e1215",    // dark page/section bg
+        deeper:        "#08090a",    // deeper black (header bg)
+        warm:          "#f8f6f1",    // cream/warm off-white sections
+        "warm-card":   "#fdfbf8",    // light cream card bg
+        panel:         "#f3f5f7",    // light grey panel bg
+
+        // ── Brand ────────────────────────────────────────────────
+        signal:        "#F5A623",    // primary brand orange
+        "signal-dark": "#bd5d11",    // dark orange (tag text)
+        "signal-hover":"#e09212",    // hover state for signal
+
+        // ── Text / UI ────────────────────────────────────────────
+        steel:         "#263039",    // dark steel text
+        muted:         "#69737d",    // secondary body text
+        line:          "#d9dee3",    // borders / dividers
+        workshop:      "#647b66",    // green-grey accent
+
+        // ── Third-party ──────────────────────────────────────────
+        whatsapp:      "#25D366",    // WhatsApp brand green
+      },
+      maxWidth: {
+        shell: "1180px",             // consistent page max-width
+        nav:   "1440px",             // header max-width
       },
       boxShadow: {
-        industrial: "0 22px 70px rgba(17, 19, 22, 0.14)"
+        industrial: "0 22px 70px rgba(17, 19, 22, 0.14)",
+        card:       "0 12px 34px rgba(17, 19, 22, 0.06)",
       },
       keyframes: {
         marquee: {
-          "0%": { transform: "translateX(0)" },
+          "0%":   { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" }
+        },
+        "float-up": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%":      { transform: "translateY(-10px)" }
         }
       },
       animation: {
-        marquee: "marquee 24s linear infinite"
+        marquee:   "marquee 24s linear infinite",
+        "float-1": "float-up 5s ease-in-out infinite",
+        "float-2": "float-up 6.5s ease-in-out 1s infinite",
+        "float-3": "float-up 5.8s ease-in-out 0.5s infinite",
       }
     }
   },

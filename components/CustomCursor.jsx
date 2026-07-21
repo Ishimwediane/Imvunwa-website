@@ -91,7 +91,7 @@ export default function CustomCursor() {
     height: isText ? "20px" : "6px",
     borderRadius: isText ? "1px" : "50%",
     background: isHover
-      ? "#F5A623"
+      ? "var(--color-brand)"
       : isMedia
       ? "rgba(255,255,255,0.9)"
       : "#ffffff",
@@ -123,9 +123,9 @@ export default function CustomCursor() {
     height: `${ringDiameter}px`,
     borderRadius: isMedia ? "10px" : "50%",
     border: `1.5px solid ${
-      isHover ? "#F5A623" : isMedia ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.55)"
+      isHover ? "var(--color-brand)" : isMedia ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.55)"
     }`,
-    background: isMedia ? "rgba(245,166,35,0.08)" : "transparent",
+    background: isMedia ? "var(--color-brand-alpha-08)" : "transparent",
     pointerEvents: "none",
     zIndex: 99998,
     marginLeft: `-${ringDiameter / 2}px`,
@@ -156,7 +156,7 @@ export default function CustomCursor() {
               fontSize: "9px",
               fontWeight: 800,
               letterSpacing: "0.08em",
-              color: "#F5A623",
+              color: "var(--color-brand)",
               textTransform: "uppercase",
             }}
           >

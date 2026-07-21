@@ -2,7 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Services Dropdown */
+/* ── Design Tokens (CSS Variables) ──────────────────────────── */
+:root {
+  --color-brand:       #F5A623;
+  --color-brand-hover: #e09212;
+  --color-brand-alpha-08: rgba(245, 166, 35, 0.08);
+  --color-dark-bg:     #0e1215;
+  --color-header-bg:   #08090a;
+  --color-cream:       #f8f6f1;
+  --color-whatsapp:    #25D366;
+
+  --shell-max-width:   1180px;
+  --section-y:         70px;
+  --section-y-lg:      96px;
+}
+
+/* ── Services Dropdown ───────────────────────────────────────── */
 @keyframes dropdownFadeIn {
   from { opacity: 0; transform: translateY(-8px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -15,7 +30,7 @@
 .services-dropdown-item {
   position: relative;
   padding: 13px 28px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   color: #1a1a1a;
   letter-spacing: 0.01em;
@@ -35,13 +50,13 @@
   transform: translateY(-50%);
   width: 3px;
   height: 0;
-  background: #F5A623;
+  background: var(--color-brand);
   border-radius: 0 2px 2px 0;
   transition: height 0.18s ease;
 }
 
 .services-dropdown-item:hover {
-  color: #F5A623;
+  color: var(--color-brand);
   background: #fdf9f2;
   padding-left: 34px;
 }
@@ -49,3 +64,4 @@
 .services-dropdown-item:hover::before {
   height: 60%;
 }
+
