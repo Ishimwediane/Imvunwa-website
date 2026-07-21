@@ -22,11 +22,14 @@ export default function SectionCta({
 }) {
   const isVideo = !!videoSrc;
   return (
-    <section className={`relative overflow-hidden px-4 py-[70px] sm:px-6 lg:py-24 ${isVideo || dark ? "bg-base text-white" : "bg-warm text-ink"}`}>
+    <section
+      className={`relative overflow-hidden px-4 py-[70px] sm:px-6 lg:py-24 ${isVideo || dark ? "bg-base text-white" : "bg-warm text-ink"}`}
+      style={isVideo ? { clipPath: "inset(0)" } : {}}
+    >
       {isVideo && (
         <>
           <video
-            className="absolute inset-0 h-full w-full object-cover z-0 pointer-events-none"
+            className="fixed inset-0 h-full w-full object-cover z-0 pointer-events-none"
             src={videoSrc}
             autoPlay
             muted
@@ -34,7 +37,7 @@ export default function SectionCta({
             playsInline
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-black/72 z-0" />
+          <div className="fixed inset-0 bg-black/72 z-0 pointer-events-none" />
         </>
       )}
       <Container className="relative z-10 text-center">
