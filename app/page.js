@@ -193,10 +193,10 @@ export default function Home() {
           <div className="mt-7 flex flex-wrap gap-3">
             <Link
               href="/contact"
-              className="inline-flex min-h-[44px] items-center gap-3 rounded-full bg-signal py-2 pl-6 pr-2 text-[12px] font-black text-white shadow-lg transition-colors hover:bg-signal-hover"
+              className="inline-flex min-h-[44px] items-center gap-3 rounded-full bg-signal py-2 pl-6 pr-2 text-[12px] font-black text-ink shadow-lg transition-colors hover:bg-signal-hover"
             >
               Get Started
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20">
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-ink/20">
                 <ArrowIcon className="h-3.5 w-3.5" />
               </span>
             </Link>
@@ -234,13 +234,13 @@ export default function Home() {
           <div className="mb-12 flex flex-wrap items-start justify-between gap-4">
             <div>
               <h2 className="m-0 text-[28px] font-black leading-[1.06] text-ink sm:text-[36px]">Our Services</h2>
-              <p className="mt-3 max-w-[460px] text-[14px] leading-[1.7] text-ink/50">
+              <p className="mt-3 max-w-[460px] text-[14px] leading-[1.7] text-ink/75">
                 Unleashing Comprehensive Industrial Services Tailored to Elevate Your Business and Boost Your Success.
               </p>
             </div>
             <Link
               href="/contact"
-              className="inline-flex min-h-[44px] items-center rounded-full bg-signal px-7 font-black text-white text-sm shadow-md transition-colors hover:bg-signal-hover"
+              className="inline-flex min-h-[44px] items-center rounded-full bg-signal px-7 font-black text-ink text-sm shadow-md transition-colors hover:bg-signal-hover"
             >
               Get Started
             </Link>

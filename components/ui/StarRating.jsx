@@ -6,7 +6,7 @@ const starPath = "M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95
 
 export default function StarRating({ count = 5 }) {
   return (
-    <div className="mb-4 flex gap-0.5" aria-label={`${count} out of 5 stars`}>
+    <div className="mb-4 flex gap-0.5" role="img" aria-label={`${count} out of 5 stars`}>
       {Array.from({ length: count }).map((_, i) => (
         <svg key={i} className="h-4 w-4 text-signal" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path d={starPath} />

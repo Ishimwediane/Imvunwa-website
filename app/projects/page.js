@@ -124,7 +124,7 @@ export default function ProjectsPage() {
                 onClick={() => setActive(cat.id)}
                 className={`inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-black uppercase tracking-wider transition-all duration-200 ${
                   active === cat.id
-                    ? "bg-signal text-white shadow-lg shadow-signal/30"
+                    ? "bg-signal text-ink shadow-lg shadow-signal/30"
                     : "border border-white/15 text-white/60 hover:border-signal/50 hover:text-white"
                 }`}
               >
@@ -144,7 +144,7 @@ export default function ProjectsPage() {
             </div>
             <Link
               href="/contact"
-              className="inline-flex min-h-[44px] items-center rounded-full bg-signal px-7 text-[12px] font-black text-white transition-colors hover:bg-signal-hover"
+              className="inline-flex min-h-[44px] items-center rounded-full bg-signal px-7 text-[12px] font-black text-ink transition-colors hover:bg-signal-hover"
             >
               Request This Service
             </Link>

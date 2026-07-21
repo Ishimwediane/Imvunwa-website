@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import ChevronIcon from "./ui/ChevronIcon";
 
@@ -60,11 +61,11 @@ export default function Header() {
       <header className="relative z-20 bg-deeper text-white shadow-md">
 
         {/* ── Top marquee bar ── */}
-        <div className="overflow-hidden border-b border-white/10 bg-signal py-2 text-[12px] font-semibold text-white">
+        <div className="overflow-hidden border-b border-white/10 bg-signal py-2 text-[12px] font-semibold text-ink">
           <div className="flex w-max animate-marquee whitespace-nowrap">
             {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS, ...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
               <span className="mx-6 inline-flex items-center gap-3" key={`${item}-${i}`}>
-                <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
+                <span className="h-1.5 w-1.5 rounded-full bg-ink/30" />
                 {item}
               </span>
             ))}
@@ -76,7 +77,14 @@ export default function Header() {
 
           {/* Logo */}
           <Link className="flex shrink-0 items-center gap-3" href="/" aria-label="Imvunwa home">
-            <img src="/image/logo.jpg" alt="Imvunwa Business Group Ltd logo" className="h-[72px] w-auto object-contain" />
+            <Image
+              src="/image/logo.jpg"
+              alt="Imvunwa Business Group Ltd logo"
+              width={72}
+              height={72}
+              priority
+              className="h-[72px] w-auto object-contain"
+            />
             <span className="hidden flex-col lg:flex">
               <span className="text-[16px] font-black uppercase leading-none tracking-wider text-white">Imvunwa</span>
               <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40">Business Group Ltd</span>

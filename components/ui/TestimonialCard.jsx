@@ -39,7 +39,7 @@ export default function TestimonialCard({
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/60" />
-        <span className="absolute bottom-3 left-4 rounded-full bg-signal px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white">
+        <span className="absolute bottom-3 left-4 rounded-full bg-signal px-3 py-1 text-[10px] font-black uppercase tracking-wider text-ink">
           {badge}
         </span>
       </div>

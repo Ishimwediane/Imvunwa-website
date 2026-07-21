@@ -20,12 +20,12 @@ export default function ServiceCard({ icon, title, description, href = "/service
       <h3 className="text-[17px] font-extrabold text-ink group-hover:text-white transition-colors duration-300">
         {title}
       </h3>
-      <p className="mt-2 flex-1 text-[12px] leading-[1.7] text-ink/50 group-hover:text-white/60 transition-colors duration-300">
+      <p className="mt-2 flex-1 text-[12px] leading-[1.7] text-ink/75 group-hover:text-white/80 transition-colors duration-300">
         {description}
       </p>
       <Link
         href={href}
-        className="mt-6 inline-flex items-center gap-1.5 text-[12px] font-bold text-ink group-hover:text-signal hover:gap-3 transition-all duration-300"
+        className="mt-6 inline-flex items-center gap-1.5 text-[12px] font-extrabold text-ink group-hover:text-signal hover:gap-3 transition-all duration-300"
       >
         Learn more <span className="text-base">›</span>
       </Link>

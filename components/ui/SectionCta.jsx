@@ -24,7 +24,7 @@ export default function SectionCta({ heading, body, href = "/contact", label = "
         )}
         <Link
           href={href}
-          className="mt-8 inline-flex min-h-[50px] items-center justify-center rounded-full bg-signal px-10 text-[13px] font-black text-white transition-colors hover:bg-signal-hover"
+          className="mt-8 inline-flex min-h-[50px] items-center justify-center rounded-full bg-signal px-10 text-[13px] font-black text-ink transition-colors hover:bg-signal-hover"
         >
           {label}
         </Link>
