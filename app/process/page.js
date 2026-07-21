@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Container from "../../components/ui/Container";
 import Eyebrow from "../../components/ui/Eyebrow";
 import PageHero from "../../components/ui/PageHero";
@@ -56,7 +57,14 @@ export default function ProcessPage() {
       <section className="px-4 py-[70px] sm:px-6 lg:py-24">
         <Container className="grid items-center gap-16 lg:grid-cols-[minmax(300px,0.9fr)_minmax(0,1.1fr)]">
           <div className="relative after:absolute after:-bottom-5 after:-right-5 after:-z-10 after:h-[44%] after:w-[44%] after:rounded-lg after:border after:border-signal">
-            <img className="h-[360px] w-full rounded-lg object-cover shadow-industrial lg:h-[620px]" src="/image/teamm.png" alt="Imvunwa team at work" />
+            <Image
+              src="/image/teamm.png"
+              alt="Imvunwa team at work"
+              width={500}
+              height={620}
+              quality={80}
+              className="h-[360px] w-full rounded-lg object-cover shadow-industrial lg:h-[620px]"
+            />
           </div>
           <div>
             <Eyebrow>How we work</Eyebrow>

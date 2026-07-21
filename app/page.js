@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import Container from "../components/ui/Container";
 import Eyebrow from "../components/ui/Eyebrow";
 import ServiceCard from "../components/ui/ServiceCard";
@@ -126,18 +127,30 @@ const TESTIMONIALS = [
 /* ── PortfolioCard ────────────────────────────────────────────── */
 function PortfolioCard({ src, alt, tag, title, desc }) {
   return (
-    <div className="group relative h-[380px] w-full overflow-hidden rounded-3xl cursor-pointer border border-white/5">
-      <img src={src} alt={alt} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-      <div className="absolute bottom-0 left-0 w-[82%] h-[70%] rounded-tr-full transition-all duration-500 ease-in-out group-hover:w-full group-hover:h-full group-hover:rounded-none bg-signal" />
-      <div className="absolute left-[68%] bottom-[58%] flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition-all duration-500 ease-in-out group-hover:left-6 group-hover:bottom-6 group-hover:scale-110 group-hover:rotate-45 bg-white text-signal">
-        <ArrowIcon className="h-5 w-5" />
+    <div className="group relative aspect-[4/3] w-full overflow-hidden rounded-2xl cursor-pointer border border-white/10 bg-base">
+      {/* Background Image */}
+      <Image
+        src={src}
+        alt={alt}
+        width={400}
+        height={300}
+        quality={75}
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+
+      {/* Dark Overlay gradient for readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-300" />
+
+      {/* Arrow Button - scales up on hover */}
+      <div className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 backdrop-blur-md text-white opacity-0 scale-75 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 hover:bg-signal hover:text-white">
+        <ArrowIcon className="h-4 w-4" />
       </div>
-      <div className="absolute inset-0 p-6 flex flex-col justify-start z-10 pointer-events-none">
-        <span className="text-[9px] font-black uppercase tracking-wider mb-2 text-black/60">{tag}</span>
-        <h3 className="text-[16px] font-black leading-tight transition-all duration-500 ease-in-out translate-y-[140px] group-hover:translate-y-0 text-black">
-          {title}
-        </h3>
-        <p className="mt-3 text-[11px] leading-relaxed transition-all duration-500 ease-in-out opacity-0 translate-y-[150px] group-hover:opacity-100 group-hover:translate-y-0 delay-75 max-w-[90%] text-black/80">
+
+      {/* Text Content */}
+      <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col justify-end z-10 pointer-events-none">
+        <span className="text-[9px] font-black uppercase tracking-widest text-signal mb-1.5">{tag}</span>
+        <h3 className="text-[15px] font-extrabold leading-snug text-white">{title}</h3>
+        <p className="mt-2 text-[11px] leading-relaxed text-white/70 overflow-hidden max-h-0 opacity-0 transition-all duration-300 group-hover:max-h-16 group-hover:opacity-100">
           {desc}
         </p>
       </div>
@@ -254,7 +267,7 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {PORTFOLIO_ITEMS.map((item, i) => (
+            {PORTFOLIO_ITEMS.slice(0, 6).map((item, i) => (
               <PortfolioCard key={i} {...item} />
             ))}
           </div>
@@ -272,11 +285,16 @@ export default function Home() {
       </section>
 
       {/* ── Testimonials Section ── */}
-      <section
-        className="relative overflow-hidden py-[90px]"
-        style={{ backgroundImage: "url('/image/testimoni.jpg')", backgroundAttachment: "fixed", backgroundSize: "cover", backgroundPosition: "center" }}
-      >
-        <div className="absolute inset-0 bg-black/72" />
+      <section className="relative overflow-hidden py-[90px]">
+        {/* Parallax-style optimized background image */}
+        <Image
+          src="/image/testimoni.jpg"
+          alt="Testimonials background"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center brightness-[0.28]"
+        />
 
         <div className="relative z-10 mx-auto max-w-shell px-4 sm:px-6">
           <div className="mb-14 text-center">

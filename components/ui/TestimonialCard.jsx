@@ -1,3 +1,4 @@
+import Image from "next/image";
 import StarRating from "./StarRating";
 import QuoteIcon from "./QuoteIcon";
 
@@ -29,7 +30,14 @@ export default function TestimonialCard({
     >
       {/* Image */}
       <div className="relative h-[200px] w-full overflow-hidden shrink-0">
-        <img src={image} alt={imageAlt} className="h-full w-full object-cover" />
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={380}
+          height={200}
+          quality={75}
+          className="h-full w-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/60" />
         <span className="absolute bottom-3 left-4 rounded-full bg-signal px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white">
           {badge}

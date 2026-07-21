@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Container from "../../components/ui/Container";
 import Eyebrow from "../../components/ui/Eyebrow";
 import PageHero from "../../components/ui/PageHero";
@@ -69,7 +70,14 @@ const PORTFOLIO = [
 function ImgCard({ src, caption }) {
   return (
     <div className="group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-xl">
-      <img src={src} alt={caption} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+      <Image
+        src={src}
+        alt={caption}
+        width={400}
+        height={300}
+        quality={75}
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       <p className="absolute bottom-0 left-0 right-0 translate-y-2 px-4 py-3 text-[11px] font-bold text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
         {caption}

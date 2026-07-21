@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import Container from "../../components/ui/Container";
 import PageHero from "../../components/ui/PageHero";
 import SectionCta from "../../components/ui/SectionCta";
@@ -21,9 +22,13 @@ function ServiceArticle({ title, text, image, tag }) {
   return (
     <article className="group flex min-h-[440px] flex-col overflow-hidden rounded-lg border border-line bg-white shadow-card">
       <div className="relative h-[210px] w-full overflow-hidden shrink-0">
-        <img
+        <Image
           className="h-full w-full object-cover contrast-105 saturate-[.86] transition-transform duration-500 group-hover:scale-110"
-          src={image} alt={title}
+          src={image}
+          alt={title}
+          width={400}
+          height={210}
+          quality={75}
         />
         <div className="absolute inset-0 flex items-center justify-center bg-signal/85 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <span className="text-[16px] font-black text-ink">Read more</span>
