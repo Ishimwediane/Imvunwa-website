@@ -8,13 +8,13 @@ module.exports = {
     extend: {
       colors: {
         // ── Backgrounds ──────────────────────────────────────────
-        ink:           "#333333",    // dark section/card text (#333333)
-        base:          "#ffffff",    // white page/section bg
+        ink:           "#333333",    // dark text color (#333333)
+        base:          "#ffffff",    // pure white background
         deeper:        "#1f2937",    // deep dark bg for header/footer
-        warm:          "#f8f6f1",    // cream/warm off-white sections
-        "warm-card":   "#fdfbf8",    // light cream card bg
-        panel:         "#f3f5f7",    // light grey panel bg
-        surface:       "#f8fafc",    // clean light surface bg
+        warm:          "#ffffff",    // pure white background
+        "warm-card":   "#ffffff",    // pure white card bg
+        panel:         "#ffffff",    // pure white background
+        surface:       "#ffffff",    // pure white background
 
         // ── Brand ────────────────────────────────────────────────
         signal:        "#F5A623",    // primary brand orange
