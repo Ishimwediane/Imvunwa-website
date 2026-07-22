@@ -254,13 +254,13 @@ export default function Home() {
       </section>
 
       {/* ── Portfolio Section ── */}
-      <section className="bg-base px-4 py-[70px] sm:px-6 lg:py-24">
+      <section className="bg-panel px-4 py-[70px] sm:px-6 lg:py-24 border-t border-line">
         <Container>
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Eyebrow>Our Work</Eyebrow>
-              <h2 className="m-0 text-[28px] font-black leading-[1.06] text-white sm:text-[36px]">Portfolio & Projects</h2>
-              <p className="mt-3 max-w-[500px] text-[14px] leading-[1.7] text-white/55">
+              <h2 className="m-0 text-[28px] font-black leading-[1.06] text-ink sm:text-[36px]">Portfolio & Projects</h2>
+              <p className="mt-3 max-w-[500px] text-[14px] leading-[1.7] text-muted">
                 A showcase of precision-engineered products and completed projects spanning all our service categories.
               </p>
             </div>
@@ -275,7 +275,7 @@ export default function Home() {
           <div className="mt-8 flex justify-center">
             <Link
               href="/projects"
-              className="group inline-flex min-h-[50px] items-center gap-3 rounded-full border border-white/20 px-8 text-[12px] font-black text-white/70 transition-all duration-300 hover:border-signal hover:text-signal"
+              className="group inline-flex min-h-[50px] items-center gap-3 rounded-full border border-ink/20 px-8 text-[12px] font-black text-ink/70 transition-all duration-300 hover:border-signal hover:text-signal"
             >
               View Detailed Projects Page
               <ArrowIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />

@@ -12,7 +12,7 @@ import { getServicePortfolio } from "../../data/portfolioData";
 function ImgCard({ src, caption, onClick }) {
   return (
     <div
-      className="group relative cursor-zoom-in overflow-hidden rounded-xl bg-base border border-white/10 shadow-lg aspect-[4/3]"
+      className="group relative cursor-zoom-in overflow-hidden rounded-xl bg-white border border-black/10 shadow-lg aspect-[4/3]"
       onClick={onClick}
     >
       <Image
@@ -255,12 +255,12 @@ export default function ServiceProjects({
         </div>
 
         {/* Bottom Callout */}
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-base p-6 text-white sm:p-8">
+        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-white border border-line p-6 text-ink sm:p-8 shadow-card">
           <div>
-            <h4 className="text-[18px] font-bold text-white">
+            <h4 className="text-[18px] font-bold text-ink">
               Need custom work in {service.shortLabel}?
             </h4>
-            <p className="mt-1 text-[13px] text-white/60">
+            <p className="mt-1 text-[13px] text-muted">
               We engineer solutions to match your exact specifications and site requirements.
             </p>
           </div>

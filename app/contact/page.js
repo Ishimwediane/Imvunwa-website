@@ -16,10 +16,10 @@ const WA_PATH = "M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.
 
 /* ── Sub-components ──────────────────────────────────────────── */
 function ContactRow({ tag: Tag, href, icon, text }) {
-  const baseClass = "flex items-center gap-3 text-[14px] text-white/85 transition-colors hover:text-signal";
+  const baseClass = "flex items-center gap-3 text-[14px] text-ink/85 transition-colors hover:text-signal";
   const inner = (
     <>
-      <span className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-base">{icon}</span>
+      <span className="grid h-10 w-10 place-items-center rounded-full bg-ink/5 text-base">{icon}</span>
       {text}
     </>
   );
@@ -31,7 +31,7 @@ function ContactRow({ tag: Tag, href, icon, text }) {
 function FormInput({ type = "text", placeholder, label }) {
   return (
     <input
-      className="w-full rounded-md border border-white/20 bg-white/10 p-3.5 text-[13px] text-white outline-none placeholder:text-white/50 transition-colors focus:border-signal"
+      className="w-full rounded-md border border-line bg-white p-3.5 text-[13px] text-ink outline-none placeholder:text-muted transition-colors focus:border-signal"
       aria-label={label}
       placeholder={placeholder}
       type={type}
@@ -50,16 +50,16 @@ export default function ContactPage() {
         bgImage="/image/consultation.jpg"
       />
 
-      <section className="bg-base px-4 py-[70px] text-white sm:px-6 lg:py-24">
+      <section className="bg-white px-4 py-[70px] text-ink sm:px-6 lg:py-24">
         <Container className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr]">
 
           {/* Contact info */}
           <div>
             <p className="mb-3.5 text-[10px] font-black uppercase tracking-[0.18em] text-signal">Contact</p>
-            <h2 className="m-0 text-[26px] font-black leading-none tracking-normal sm:text-[34px] lg:text-[40px]">
+            <h2 className="m-0 text-[26px] font-black leading-none tracking-normal sm:text-[34px] lg:text-[40px] text-ink">
               Let&apos;s talk about your next project.
             </h2>
-            <p className="mt-4 text-[14px] leading-[1.65] text-white/70">
+            <p className="mt-4 text-[14px] leading-[1.65] text-muted">
               Reach out through any of the channels below and our team will get back to you as soon as possible.
             </p>
             <div className="mt-8 grid gap-4">
@@ -84,21 +84,21 @@ export default function ContactPage() {
 
           {/* Contact form */}
           <form
-            className="grid gap-3 rounded-lg border border-white/15 bg-white/10 p-5 text-[13px]"
+            className="grid gap-3 rounded-2xl border border-line bg-panel p-6 shadow-card text-[13px]"
             onSubmit={(e) => e.preventDefault()}
           >
-            <h3 className="mb-2 text-[17px] font-black text-white">Send us a message</h3>
+            <h3 className="mb-2 text-[17px] font-black text-ink">Send us a message</h3>
             <FormInput placeholder="Your name"   label="Your name" />
             <FormInput placeholder="Your email"  label="Your email"  type="email" />
             <FormInput placeholder="Subject"     label="Subject" />
             <textarea
-              className="w-full resize-y rounded-md border border-white/20 bg-white/10 p-3.5 text-[13px] text-white outline-none placeholder:text-white/50 transition-colors focus:border-signal"
+              className="w-full resize-y rounded-md border border-line bg-white p-3.5 text-[13px] text-ink outline-none placeholder:text-muted transition-colors focus:border-signal"
               aria-label="Message"
               placeholder="Tell us about the project"
               rows="5"
             />
             <button
-              className="inline-flex min-h-[46px] items-center justify-center rounded-md bg-signal text-[13px] font-extrabold text-white transition-opacity hover:opacity-90"
+              className="inline-flex min-h-[46px] items-center justify-center rounded-md bg-signal text-[13px] font-extrabold text-ink transition-colors hover:bg-signal-hover"
               type="submit"
             >
               Send message

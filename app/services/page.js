@@ -60,11 +60,11 @@ const STEPS = [
 
 function ProcessStep({ number, title, text }) {
   return (
-    <article className="grid grid-cols-[46px_1fr] gap-4 border-t border-white/10 py-5 lg:grid-cols-[64px_1fr]">
+    <article className="grid grid-cols-[46px_1fr] gap-4 border-t border-line py-5 lg:grid-cols-[64px_1fr]">
       <strong className="text-[22px] font-black text-signal">{number}</strong>
       <div>
-        <h3 className="m-0 text-[18px] font-extrabold text-white">{title}</h3>
-        <p className="mt-2 text-[13px] leading-[1.65] text-white/60">{text}</p>
+        <h3 className="m-0 text-[18px] font-extrabold text-ink">{title}</h3>
+        <p className="mt-2 text-[13px] leading-[1.65] text-muted">{text}</p>
       </div>
     </article>
   );
@@ -92,7 +92,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ── Our Process Section ── */}
-      <section className="bg-base px-4 py-[70px] text-white sm:px-6 lg:py-24 border-t border-white/5">
+      <section className="bg-white px-4 py-[70px] text-ink sm:px-6 lg:py-24 border-t border-line">
         <Container className="grid items-center gap-16 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="relative after:absolute after:-bottom-5 after:-right-5 after:-z-10 after:h-[44%] after:w-[44%] after:rounded-lg after:border after:border-signal">
             <Image
@@ -106,10 +106,10 @@ export default function ServicesPage() {
           </div>
           <div>
             <Eyebrow>How we work</Eyebrow>
-            <h2 className="m-0 max-w-[760px] text-[26px] font-black leading-[1.02] tracking-normal text-white sm:text-[34px] lg:text-[42px]">
+            <h2 className="m-0 max-w-[760px] text-[26px] font-black leading-[1.02] tracking-normal text-ink sm:text-[34px] lg:text-[42px]">
               Our Process
             </h2>
-            <p className="mt-4 max-w-[500px] text-[13px] leading-[1.7] text-white/60">
+            <p className="mt-4 max-w-[500px] text-[13px] leading-[1.7] text-muted">
               A clear, structured route from first conversation to final handover.
             </p>
             <div className="mt-8 grid gap-3.5">

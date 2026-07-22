@@ -14,7 +14,7 @@ import { PORTFOLIO_DATA as PORTFOLIO } from "../../data/portfolioData";
 function ImgCard({ src, caption, onClick }) {
   return (
     <div
-      className="group relative cursor-zoom-in overflow-hidden rounded-2xl bg-white/5 shadow-lg aspect-[4/3]"
+      className="group relative cursor-zoom-in overflow-hidden rounded-2xl bg-white border border-black/10 shadow-md aspect-[4/3]"
       onClick={onClick}
     >
       <Image
@@ -58,8 +58,8 @@ function SubCategory({ name, images }) {
           <div className="h-[3px] w-8 rounded-full bg-signal" />
           <h3 className="text-[13px] font-black uppercase tracking-[0.15em] text-signal">{name}</h3>
         </div>
-        <div className="h-px flex-1 bg-white/8" />
-        <span className="text-[11px] font-bold uppercase tracking-wider text-white/30">
+        <div className="h-px flex-1 bg-line" />
+        <span className="text-[11px] font-bold uppercase tracking-wider text-muted">
           {images.length} {images.length === 1 ? "item" : "items"}
         </span>
       </div>
@@ -80,7 +80,7 @@ function SubCategory({ name, images }) {
         <div className="mt-6 flex justify-center">
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 px-8 py-3 text-[12px] font-black uppercase tracking-wider text-white/60 transition-all duration-200 hover:border-signal hover:bg-signal/10 hover:text-signal"
+            className="group inline-flex items-center gap-2.5 rounded-full border border-ink/20 px-8 py-3 text-[12px] font-black uppercase tracking-wider text-ink/70 transition-all duration-200 hover:border-signal hover:bg-signal/10 hover:text-signal"
           >
             {expanded ? (
               <>
@@ -156,7 +156,7 @@ function ProjectsContent() {
       : current.subs.filter((s) => s.name === activeSub);
 
   return (
-    <div className="overflow-hidden bg-[#1a1a1a]">
+    <div className="overflow-hidden bg-white">
       {/* Hero */}
       <PageHero
         eyebrow="Our Portfolio"
@@ -169,7 +169,7 @@ function ProjectsContent() {
         <Container>
 
           {/* ── Stats bar ──────────────────────────────────────── */}
-          <div className="mb-12 grid grid-cols-2 gap-3 rounded-2xl border border-white/8 bg-white/4 p-4 sm:grid-cols-4 sm:p-6 backdrop-blur-sm">
+          <div className="mb-12 grid grid-cols-2 gap-3 rounded-2xl border border-line bg-panel p-4 sm:grid-cols-4 sm:p-6 shadow-sm">
             {[
               { label: "Service Areas", value: PORTFOLIO.length },
               { label: "Project Categories", value: PORTFOLIO.reduce((a, s) => a + s.subs.length, 0) },
@@ -178,7 +178,7 @@ function ProjectsContent() {
             ].map(({ label, value }) => (
               <div key={label} className="text-center">
                 <p className="text-[28px] font-black text-signal leading-none">{value}+</p>
-                <p className="mt-1 text-[11px] font-medium uppercase tracking-wider text-white/40">{label}</p>
+                <p className="mt-1 text-[11px] font-medium uppercase tracking-wider text-muted">{label}</p>
               </div>
             ))}
           </div>
@@ -188,7 +188,7 @@ function ProjectsContent() {
 
             {/* Sidebar navigation */}
             <aside className="lg:w-[220px] shrink-0">
-              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.15em] text-white/30">
+              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.15em] text-muted">
                 Service Areas
               </p>
               <nav className="flex flex-row flex-wrap gap-2 lg:flex-col lg:gap-1">
@@ -202,14 +202,14 @@ function ProjectsContent() {
                       className={`group flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-left text-[12px] font-bold transition-all duration-200 w-full ${
                         isActive
                           ? "bg-signal text-ink shadow-lg shadow-signal/25"
-                          : "text-white/60 hover:bg-white/6 hover:text-white"
+                          : "text-ink/70 hover:bg-panel hover:text-ink"
                       }`}
                     >
                       <span className="flex items-center gap-2.5">
                         <span>{cat.shortLabel || cat.label}</span>
                       </span>
                       <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-black ${
-                        isActive ? "bg-black/20 text-ink" : "bg-white/8 text-white/40"
+                        isActive ? "bg-black/20 text-ink" : "bg-ink/8 text-muted"
                       }`}>
                         {count}
                       </span>
@@ -219,11 +219,11 @@ function ProjectsContent() {
               </nav>
 
               {/* Sidebar CTA */}
-              <div className="mt-8 hidden rounded-2xl border border-signal/20 bg-signal/5 p-5 lg:block">
-                <p className="text-[13px] font-bold text-white">
+              <div className="mt-8 hidden rounded-2xl border border-signal/30 bg-signal/10 p-5 lg:block">
+                <p className="text-[13px] font-bold text-ink">
                   Interested in {current.shortLabel || current.label}?
                 </p>
-                <p className="mt-1.5 text-[12px] leading-relaxed text-white/50">
+                <p className="mt-1.5 text-[12px] leading-relaxed text-muted">
                   Get a tailored quote for your project.
                 </p>
                 <Link
@@ -238,14 +238,14 @@ function ProjectsContent() {
             {/* Main content */}
             <main className="min-w-0 flex-1">
               {/* Category header */}
-              <div className="mb-10 flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-white/8 bg-white/4 p-6 backdrop-blur-sm">
+              <div className="mb-10 flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-line bg-panel p-6 shadow-sm">
                 <div>
                   <div className="flex items-center gap-3">
-                    <h2 className="text-[22px] font-black text-white sm:text-[26px]">
+                    <h2 className="text-[22px] font-black text-ink sm:text-[26px]">
                       {current.label}
                     </h2>
                   </div>
-                  <p className="mt-2 max-w-[480px] text-[13px] leading-relaxed text-white/50">
+                  <p className="mt-2 max-w-[480px] text-[13px] leading-relaxed text-muted">
                     {current.desc}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -254,7 +254,7 @@ function ProjectsContent() {
                       className={`inline-flex items-center rounded-full px-4 py-1.5 text-[11px] font-bold transition-all ${
                         activeSub === "all"
                           ? "bg-signal text-ink"
-                          : "border border-white/15 text-white/50 hover:border-signal/50 hover:text-white"
+                          : "border border-ink/15 text-ink/70 hover:border-signal/50 hover:text-ink"
                       }`}
                     >
                       All Categories
@@ -266,7 +266,7 @@ function ProjectsContent() {
                         className={`inline-flex items-center rounded-full px-4 py-1.5 text-[11px] font-bold transition-all ${
                           activeSub === s.name
                             ? "bg-signal text-ink"
-                            : "border border-white/15 text-white/50 hover:border-signal/50 hover:text-white"
+                            : "border border-ink/15 text-ink/70 hover:border-signal/50 hover:text-ink"
                         }`}
                       >
                         {s.name}
@@ -276,7 +276,7 @@ function ProjectsContent() {
                 </div>
                 <Link
                   href={`/services/${activeCat}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-2.5 text-[12px] font-black text-white/70 transition-all hover:border-signal hover:text-signal shrink-0"
+                  className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-2.5 text-[12px] font-black text-ink/70 transition-all hover:border-signal hover:text-signal shrink-0"
                 >
                   View Service Page →
                 </Link>
@@ -321,10 +321,10 @@ export default function ProjectsPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-[#1a1a1a]">
+        <div className="flex min-h-screen items-center justify-center bg-white">
           <div className="flex flex-col items-center gap-4">
             <div className="h-10 w-10 animate-spin rounded-full border-4 border-signal border-t-transparent" />
-            <p className="text-[13px] text-white/40">Loading portfolio…</p>
+            <p className="text-[13px] text-muted">Loading portfolio…</p>
           </div>
         </div>
       }
