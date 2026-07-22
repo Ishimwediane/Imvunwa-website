@@ -8,9 +8,9 @@ module.exports = {
     extend: {
       colors: {
         // ── Backgrounds ──────────────────────────────────────────
-        ink:           "#111316",    // deepest dark (header, dark sections)
-        base:          "#0e1215",    // dark page/section bg
-        deeper:        "#08090a",    // deeper black (header bg)
+        ink:           "#333333",    // dark section/card text & bg (#333333)
+        base:          "#333333",    // dark page/section bg (#333333)
+        deeper:        "#333333",    // deeper dark bg (header/footer bg) (#333333)
         warm:          "#f8f6f1",    // cream/warm off-white sections
         "warm-card":   "#fdfbf8",    // light cream card bg
         panel:         "#f3f5f7",    // light grey panel bg

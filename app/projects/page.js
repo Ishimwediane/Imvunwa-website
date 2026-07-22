@@ -1,192 +1,334 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Container from "../../components/ui/Container";
-import Eyebrow from "../../components/ui/Eyebrow";
 import PageHero from "../../components/ui/PageHero";
 import SectionCta from "../../components/ui/SectionCta";
+import Lightbox from "../../components/ui/Lightbox";
+import { PORTFOLIO_DATA as PORTFOLIO } from "../../data/portfolioData";
 
-/* ── Portfolio data ───────────────────────────────────────────── */
-const PORTFOLIO = [
-  {
-    id: "welding", label: "Welding", icon: "🔥",
-    desc: "Precision welding for structural, decorative, and industrial applications.",
-    subs: [
-      { name: "Doors & Gates",      images: [{ src: "/image/project1.jpg", caption: "Steel security door" }, { src: "/image/project2.jpg", caption: "Ornamental gate" }, { src: "/image/project4.jpg", caption: "Sliding compound gate" }] },
-      { name: "Roofing Frames",     images: [{ src: "/image/project5.jpg", caption: "Steel roof truss" }, { src: "/image/welding1.png", caption: "Industrial roofing frame" }, { src: "/image/project6.jpg", caption: "Commercial roof structure" }] },
-      { name: "Structural Frames",  images: [{ src: "/image/execution.jpg", caption: "Building steel frame" }, { src: "/image/manufacturing.jpg", caption: "Steel structure assembly" }] },
-    ],
-  },
-  {
-    id: "manufacturing", label: "Manufacturing", icon: "⚙️",
-    desc: "Custom industrial machines precision-built to your exact specifications.",
-    subs: [
-      { name: "Industrial Machines",  images: [{ src: "/image/manifa.jpg", caption: "Custom production machine" }, { src: "/image/mman.png", caption: "Production line equipment" }, { src: "/image/manufacturing.jpg", caption: "Factory machine installation" }] },
-      { name: "Product Fabrication",  images: [{ src: "/image/ppic (1).jpg", caption: "Fabricated metal product" }, { src: "/image/product1.jpg", caption: "Custom fabricated part" }] },
-    ],
-  },
-  {
-    id: "repair", label: "Machine Repair", icon: "🔧",
-    desc: "Diagnostics and restoration to keep your equipment at peak performance.",
-    subs: [
-      { name: "Heavy Equipment",  images: [{ src: "/image/repaire.jpg", caption: "Heavy equipment overhaul" }, { src: "/image/repairement.jpg", caption: "Machine component restoration" }] },
-      { name: "Precision Repair", images: [{ src: "/image/pic1.jpg", caption: "Precision part repair" }, { src: "/image/pic11.jpeg", caption: "Component calibration" }] },
-    ],
-  },
-  {
-    id: "painting", label: "Painting", icon: "🎨",
-    desc: "Industrial-grade coatings and finishes for long-lasting protection.",
-    subs: [
-      { name: "Anti-Corrosion Coating", images: [{ src: "/image/painting.jpg", caption: "Anti-corrosion surface coat" }, { src: "/image/paint.jpg", caption: "Industrial paint application" }] },
-      { name: "Decorative Finishes",    images: [{ src: "/image/abou.jpg", caption: "Decorative interior finish" }] },
-    ],
-  },
-  {
-    id: "electrical", label: "Electrical", icon: "⚡",
-    desc: "Complete electrical installations for industrial and commercial buildings.",
-    subs: [
-      { name: "Industrial Wiring", images: [{ src: "/image/electricity.jpg", caption: "Industrial electrical system" }, { src: "/image/light bulb.jpeg", caption: "Lighting installation" }] },
-    ],
-  },
-  {
-    id: "plumbing", label: "Plumbing", icon: "🔩",
-    desc: "Heavy-duty piping and plumbing for factories and commercial buildings.",
-    subs: [
-      { name: "Industrial Piping", images: [{ src: "/image/plumb.jpg", caption: "Commercial plumbing network" }, { src: "/image/plumbling.jpg", caption: "Industrial piping system" }] },
-    ],
-  },
-  {
-    id: "design", label: "Product Design", icon: "✏️",
-    desc: "Engineering design and prototyping for custom industrial products.",
-    subs: [
-      { name: "Design & Prototyping", images: [{ src: "/image/design.jpg", caption: "Product engineering design" }, { src: "/image/product.jpg", caption: "Prototype fabrication" }, { src: "/image/product2.jpeg", caption: "Custom product design" }] },
-    ],
-  },
-];
-
-/* ── Sub-components ──────────────────────────────────────────── */
-function ImgCard({ src, caption }) {
+/* ── Clickable image card ─────────────────────────────────────── */
+function ImgCard({ src, caption, onClick }) {
   return (
-    <div className="group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-xl">
+    <div
+      className="group relative cursor-zoom-in overflow-hidden rounded-2xl bg-white/5 shadow-lg aspect-[4/3]"
+      onClick={onClick}
+    >
       <Image
         src={src}
         alt={caption}
-        width={400}
-        height={300}
-        quality={75}
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        fill
+        quality={80}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <p className="absolute bottom-0 left-0 right-0 translate-y-2 px-4 py-3 text-[11px] font-bold text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      {/* Expand icon */}
+      <div className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 group-hover:scale-110">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+        </svg>
+      </div>
+      {/* Caption */}
+      <p className="absolute bottom-0 left-0 right-0 translate-y-3 px-4 py-4 text-[12px] font-semibold leading-snug text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
         {caption}
       </p>
     </div>
   );
 }
 
+/* ── Sub-category section ─────────────────────────────────────── */
+const INITIAL_SHOW = 6;
+
 function SubCategory({ name, images }) {
+  const [expanded, setExpanded] = useState(false);
+  const [lbIndex, setLbIndex] = useState(null);
+  const visible = expanded ? images : images.slice(0, INITIAL_SHOW);
+  const hasMore = images.length > INITIAL_SHOW;
+
   return (
-    <div className="mb-10">
-      <div className="mb-4 flex items-center gap-3">
-        <div className="h-[3px] w-6 rounded-full bg-signal" />
-        <h3 className="text-[13px] font-black uppercase tracking-widest text-signal">{name}</h3>
+    <div className="mb-14">
+      {/* Sub-heading */}
+      <div className="mb-6 flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <div className="h-[3px] w-8 rounded-full bg-signal" />
+          <h3 className="text-[13px] font-black uppercase tracking-[0.15em] text-signal">{name}</h3>
+        </div>
+        <div className="h-px flex-1 bg-white/8" />
+        <span className="text-[11px] font-bold uppercase tracking-wider text-white/30">
+          {images.length} {images.length === 1 ? "item" : "items"}
+        </span>
       </div>
+
+      {/* Standard grid */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {images.map((img, i) => <ImgCard key={i} {...img} />)}
+        {visible.map((img, i) => (
+          <div key={i}>
+            <ImgCard
+              {...img}
+              onClick={() => setLbIndex(i)}
+            />
+          </div>
+        ))}
       </div>
+
+      {hasMore && (
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 px-8 py-3 text-[12px] font-black uppercase tracking-wider text-white/60 transition-all duration-200 hover:border-signal hover:bg-signal/10 hover:text-signal"
+          >
+            {expanded ? (
+              <>
+                <span className="transition-transform group-hover:-translate-y-0.5">↑</span>
+                Collapse
+              </>
+            ) : (
+              <>
+                <span className="transition-transform group-hover:translate-y-0.5">↓</span>
+                Show {images.length - INITIAL_SHOW} More
+              </>
+            )}
+          </button>
+        </div>
+      )}
+
+      {lbIndex !== null && (
+        <Lightbox
+          images={images}
+          index={lbIndex}
+          onClose={() => setLbIndex(null)}
+          onNavigate={setLbIndex}
+        />
+      )}
     </div>
   );
 }
 
-/* ── Inner component (uses useSearchParams — must be inside Suspense) ── */
+/* ── Inner page content ───────────────────────────────────────── */
 function ProjectsContent() {
   const searchParams = useSearchParams();
-  const [active, setActive] = useState("welding");
+  const [activeCat, setActiveCat] = useState("welding");
+  const [activeSub, setActiveSub] = useState("all");
+  const contentRef = useRef(null);
 
-  /* Sync ?cat= query param to active tab */
   useEffect(() => {
     const cat = searchParams.get("cat");
-    const valid = PORTFOLIO.find((c) => c.id === cat);
-    if (valid) setActive(valid.id);
+    const sub = searchParams.get("sub");
+    
+    const validCat = PORTFOLIO.find((c) => c.id === cat);
+    if (validCat) {
+      setActiveCat(validCat.id);
+      if (sub && validCat.subs.some((s) => s.name === sub)) {
+        setActiveSub(sub);
+      } else {
+        setActiveSub("all");
+      }
+      
+      // If navigating from navbar to a specific category, scroll to the content
+      if (cat) {
+        setTimeout(() => {
+          contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 300); // slight delay to ensure layout is ready
+      }
+    } else {
+      // If no valid cat in URL, keep default but ensure sub is "all"
+      setActiveSub("all");
+    }
   }, [searchParams]);
 
-  const current = PORTFOLIO.find((c) => c.id === active);
+  const handleCatChange = (catId) => {
+    setActiveCat(catId);
+    setActiveSub("all");
+  };
+
+  const current = PORTFOLIO.find((c) => c.id === activeCat);
+  const totalImages = current.subs.reduce((acc, s) => acc + s.images.length, 0);
+  const totalSubs   = current.subs.length;
+
+  const displayedSubs =
+    activeSub === "all"
+      ? current.subs
+      : current.subs.filter((s) => s.name === activeSub);
 
   return (
-    <div className="overflow-hidden bg-base">
+    <div className="overflow-hidden bg-[#1a1a1a]">
+      {/* Hero */}
       <PageHero
         eyebrow="Our Portfolio"
         title="Projects & Work"
-        subtitle="Browse our completed projects by service category. Each category shows the specific types of work we deliver."
+        subtitle="Browse our completed projects by service category. Each category shows the specific types of work we deliver across Rwanda."
         bgImage="/image/execution.jpg"
       />
 
-      <section className="px-4 pb-24 sm:px-6">
-        <Container className="pt-0">
+      <section ref={contentRef} className="scroll-mt-6 px-4 py-16 sm:px-6 lg:py-20">
+        <Container>
 
-          {/* Category tabs */}
-          <div className="mb-10 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-            {PORTFOLIO.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActive(cat.id)}
-                className={`inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-black uppercase tracking-wider transition-all duration-200 ${
-                  active === cat.id
-                    ? "bg-signal text-ink shadow-lg shadow-signal/30"
-                    : "border border-white/15 text-white/60 hover:border-signal/50 hover:text-white"
-                }`}
-              >
-                <span>{cat.icon}</span>
-                {cat.label}
-              </button>
+          {/* ── Stats bar ──────────────────────────────────────── */}
+          <div className="mb-12 grid grid-cols-2 gap-3 rounded-2xl border border-white/8 bg-white/4 p-4 sm:grid-cols-4 sm:p-6 backdrop-blur-sm">
+            {[
+              { label: "Service Areas", value: PORTFOLIO.length },
+              { label: "Project Categories", value: PORTFOLIO.reduce((a, s) => a + s.subs.length, 0) },
+              { label: "Photos in This View", value: totalImages },
+              { label: "Sub-categories", value: totalSubs },
+            ].map(({ label, value }) => (
+              <div key={label} className="text-center">
+                <p className="text-[28px] font-black text-signal leading-none">{value}+</p>
+                <p className="mt-1 text-[11px] font-medium uppercase tracking-wider text-white/40">{label}</p>
+              </div>
             ))}
           </div>
 
-          {/* Active category header */}
-          <div className="mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-8">
-            <div>
-              <h2 className="text-[22px] font-black text-white sm:text-[28px]">
-                {current.icon} {current.label}
-              </h2>
-              <p className="mt-2 max-w-[520px] text-[13px] leading-[1.7] text-white/50">{current.desc}</p>
-            </div>
-            <Link
-              href="/contact"
-              className="inline-flex min-h-[44px] items-center rounded-full bg-signal px-7 text-[12px] font-black text-ink transition-colors hover:bg-signal-hover"
-            >
-              Request This Service
-            </Link>
+          {/* ── Two-column layout: sidebar + content ─────────── */}
+          <div className="flex flex-col gap-10 lg:flex-row lg:gap-12">
+
+            {/* Sidebar navigation */}
+            <aside className="lg:w-[220px] shrink-0">
+              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.15em] text-white/30">
+                Service Areas
+              </p>
+              <nav className="flex flex-row flex-wrap gap-2 lg:flex-col lg:gap-1">
+                {PORTFOLIO.map((cat) => {
+                  const isActive = activeCat === cat.id;
+                  const count = cat.subs.reduce((a, s) => a + s.images.length, 0);
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => handleCatChange(cat.id)}
+                      className={`group flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-left text-[12px] font-bold transition-all duration-200 w-full ${
+                        isActive
+                          ? "bg-signal text-ink shadow-lg shadow-signal/25"
+                          : "text-white/60 hover:bg-white/6 hover:text-white"
+                      }`}
+                    >
+                      <span className="flex items-center gap-2.5">
+                        <span>{cat.shortLabel || cat.label}</span>
+                      </span>
+                      <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-black ${
+                        isActive ? "bg-black/20 text-ink" : "bg-white/8 text-white/40"
+                      }`}>
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </nav>
+
+              {/* Sidebar CTA */}
+              <div className="mt-8 hidden rounded-2xl border border-signal/20 bg-signal/5 p-5 lg:block">
+                <p className="text-[13px] font-bold text-white">
+                  Interested in {current.shortLabel || current.label}?
+                </p>
+                <p className="mt-1.5 text-[12px] leading-relaxed text-white/50">
+                  Get a tailored quote for your project.
+                </p>
+                <Link
+                  href="/contact"
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-signal py-2.5 text-[12px] font-black text-ink transition-colors hover:bg-signal-hover"
+                >
+                  Request Quote
+                </Link>
+              </div>
+            </aside>
+
+            {/* Main content */}
+            <main className="min-w-0 flex-1">
+              {/* Category header */}
+              <div className="mb-10 flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-white/8 bg-white/4 p-6 backdrop-blur-sm">
+                <div>
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-[22px] font-black text-white sm:text-[26px]">
+                      {current.label}
+                    </h2>
+                  </div>
+                  <p className="mt-2 max-w-[480px] text-[13px] leading-relaxed text-white/50">
+                    {current.desc}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <button
+                      onClick={() => setActiveSub("all")}
+                      className={`inline-flex items-center rounded-full px-4 py-1.5 text-[11px] font-bold transition-all ${
+                        activeSub === "all"
+                          ? "bg-signal text-ink"
+                          : "border border-white/15 text-white/50 hover:border-signal/50 hover:text-white"
+                      }`}
+                    >
+                      All Categories
+                    </button>
+                    {current.subs.map((s) => (
+                      <button
+                        key={s.name}
+                        onClick={() => setActiveSub(s.name)}
+                        className={`inline-flex items-center rounded-full px-4 py-1.5 text-[11px] font-bold transition-all ${
+                          activeSub === s.name
+                            ? "bg-signal text-ink"
+                            : "border border-white/15 text-white/50 hover:border-signal/50 hover:text-white"
+                        }`}
+                      >
+                        {s.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <Link
+                  href={`/services/${activeCat}`}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-2.5 text-[12px] font-black text-white/70 transition-all hover:border-signal hover:text-signal shrink-0"
+                >
+                  View Service Page →
+                </Link>
+              </div>
+
+              {/* Sub-categories */}
+              <div className="space-y-12">
+                {displayedSubs.map((sub, i) => (
+                  <div
+                    key={sub.name}
+                    style={{ animation: `grid-in 0.4s ease both`, animationDelay: `${i * 0.05}s` }}
+                  >
+                    <SubCategory name={sub.name} images={sub.images} />
+                  </div>
+                ))}
+              </div>
+            </main>
           </div>
-
-          {/* Sub-categories */}
-          {current.subs.map((sub, i) => (
-            <SubCategory key={i} name={sub.name} images={sub.images} />
-          ))}
-
+          
+          <style>{`
+            @keyframes grid-in {
+              from { opacity: 0; transform: translateY(14px); }
+              to   { opacity: 1; transform: translateY(0); }
+            }
+          `}</style>
         </Container>
       </section>
 
       <SectionCta
-        heading="Have a project in mind?"
-        body="Share your idea with us and we'll bring it to life with precision and quality."
+        heading="Need a custom solution?"
+        body="Tell us about your project and we'll tailor the right service for you."
         href="/contact"
-        label="Start a Project"
+        label="Get in Touch"
+        videoSrc="/video-imvunwa/Create_an_second_cinematic_v.mp4"
       />
     </div>
   );
 }
 
-/* ── Page (wraps content in Suspense for useSearchParams) ─────── */
+/* ── Page wrapper ─────────────────────────────────────────────── */
 export default function ProjectsPage() {
   return (
-    <Suspense fallback={
-      <div className="flex min-h-screen items-center justify-center bg-base">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-signal border-t-transparent" />
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-[#1a1a1a]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-signal border-t-transparent" />
+            <p className="text-[13px] text-white/40">Loading portfolio…</p>
+          </div>
+        </div>
+      }
+    >
       <ProjectsContent />
     </Suspense>
   );

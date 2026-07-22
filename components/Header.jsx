@@ -26,54 +26,54 @@ const SERVICE_LINKS = [
     name: "Manufacturing of Machines",
     href: "/services/manufacturing",
     subs: [
-      { label: "Industrial Machines",  href: "/projects?cat=manufacturing" },
-      { label: "Product Fabrication",  href: "/projects?cat=manufacturing" },
+      { label: "Industrial Machines",  href: "/projects?cat=manufacturing&sub=Industrial%20Machines" },
+      { label: "Product Fabrication",  href: "/projects?cat=manufacturing&sub=Product%20Fabrication" },
     ],
   },
   {
     name: "Repairment of Machines",
     href: "/services/repair",
     subs: [
-      { label: "Heavy Equipment",  href: "/projects?cat=repair" },
-      { label: "Precision Repair", href: "/projects?cat=repair" },
+      { label: "Heavy Equipment",  href: "/projects?cat=repair&sub=Heavy%20Equipment" },
+      { label: "Precision Repair", href: "/projects?cat=repair&sub=Precision%20Repair" },
     ],
   },
   {
     name: "Welding Services",
     href: "/services/welding",
     subs: [
-      { label: "Doors & Gates",      href: "/projects?cat=welding" },
-      { label: "Roofing Frames",     href: "/projects?cat=welding" },
-      { label: "Structural Frames",  href: "/projects?cat=welding" },
+      { label: "Doors & Gates",      href: "/projects?cat=welding&sub=Doors%20%26%20Gates" },
+      { label: "Roofing Frames",     href: "/projects?cat=welding&sub=Roofing%20Frames" },
+      { label: "Structural Frames",  href: "/projects?cat=welding&sub=Structural%20Frames" },
     ],
   },
   {
     name: "Painting Services",
     href: "/services/painting",
     subs: [
-      { label: "Anti-Corrosion Coating", href: "/projects?cat=painting" },
-      { label: "Decorative Finishes",    href: "/projects?cat=painting" },
+      { label: "Anti-Corrosion Coating", href: "/projects?cat=painting&sub=Anti-Corrosion%20Coating" },
+      { label: "Decorative Finishes",    href: "/projects?cat=painting&sub=Decorative%20Finishes" },
     ],
   },
   {
     name: "Electricity Installation & Repair",
     href: "/services/electrical",
     subs: [
-      { label: "Industrial Wiring", href: "/projects?cat=electrical" },
+      { label: "Industrial Wiring", href: "/projects?cat=electrical&sub=Industrial%20Wiring" },
     ],
   },
   {
     name: "Plumbing Services",
     href: "/services/plumbing",
     subs: [
-      { label: "Industrial Piping", href: "/projects?cat=plumbing" },
+      { label: "Industrial Piping", href: "/projects?cat=plumbing&sub=Industrial%20Piping" },
     ],
   },
   {
     name: "Product Design",
     href: "/services/design",
     subs: [
-      { label: "Design & Prototyping", href: "/projects?cat=design" },
+      { label: "Design & Prototyping", href: "/projects?cat=design&sub=Design%20%26%20Prototyping" },
     ],
   },
 ];

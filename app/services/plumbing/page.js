@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import PageHero from "../../../components/ui/PageHero";
 import Container from "../../../components/ui/Container";
-import SectionCta from "../../../components/ui/SectionCta";
 import Eyebrow from "../../../components/ui/Eyebrow";
+import ServiceProjects from "../../../components/ui/ServiceProjects";
 
 const FEATURES = [
   "Heavy-duty industrial pipe installation for factories",
@@ -15,24 +14,6 @@ const FEATURES = [
   "Hot and cold water system setup and maintenance",
   "Custom plumbing layouts for large construction projects",
 ];
-
-const PROJECTS = [
-  { src: "/image/plumb.jpg",     caption: "Commercial plumbing network — full installation" },
-  { src: "/image/plumbling.jpg", caption: "Industrial piping system — factory infrastructure" },
-];
-
-function ProjectCard({ src, caption }) {
-  return (
-    <div className="group relative aspect-[4/3] overflow-hidden rounded-xl cursor-pointer">
-      <Image src={src} alt={caption} fill quality={80}
-        className="object-cover transition-transform duration-500 group-hover:scale-110" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <p className="absolute bottom-0 left-0 right-0 translate-y-2 px-4 py-3 text-[12px] font-bold text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-        {caption}
-      </p>
-    </div>
-  );
-}
 
 export default function PlumbingPage() {
   return (
@@ -74,34 +55,8 @@ export default function PlumbingPage() {
         </Container>
       </section>
 
-      {/* Sample Projects */}
-      <section className="bg-panel px-4 py-[70px] sm:px-6 lg:py-24">
-        <Container>
-          <div className="mb-10">
-            <Eyebrow>Our Work</Eyebrow>
-            <h2 className="m-0 text-[26px] font-black text-ink sm:text-[32px]">Sample Plumbing Projects</h2>
-            <p className="mt-3 max-w-[520px] text-[14px] leading-[1.7] text-muted">
-              Pipe networks and water systems we have installed for industrial and commercial clients.
-            </p>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {PROJECTS.map((p, i) => <ProjectCard key={i} {...p} />)}
-          </div>
-          <div className="mt-8 flex justify-center">
-            <Link href="/projects?cat=plumbing"
-              className="inline-flex min-h-[46px] items-center gap-2 rounded-full border border-ink/20 px-8 text-[12px] font-black text-ink/70 transition-all hover:border-signal hover:text-signal">
-              View All Plumbing Projects →
-            </Link>
-          </div>
-        </Container>
-      </section>
-
-      <SectionCta
-        heading="Need reliable plumbing installed?"
-        body="Tell us about your project site and requirements and our team will design and install the right system for you."
-        href="/contact"
-        label="Get a Plumbing Quote"
-      />
+      {/* Projects & Categories */}
+      <ServiceProjects serviceId="plumbing" />
     </div>
   );
 }
