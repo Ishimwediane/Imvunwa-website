@@ -47,7 +47,7 @@ export const PORTFOLIO_DATA = [
   },
   {
     id: "manufacturing",
-    label: "Machine Manufacturing",
+    label: "Manufacturing of Machines",
     shortLabel: "Manufacturing",
     desc: "Custom industrial machines precision-built to your exact specifications.",
     subs: [
@@ -82,7 +82,7 @@ export const PORTFOLIO_DATA = [
   },
   {
     id: "repair",
-    label: "Machine Repair",
+    label: "Machine Repairment",
     shortLabel: "Repair",
     desc: "Diagnostics and restoration to keep your equipment at peak performance.",
     subs: [
@@ -144,7 +144,7 @@ export const PORTFOLIO_DATA = [
   },
   {
     id: "electrical",
-    label: "Electrical Works",
+    label: "Electricity Installation and Repair",
     shortLabel: "Electrical",
     desc: "Complete electrical installations for industrial and commercial buildings.",
     subs: [

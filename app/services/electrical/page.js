@@ -20,8 +20,8 @@ export default function ElectricalPage() {
     <div className="overflow-hidden">
       <PageHero
         eyebrow="Installation"
-        title="Electrical Works"
-        subtitle="Safe, certified electrical installation, maintenance, and repair for residential, commercial, and industrial properties."
+        title="Electricity Installation and Repair"
+        subtitle="Professional electrical services including installation, repair, and maintenance by certified electricians."
         bgImage="/image/electricity.jpg"
       />
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 /* ── Data ────────────────────────────────────────────────────── */
 const QUICK_LINKS = [
   { href: "/",         label: "Home" },
+  { href: "/about",    label: "About Us" },
   { href: "/services", label: "Services" },
   { href: "/projects", label: "Portfolio" },
   { href: "/contact",  label: "Contact Us" },
@@ -13,8 +14,9 @@ const SERVICE_LINKS = [
   "Machine Repairment",
   "Welding Services",
   "Painting Services",
-  "Electricity Installation",
+  "Electricity Installation and Repair",
   "Plumbing Services",
+  "Product Design",
 ];
 
 /* ── Sub-components ──────────────────────────────────────────── */
@@ -78,7 +80,7 @@ export default function Footer() {
             <span>Imvunwa Ltd</span>
             <span>P.O. Box 45, Kigali, Rwanda</span>
             <a href="tel:+250787782226" className="hover:text-signal transition-colors">Phone: +250 787 782 226</a>
-            <a href="mailto:ishimwediane400@gmail.com" className="hover:text-signal transition-colors">Email: ishimwediane400@gmail.com</a>
+            <a href="mailto:imvunwabusinessgroup@gmail.com" className="hover:text-signal transition-colors">Email: imvunwabusinessgroup@gmail.com</a>
           </address>
         </div>
       </div>

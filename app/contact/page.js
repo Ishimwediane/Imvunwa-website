@@ -5,9 +5,8 @@ import PageHero from "../../components/ui/PageHero";
 
 /* ── Contact info items ──────────────────────────────────────── */
 const CONTACT_INFO = [
-  { tag: "a", href: "tel:+250787782226",              icon: "📞", text: "+250 787 782 226" },
-  { tag: "a", href: "tel:+250790755673",              icon: "📞", text: "+250 790 755 673" },
-  { tag: "a", href: "mailto:ishimwediane400@gmail.com", icon: "✉️", text: "ishimwediane400@gmail.com" },
+  { tag: "a", href: "tel:+250787782226",                     icon: "📞", text: "+250 787 782 226" },
+  { tag: "a", href: "mailto:imvunwabusinessgroup@gmail.com", icon: "✉️", text: "imvunwabusinessgroup@gmail.com" },
   { tag: "span", icon: "📍", text: "Rwanda, Kigali, Kimironko" },
   { tag: "span", icon: "🕐", text: "Mon–Sat, 11:00–23:00" },
 ];
@@ -69,7 +68,7 @@ export default function ContactPage() {
 
               {/* WhatsApp CTA */}
               <a
-                href="https://wa.me/250790755673"
+                href="https://wa.me/250787782226"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 inline-flex h-11 w-max items-center gap-3 rounded-full bg-whatsapp px-6 text-[13px] font-bold text-white transition-opacity hover:opacity-90"

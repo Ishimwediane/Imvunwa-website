@@ -9,14 +9,15 @@ import ChevronIcon from "./ui/ChevronIcon";
 /* ── Data ────────────────────────────────────────────────────── */
 const MARQUEE_ITEMS = [
   "Call +250 787 782 226",
-  "Call +250 790 755 673",
-  "Email ishimwediane400@gmail.com",
+  "Email imvunwabusinessgroup@gmail.com",
   "Rwanda, Kigali, Kimironko",
-  "Industrial manufacturing and repair services",
+  "Your one stop shop for transforming your space",
+  "Metal fabrication · painting · repair · restoration",
 ];
 
 const NAV_LINKS = [
   { href: "/",        label: "Home",       exact: true },
+  { href: "/about",   label: "About" },
   { href: "/projects",label: "Projects" },
   { href: "/contact", label: "Contact" },
 ];
@@ -31,7 +32,7 @@ const SERVICE_LINKS = [
     ],
   },
   {
-    name: "Repairment of Machines",
+    name: "Machine Repairment",
     href: "/services/repair",
     subs: [
       { label: "Heavy Equipment",  href: "/projects?cat=repair&sub=Heavy%20Equipment" },
@@ -56,7 +57,7 @@ const SERVICE_LINKS = [
     ],
   },
   {
-    name: "Electricity Installation & Repair",
+    name: "Electricity Installation and Repair",
     href: "/services/electrical",
     subs: [
       { label: "Industrial Wiring", href: "/projects?cat=electrical&sub=Industrial%20Wiring" },
@@ -300,6 +301,7 @@ export default function Header() {
             aria-label="Mobile navigation"
           >
             <Link onClick={closeMobile} className="hover:text-signal transition-colors" href="/">Home</Link>
+            <Link onClick={closeMobile} className="hover:text-signal transition-colors" href="/about">About</Link>
 
             {/* Mobile services accordion */}
             <div>

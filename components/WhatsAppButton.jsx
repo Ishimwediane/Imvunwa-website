@@ -6,7 +6,7 @@ const WA_PATH = "M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.
 export default function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/250790755673"
+      href="https://wa.me/250787782226"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-whatsapp text-white shadow-lg transition-transform hover:scale-110 hover:shadow-xl"

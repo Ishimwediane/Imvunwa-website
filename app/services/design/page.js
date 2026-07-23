@@ -3,7 +3,6 @@
 import Link from "next/link";
 import PageHero from "../../../components/ui/PageHero";
 import Container from "../../../components/ui/Container";
-import SectionCta from "../../../components/ui/SectionCta";
 import Eyebrow from "../../../components/ui/Eyebrow";
 import ServiceProjects from "../../../components/ui/ServiceProjects";
 
@@ -58,13 +57,6 @@ export default function DesignPage() {
 
       {/* Projects & Categories */}
       <ServiceProjects serviceId="design" />
-
-      <SectionCta
-        heading="Have a product idea to develop?"
-        body="Tell us your concept and our design team will turn it into a manufacturable, functional product."
-        href="/contact"
-        label="Start Your Design Project"
-      />
     </div>
   );
 }

@@ -20,8 +20,8 @@ export default function RepairPage() {
     <div className="overflow-hidden">
       <PageHero
         eyebrow="Maintenance"
-        title="Machine Repair"
-        subtitle="Fast, reliable diagnostics and restoration services to keep your equipment running at peak performance."
+        title="Machine Repairment"
+        subtitle="Comprehensive repair services for a wide range of machinery, with prompt diagnosis and effective solutions."
         bgImage="/image/repairement.jpg"
       />
 

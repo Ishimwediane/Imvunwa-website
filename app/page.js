@@ -11,8 +11,8 @@ import ArrowIcon from "../components/ui/ArrowIcon";
 /* ── Services data ───────────────────────────────────────────── */
 const SERVICES = [
   {
-    title: "Machine Manufacturing",
-    description: "Custom machines engineered for industrial use — precision-built to your exact specifications.",
+    title: "Manufacturing of Machines",
+    description: "Design and production of high-quality machines tailored to meet specific industrial needs.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -21,8 +21,8 @@ const SERVICES = [
     ),
   },
   {
-    title: "Machine Repair",
-    description: "Diagnostics, restoration, and maintenance services to keep your equipment running at peak performance.",
+    title: "Machine Repairment",
+    description: "Comprehensive repair services for a wide range of machinery, with prompt diagnosis and effective solutions.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -31,7 +31,7 @@ const SERVICES = [
   },
   {
     title: "Welding Services",
-    description: "Structural and custom welding for fabrication and repair — delivered with precision and safety.",
+    description: "Top-tier welding services for both structural and custom projects, delivered with precision and safety.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -39,29 +39,38 @@ const SERVICES = [
     ),
   },
   {
-    title: "Project Management",
-    description: "End-to-end project oversight ensuring timely delivery, budget control, and quality assurance.",
+    title: "Painting Services",
+    description: "Top-quality painting finishes for homes and businesses, with lasting protective surface coating.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
       </svg>
     ),
   },
   {
-    title: "Design & Fabrication",
-    description: "Creative product design paired with expert fabrication for industrial and commercial applications.",
+    title: "Electricity Installation and Repair",
+    description: "Professional electrical services including installation, repair, and maintenance by certified electricians.",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Plumbing Services",
+    description: "Installations, repairs, and maintenance of water systems for residential and commercial spaces.",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21.75c-3.727 0-6.75-2.925-6.75-6.532 0-3.28 3.04-7.087 5.446-9.94A1.71 1.71 0 0112 4.657a1.71 1.71 0 011.304.62c2.406 2.854 5.446 6.66 5.446 9.94 0 3.608-3.023 6.533-6.75 6.533z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Product Design",
+    description: "Innovative product design services developed collaboratively using cutting-edge technology.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-      </svg>
-    ),
-  },
-  {
-    title: "Electrical & Plumbing",
-    description: "Reliable electrical installations and plumbing solutions for industrial and commercial buildings.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
       </svg>
     ),
   },
@@ -95,7 +104,7 @@ const TESTIMONIALS = [
   {
     image:     "/image/manifa.jpg",
     imageAlt:  "Custom machine manufactured for Jean-Pierre",
-    badge:     "Machine Manufacturing",
+    badge:     "Manufacturing of Machines",
     quote:     "Imvunwa fabricated the custom machines for our production line on time and within budget. The quality is exceptional — we've had zero downtime since installation. Truly world-class work.",
     author:    "Jean-Pierre Nkurunziza",
     role:      "Factory Manager, Kigali",
@@ -178,16 +187,16 @@ export default function Home() {
           style={{ background: "linear-gradient(to right, var(--color-dark-bg) 0%, var(--color-dark-bg) 55%, rgba(14,18,21,0) 100%)" }}
         >
           <div className="mb-5 h-[3px] w-10 rounded-full bg-signal" />
-          <Eyebrow>Industrial Excellence · Rwanda</Eyebrow>
+          <Eyebrow>Imvunwa Business Group · Rwanda</Eyebrow>
 
           <h1 className="m-0 text-[24px] font-black leading-[1.08] tracking-tight text-white sm:text-[30px] lg:text-[36px]">
-            We Build & Fix<br />
-            <span className="text-signal">Machines</span> That<br />
-            Keep Rwanda Moving
+            Your One Stop Shop<br />
+            For <span className="text-signal">Transforming</span><br />
+            Your Space
           </h1>
 
           <p className="mt-4 max-w-[460px] text-[13px] leading-[1.7] text-white/60">
-            Manufacturing, repair, welding, electrical, plumbing, painting, and product design services — delivered with precision.
+            A leading metal fabrication, painting, repair, and restoration company — delivering exceptional services across Rwanda.
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
@@ -235,7 +244,7 @@ export default function Home() {
             <div>
               <h2 className="m-0 text-[28px] font-black leading-[1.06] text-ink sm:text-[36px]">Our Services</h2>
               <p className="mt-3 max-w-[460px] text-[14px] leading-[1.7] text-ink/75">
-                Unleashing Comprehensive Industrial Services Tailored to Elevate Your Business and Boost Your Success.
+                Metal fabrication, manufacturing, repair, and finishing — a complete range of industrial services to transform your space.
               </p>
             </div>
             <Link
