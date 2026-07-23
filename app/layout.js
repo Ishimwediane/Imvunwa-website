@@ -1,7 +1,5 @@
 import "./globals.css";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import WhatsAppButton from "../components/WhatsAppButton";
+import SiteFrame from "../components/SiteFrame";
 
 export const metadata = {
   title: "Imvunwa Business Group Ltd",
@@ -13,10 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="overflow-x-hidden bg-panel">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <SiteFrame>{children}</SiteFrame>
       </body>
     </html>
   );

@@ -65,3 +65,25 @@
   height: 60%;
 }
 
+/* ── Admin: click-to-edit affordance ─────────────────────────── */
+.editable {
+  cursor: text;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  min-width: 1ch;
+}
+.editable:hover {
+  background: rgba(245, 166, 35, 0.12);
+  box-shadow: 0 0 0 2px rgba(245, 166, 35, 0.4);
+}
+.editable:focus {
+  background: rgba(245, 166, 35, 0.08);
+  box-shadow: 0 0 0 2px #f5a623;
+}
+.editable[data-empty="true"]::before {
+  content: attr(data-placeholder);
+  opacity: 0.45;
+  font-style: italic;
+}
+
