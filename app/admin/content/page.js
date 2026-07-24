@@ -1,35 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  DemoBanner, PageHeader, Btn, EditableText, PreviewBlock, useSavedToast,
+  ModeBanner, PageHeader, Btn, EditableText, PreviewBlock, useSavedToast,
 } from "../../../components/admin/ui";
+import { SITE_CONTENT_DEFAULT } from "../../../lib/defaults";
+import { fetchSiteContent, saveSiteContent } from "../../../lib/adminApi";
 
-/* Seed values mirror what's currently live on the site */
-const SEED = {
-  heroEyebrow: "Imvunwa Business Group · Rwanda",
-  heroTitle: "Your One Stop Shop For Transforming Your Space",
-  heroSubtitle: "A leading metal fabrication, painting, repair, and restoration company — delivering exceptional services across Rwanda.",
-  tagline: "Your one stop shop for transforming your space",
-  description: "Imvunwa is a leading metal fabrication, painting, repair, and restoration company, dedicated to delivering exceptional services to our clients.",
-  phone: "+250 787 782 226",
-  email: "imvunwabusinessgroup@gmail.com",
-  address: "Rwanda, Kigali, Kimironko",
-  hours: "Mon–Sat, 11:00–23:00",
-  aboutStory: "Imvunwa Business Group Ltd is a leading metal fabrication, painting, repair, and restoration company, dedicated to delivering exceptional services to our clients. We specialise in transforming spaces through industrial services and product manufacturing, with a constant emphasis on precision engineering and quality finishes.",
-  mission: "To transform spaces and empower businesses across Rwanda through high-quality metal fabrication, manufacturing, repair, and finishing — delivered with precision engineering and dependable craftsmanship.",
-  vision: "To be Rwanda's most trusted one stop shop for industrial services and product manufacturing — the first name businesses and homeowners think of when they want to transform their space.",
-};
-
+/* Field keys map 1:1 to the site_content table keys */
 export default function ContentManager() {
-  const [form, setForm] = useState(SEED);
+  const [form, setForm] = useState(SITE_CONTENT_DEFAULT);
+  const [saving, setSaving] = useState(false);
   const [toast, showToast] = useSavedToast();
   const upd = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
+
+  useEffect(() => {
+    fetchSiteContent()
+      .then(setForm)
+      .catch((e) => showToast("Could not load: " + e.message));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+      await saveSiteContent(form);
+      showToast("All text saved");
+    } catch (e) {
+      showToast("Could not save: " + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div className="pb-24">
       {toast}
-      <DemoBanner />
+      <ModeBanner />
       <PageHeader
         title="Site Text"
         subtitle="This is what your website looks like. Click on any text below to change it — your edit shows up straight away."
@@ -42,22 +49,22 @@ export default function ContentManager() {
             <div className="mb-4 h-[3px] w-10 rounded-full bg-signal" />
             <EditableText
               as="p"
-              value={form.heroEyebrow}
-              onChange={upd("heroEyebrow")}
+              value={form.hero_eyebrow}
+              onChange={upd("hero_eyebrow")}
               className="mb-3 inline-block text-[11px] font-black uppercase tracking-[0.18em] text-signal"
             />
             <EditableText
               as="h1"
               multiline
-              value={form.heroTitle}
-              onChange={upd("heroTitle")}
+              value={form.hero_title}
+              onChange={upd("hero_title")}
               className="block text-[26px] font-black leading-tight text-white sm:text-[36px]"
             />
             <EditableText
               as="p"
               multiline
-              value={form.heroSubtitle}
-              onChange={upd("heroSubtitle")}
+              value={form.hero_subtitle}
+              onChange={upd("hero_subtitle")}
               className="mt-4 block max-w-[520px] text-[13px] leading-relaxed text-white/70"
             />
             <div className="mt-6 flex flex-wrap gap-3">
@@ -126,8 +133,8 @@ export default function ContentManager() {
             <EditableText
               as="p"
               multiline
-              value={form.aboutStory}
-              onChange={upd("aboutStory")}
+              value={form.about_story}
+              onChange={upd("about_story")}
               className="block text-[13.5px] leading-relaxed text-muted"
             />
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -161,8 +168,8 @@ export default function ContentManager() {
       {/* Sticky save bar */}
       <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-line bg-white/95 px-4 py-3 backdrop-blur lg:pl-64">
         <div className="mx-auto flex max-w-[1100px] items-center justify-between gap-4 px-2 sm:px-6">
-          <p className="hidden text-[12.5px] text-muted sm:block">Changes update the preview instantly. Press Save to keep them.</p>
-          <Btn onClick={() => showToast("All text saved (preview)")} className="ml-auto">Save changes</Btn>
+          <p className="hidden text-[12.5px] text-muted sm:block">Edits show live above. Press Save to keep them.</p>
+          <Btn onClick={handleSave} disabled={saving} className="ml-auto">{saving ? "Saving…" : "Save changes"}</Btn>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { DemoBanner, Card, Icon, ICONS, Btn } from "../../components/admin/ui";
+import { ModeBanner, Card, Icon, ICONS, Btn } from "../../components/admin/ui";
 
 const SECTIONS = [
   {
@@ -43,7 +43,7 @@ const TIPS = [
 export default function AdminDashboard() {
   return (
     <div>
-      <DemoBanner />
+      <ModeBanner />
 
       {/* Welcome */}
       <div className="mb-7 rounded-2xl bg-gradient-to-br from-deeper to-[#2b3a4d] p-7 text-white shadow-card">

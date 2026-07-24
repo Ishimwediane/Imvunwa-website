@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { isSupabaseConfigured } from "../../lib/supabase/config";
 
 /* ──────────────────────────────────────────────────────────────
    Shared admin UI primitives.
@@ -21,6 +22,22 @@ export function DemoBanner() {
       </p>
     </div>
   );
+}
+
+/* ── Mode banner: preview (no backend) vs live (Supabase on) ──── */
+export function ModeBanner() {
+  if (isSupabaseConfigured) {
+    return (
+      <div className="mb-6 flex items-start gap-3 rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3">
+        <span className="mt-0.5 text-lg leading-none">✅</span>
+        <p className="text-[13px] leading-relaxed text-emerald-900">
+          <strong className="font-bold">Live.</strong> Changes you make here are saved and appear on your
+          website automatically.
+        </p>
+      </div>
+    );
+  }
+  return <DemoBanner />;
 }
 
 /* ── Page header ─────────────────────────────────────────────── */
@@ -345,6 +362,7 @@ export function EditableText({
 export function EditableImage({
   value,
   onChange,
+  uploader,
   className = "",
   rounded = "rounded-xl",
   label = "Change photo",
@@ -352,10 +370,19 @@ export function EditableImage({
   fallback = null,
 }) {
   const ref = useRef(null);
-  const handle = (e) => {
+  const [busy, setBusy] = useState(false);
+
+  const handle = async (e) => {
     const f = e.target.files?.[0];
-    if (f) onChange?.(URL.createObjectURL(f));
     e.target.value = "";
+    if (!f) return;
+    try {
+      setBusy(true);
+      const url = uploader ? await uploader(f) : URL.createObjectURL(f);
+      onChange?.(url);
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -375,11 +402,14 @@ export function EditableImage({
       <button
         type="button"
         onClick={() => ref.current?.click()}
-        className="absolute inset-0 flex items-center justify-center bg-black/0 text-[12px] font-bold text-white opacity-0 transition-all group-hover:bg-black/45 group-hover:opacity-100"
+        disabled={busy}
+        className={`absolute inset-0 flex items-center justify-center text-[12px] font-bold text-white transition-all ${
+          busy ? "bg-black/55 opacity-100" : "bg-black/0 opacity-0 group-hover:bg-black/45 group-hover:opacity-100"
+        }`}
       >
         <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 backdrop-blur-md">
           <Icon path={ICONS.upload} className="h-4 w-4" />
-          {value ? label : placeholder}
+          {busy ? "Uploading…" : value ? label : placeholder}
         </span>
       </button>
 

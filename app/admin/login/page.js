@@ -4,16 +4,27 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Field, TextInput, Btn } from "../../../components/admin/ui";
+import { signIn, configured } from "../../../lib/adminApi";
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Frontend only for now — real email/password auth is wired up in the next step.
-    router.push("/admin");
+    setError("");
+    setLoading(true);
+    const res = await signIn(email, password);
+    setLoading(false);
+    if (res.ok) {
+      router.push("/admin");
+      router.refresh();
+    } else {
+      setError(res.error || "Could not sign in. Please check your email and password.");
+    }
   };
 
   return (
@@ -60,12 +71,22 @@ export default function AdminLoginPage() {
             </button>
           </div>
 
-          <Btn type="submit" className="w-full">Sign in</Btn>
+          {error && (
+            <p className="rounded-lg bg-red-50 px-3 py-2.5 text-[12.5px] font-semibold text-red-600">
+              {error}
+            </p>
+          )}
 
-          <p className="pt-1 text-center text-[11.5px] leading-relaxed text-muted">
-            Preview mode — login isn&apos;t connected yet. Enter anything and press{" "}
-            <strong className="font-bold">Sign in</strong> to explore the dashboard.
-          </p>
+          <Btn type="submit" className="w-full" disabled={loading}>
+            {loading ? "Signing in…" : "Sign in"}
+          </Btn>
+
+          {!configured && (
+            <p className="pt-1 text-center text-[11.5px] leading-relaxed text-muted">
+              Preview mode — login isn&apos;t connected yet. Enter anything and press{" "}
+              <strong className="font-bold">Sign in</strong> to explore the dashboard.
+            </p>
+          )}
         </form>
       </div>
     </div>

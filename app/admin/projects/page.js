@@ -1,67 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  DemoBanner, PageHeader, Field, TextInput, Btn, Icon, ICONS,
+  ModeBanner, PageHeader, Field, TextInput, Btn, Icon, ICONS,
   Modal, ConfirmDialog, EmptyState, EditableText, useSavedToast,
 } from "../../../components/admin/ui";
-
-let UID = 1000;
-const uid = () => ++UID;
-
-/* Seed mirrors the live portfolio (trimmed to a few photos each) */
-const SEED = [
-  {
-    id: uid(), name: "Welding Services", subs: [
-      { id: uid(), name: "Doors & Gates", images: [
-        { id: uid(), src: "/image/project1.jpg" }, { id: uid(), src: "/image/project2.jpg" }, { id: uid(), src: "/image/project4.jpg" },
-      ] },
-      { id: uid(), name: "Roofing Frames", images: [
-        { id: uid(), src: "/image/project5.jpg" }, { id: uid(), src: "/image/welding1.png" },
-      ] },
-      { id: uid(), name: "Structural Frames", images: [
-        { id: uid(), src: "/image/execution.jpg" }, { id: uid(), src: "/image/manufacturing.jpg" },
-      ] },
-    ],
-  },
-  {
-    id: uid(), name: "Manufacturing of Machines", subs: [
-      { id: uid(), name: "Industrial Machines", images: [
-        { id: uid(), src: "/image/manifa.jpg" }, { id: uid(), src: "/image/mman.png" },
-      ] },
-      { id: uid(), name: "Product Fabrication", images: [
-        { id: uid(), src: "/image/product1.jpg" }, { id: uid(), src: "/image/ppic (1).jpg" },
-      ] },
-    ],
-  },
-  {
-    id: uid(), name: "Machine Repairment", subs: [
-      { id: uid(), name: "Heavy Equipment", images: [{ id: uid(), src: "/image/repaire.jpg" }] },
-      { id: uid(), name: "Precision Repair", images: [{ id: uid(), src: "/image/pic1.jpg" }] },
-    ],
-  },
-  {
-    id: uid(), name: "Painting Services", subs: [
-      { id: uid(), name: "Anti-Corrosion Coating", images: [{ id: uid(), src: "/image/painting.jpg" }] },
-      { id: uid(), name: "Decorative Finishes", images: [{ id: uid(), src: "/image/paint.jpg" }] },
-    ],
-  },
-  {
-    id: uid(), name: "Electricity Installation and Repair", subs: [
-      { id: uid(), name: "Industrial Wiring", images: [{ id: uid(), src: "/image/electricity.jpg" }] },
-    ],
-  },
-  {
-    id: uid(), name: "Plumbing Services", subs: [
-      { id: uid(), name: "Industrial Piping", images: [{ id: uid(), src: "/image/plumb.jpg" }] },
-    ],
-  },
-  {
-    id: uid(), name: "Product Design", subs: [
-      { id: uid(), name: "Design & Prototyping", images: [{ id: uid(), src: "/image/design.jpg" }] },
-    ],
-  },
-];
+import {
+  fetchProjects, createCategory, renameCategory, deleteCategory,
+  createSubcategory, renameSubcategory, deleteSubcategory,
+  addProjectImage, deleteProjectImage, uploadImage,
+} from "../../../lib/adminApi";
 
 /* ── A single photo tile with hover-remove ───────────────────── */
 function PhotoTile({ src, onRemove }) {
@@ -80,22 +28,35 @@ function PhotoTile({ src, onRemove }) {
   );
 }
 
-/* ── "Add photo" upload tile ─────────────────────────────────── */
-function AddPhotoTile({ onAdd }) {
+/* ── "Add photo" upload tile (uploads, then persists) ────────── */
+function AddPhotoTile({ onAddUrl }) {
   const ref = useRef(null);
-  const handle = (e) => {
+  const [busy, setBusy] = useState(false);
+
+  const handle = async (e) => {
     const files = Array.from(e.target.files || []);
-    files.forEach((f) => onAdd(URL.createObjectURL(f)));
     e.target.value = "";
+    if (!files.length) return;
+    setBusy(true);
+    try {
+      for (const f of files) {
+        const url = await uploadImage(f);
+        await onAddUrl(url);
+      }
+    } finally {
+      setBusy(false);
+    }
   };
+
   return (
     <>
       <button
         onClick={() => ref.current?.click()}
+        disabled={busy}
         className="flex aspect-square flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed border-line text-muted transition-colors hover:border-signal hover:text-signal-dark"
       >
         <Icon path={ICONS.upload} className="h-6 w-6" />
-        <span className="text-[11px] font-bold">Add photo</span>
+        <span className="text-[11px] font-bold">{busy ? "Uploading…" : "Add photo"}</span>
       </button>
       <input ref={ref} type="file" accept="image/*" multiple className="hidden" onChange={handle} />
     </>
@@ -103,81 +64,105 @@ function AddPhotoTile({ onAdd }) {
 }
 
 export default function ProjectsManager() {
-  const [cats, setCats] = useState(SEED);
-  const [open, setOpen] = useState(() => new Set(SEED.length ? [SEED[0].id] : []));
-  const [catModal, setCatModal] = useState(null);   // { mode, id?, name }
-  const [subModal, setSubModal] = useState(null);   // { mode, catId, id?, name }
-  const [confirm, setConfirm] = useState(null);      // { kind, ...ids, label }
+  const [cats, setCats] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(() => new Set());
+  const [catModal, setCatModal] = useState(null);   // { name }
+  const [subModal, setSubModal] = useState(null);   // { catId, name }
+  const [confirm, setConfirm] = useState(null);      // { kind, catId, subId?, label }
   const [toast, showToast] = useSavedToast();
+
+  useEffect(() => {
+    fetchProjects()
+      .then((data) => {
+        setCats(data);
+        if (data.length) setOpen(new Set([data[0].id]));
+      })
+      .catch((e) => showToast("Could not load projects: " + e.message))
+      .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fail = (e) => showToast("Something went wrong: " + e.message);
 
   const toggle = (id) =>
     setOpen((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
 
-  /* ── Category ops ── */
-  const saveCat = (e) => {
+  /* ── Category ── */
+  const addCat = async (e) => {
     e.preventDefault();
     const name = catModal.name.trim();
     if (!name) return;
-    if (catModal.mode === "edit") {
-      setCats((c) => c.map((x) => (x.id === catModal.id ? { ...x, name } : x)));
-      showToast("Category renamed (preview)");
-    } else {
-      const id = uid();
-      setCats((c) => [...c, { id, name, subs: [] }]);
-      setOpen((s) => new Set(s).add(id));
-      showToast("Category added (preview)");
-    }
     setCatModal(null);
+    try {
+      const cat = await createCategory(name, cats.length + 1);
+      setCats((c) => [...c, cat]);
+      setOpen((s) => new Set(s).add(cat.id));
+      showToast("Category added");
+    } catch (e) { fail(e); }
   };
 
-  /* ── Sub-category ops ── */
-  const saveSub = (e) => {
+  const renameCat = (id, name) => {
+    setCats((c) => c.map((x) => (x.id === id ? { ...x, name } : x)));
+    renameCategory(id, name).catch(fail);
+  };
+
+  /* ── Sub-category ── */
+  const addSub = async (e) => {
     e.preventDefault();
     const name = subModal.name.trim();
     if (!name) return;
-    if (subModal.mode === "edit") {
-      setCats((c) => c.map((x) => x.id !== subModal.catId ? x : {
-        ...x, subs: x.subs.map((s) => (s.id === subModal.id ? { ...s, name } : s)),
-      }));
-      showToast("Sub-category renamed (preview)");
-    } else {
-      setCats((c) => c.map((x) => x.id !== subModal.catId ? x : {
-        ...x, subs: [...x.subs, { id: uid(), name, images: [] }],
-      }));
-      showToast("Sub-category added (preview)");
-    }
+    const catId = subModal.catId;
     setSubModal(null);
+    try {
+      const cat = cats.find((x) => x.id === catId);
+      const sub = await createSubcategory(catId, name, (cat?.subs.length || 0) + 1);
+      setCats((c) => c.map((x) => (x.id === catId ? { ...x, subs: [...x.subs, sub] } : x)));
+      showToast("Sub-category added");
+    } catch (e) { fail(e); }
   };
 
-  /* ── Image ops ── */
-  const addImage = (catId, subId, src) =>
-    setCats((c) => c.map((x) => x.id !== catId ? x : {
-      ...x, subs: x.subs.map((s) => s.id !== subId ? s : { ...s, images: [...s.images, { id: uid(), src }] }),
-    }));
-
-  const removeImage = (catId, subId, imgId) =>
-    setCats((c) => c.map((x) => x.id !== catId ? x : {
-      ...x, subs: x.subs.map((s) => s.id !== subId ? s : { ...s, images: s.images.filter((i) => i.id !== imgId) }),
-    }));
-
-  const renameCat = (catId, name) =>
-    setCats((c) => c.map((x) => (x.id === catId ? { ...x, name } : x)));
-
-  const renameSub = (catId, subId, name) =>
+  const renameSub = (catId, subId, name) => {
     setCats((c) => c.map((x) => x.id !== catId ? x : {
       ...x, subs: x.subs.map((s) => (s.id === subId ? { ...s, name } : s)),
     }));
+    renameSubcategory(subId, name).catch(fail);
+  };
+
+  /* ── Images ── */
+  const addImage = async (catId, subId, url) => {
+    try {
+      const cat = cats.find((x) => x.id === catId);
+      const sub = cat?.subs.find((s) => s.id === subId);
+      const img = await addProjectImage(subId, url, "", (sub?.images.length || 0) + 1);
+      setCats((c) => c.map((x) => x.id !== catId ? x : {
+        ...x, subs: x.subs.map((s) => s.id !== subId ? s : { ...s, images: [...s.images, img] }),
+      }));
+    } catch (e) { fail(e); }
+  };
+
+  const removeImage = (catId, subId, imgId) => {
+    setCats((c) => c.map((x) => x.id !== catId ? x : {
+      ...x, subs: x.subs.map((s) => s.id !== subId ? s : { ...s, images: s.images.filter((i) => i.id !== imgId) }),
+    }));
+    deleteProjectImage(imgId).catch(fail);
+  };
 
   /* ── Delete confirm ── */
-  const runConfirm = () => {
-    if (confirm.kind === "cat") {
-      setCats((c) => c.filter((x) => x.id !== confirm.catId));
-      showToast("Category removed (preview)");
-    } else {
-      setCats((c) => c.map((x) => x.id !== confirm.catId ? x : { ...x, subs: x.subs.filter((s) => s.id !== confirm.subId) }));
-      showToast("Sub-category removed (preview)");
-    }
+  const runConfirm = async () => {
+    const c = confirm;
     setConfirm(null);
+    try {
+      if (c.kind === "cat") {
+        setCats((list) => list.filter((x) => x.id !== c.catId));
+        await deleteCategory(c.catId);
+        showToast("Category removed");
+      } else {
+        setCats((list) => list.map((x) => x.id !== c.catId ? x : { ...x, subs: x.subs.filter((s) => s.id !== c.subId) }));
+        await deleteSubcategory(c.subId);
+        showToast("Sub-category removed");
+      }
+    } catch (e) { fail(e); }
   };
 
   const totalPhotos = (cat) => cat.subs.reduce((a, s) => a + s.images.length, 0);
@@ -185,23 +170,29 @@ export default function ProjectsManager() {
   return (
     <div>
       {toast}
-      <DemoBanner />
+      <ModeBanner />
       <PageHeader
         title="Projects & Photos"
-        subtitle="Organise your work into categories (e.g. Welding) and sub-categories (e.g. Doors & Gates), then upload photos into each one."
+        subtitle="Organise your work into categories (e.g. Welding) and sub-categories (e.g. Doors & Gates), then upload photos into each one. Click a name to rename it."
         action={
-          <Btn onClick={() => setCatModal({ mode: "add", name: "" })}>
+          <Btn onClick={() => setCatModal({ name: "" })}>
             <Icon path={ICONS.plus} className="h-4 w-4" />
             Add category
           </Btn>
         }
       />
 
-      {cats.length === 0 ? (
+      {loading ? (
+        <div className="space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-20 animate-pulse rounded-2xl border border-line bg-line/30" />
+          ))}
+        </div>
+      ) : cats.length === 0 ? (
         <EmptyState
           title="No categories yet"
           hint="Create your first project category to start adding photos of your work."
-          action={<Btn onClick={() => setCatModal({ mode: "add", name: "" })}><Icon path={ICONS.plus} className="h-4 w-4" />Add category</Btn>}
+          action={<Btn onClick={() => setCatModal({ name: "" })}><Icon path={ICONS.plus} className="h-4 w-4" />Add category</Btn>}
         />
       ) : (
         <div className="space-y-4">
@@ -261,12 +252,12 @@ export default function ProjectsManager() {
                           {sub.images.map((img) => (
                             <PhotoTile key={img.id} src={img.src} onRemove={() => removeImage(cat.id, sub.id, img.id)} />
                           ))}
-                          <AddPhotoTile onAdd={(src) => addImage(cat.id, sub.id, src)} />
+                          <AddPhotoTile onAddUrl={(url) => addImage(cat.id, sub.id, url)} />
                         </div>
                       </div>
                     ))}
 
-                    <Btn variant="ghost" size="sm" onClick={() => setSubModal({ mode: "add", catId: cat.id, name: "" })}>
+                    <Btn variant="ghost" size="sm" onClick={() => setSubModal({ catId: cat.id, name: "" })}>
                       <Icon path={ICONS.plus} className="h-4 w-4" /> Add sub-category
                     </Btn>
                   </div>
@@ -277,21 +268,21 @@ export default function ProjectsManager() {
         </div>
       )}
 
-      {/* Category modal */}
+      {/* Add category modal */}
       <Modal
         open={!!catModal}
-        title={catModal?.mode === "edit" ? "Rename category" : "Add a category"}
+        title="Add a category"
         onClose={() => setCatModal(null)}
         size="sm"
         footer={
           <>
             <Btn variant="ghost" onClick={() => setCatModal(null)}>Cancel</Btn>
-            <Btn type="submit" form="cat-form">{catModal?.mode === "edit" ? "Save" : "Add category"}</Btn>
+            <Btn type="submit" form="cat-form">Add category</Btn>
           </>
         }
       >
         {catModal && (
-          <form id="cat-form" onSubmit={saveCat}>
+          <form id="cat-form" onSubmit={addCat}>
             <Field label="Category name" hint="e.g. Welding Services, Painting Services">
               <TextInput value={catModal.name} onChange={(e) => setCatModal((m) => ({ ...m, name: e.target.value }))} autoFocus required />
             </Field>
@@ -299,21 +290,21 @@ export default function ProjectsManager() {
         )}
       </Modal>
 
-      {/* Sub-category modal */}
+      {/* Add sub-category modal */}
       <Modal
         open={!!subModal}
-        title={subModal?.mode === "edit" ? "Rename sub-category" : "Add a sub-category"}
+        title="Add a sub-category"
         onClose={() => setSubModal(null)}
         size="sm"
         footer={
           <>
             <Btn variant="ghost" onClick={() => setSubModal(null)}>Cancel</Btn>
-            <Btn type="submit" form="sub-form">{subModal?.mode === "edit" ? "Save" : "Add sub-category"}</Btn>
+            <Btn type="submit" form="sub-form">Add sub-category</Btn>
           </>
         }
       >
         {subModal && (
-          <form id="sub-form" onSubmit={saveSub}>
+          <form id="sub-form" onSubmit={addSub}>
             <Field label="Sub-category name" hint="e.g. Doors & Gates, Roofing Frames">
               <TextInput value={subModal.name} onChange={(e) => setSubModal((m) => ({ ...m, name: e.target.value }))} autoFocus required />
             </Field>

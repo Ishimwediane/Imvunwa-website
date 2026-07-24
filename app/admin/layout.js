@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Icon, ICONS } from "../../components/admin/ui";
+import { signOut } from "../../lib/adminApi";
 
 /* ── Navigation ──────────────────────────────────────────────── */
 const NAV = [
@@ -15,7 +16,7 @@ const NAV = [
   { href: "/admin/team",     label: "Team",             icon: ICONS.users },
 ];
 
-function SidebarContent({ pathname, onNavigate }) {
+function SidebarContent({ pathname, onNavigate, onLogout }) {
   return (
     <div className="flex h-full flex-col">
       {/* Brand */}
@@ -58,14 +59,13 @@ function SidebarContent({ pathname, onNavigate }) {
           <Icon path={ICONS.external} className="h-5 w-5 shrink-0" />
           View website
         </Link>
-        <Link
-          href="/admin/login"
-          onClick={onNavigate}
-          className="flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-[13px] font-bold text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+        <button
+          onClick={onLogout}
+          className="flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-[13px] font-bold text-white/70 transition-colors hover:bg-white/10 hover:text-white"
         >
           <Icon path={ICONS.logout} className="h-5 w-5 shrink-0" />
           Log out
-        </Link>
+        </button>
       </div>
     </div>
   );
@@ -73,7 +73,15 @@ function SidebarContent({ pathname, onNavigate }) {
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleLogout = async () => {
+    setMobileOpen(false);
+    await signOut();
+    router.push("/admin/login");
+    router.refresh();
+  };
 
   /* Login page: no dashboard chrome */
   if (pathname === "/admin/login") {
@@ -84,7 +92,7 @@ export default function AdminLayout({ children }) {
     <div className="min-h-screen bg-[#eef0f3]">
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 bg-deeper lg:block">
-        <SidebarContent pathname={pathname} />
+        <SidebarContent pathname={pathname} onLogout={handleLogout} />
       </aside>
 
       {/* Mobile drawer */}
@@ -92,7 +100,7 @@ export default function AdminLayout({ children }) {
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-black/50" onClick={() => setMobileOpen(false)} />
           <aside className="absolute inset-y-0 left-0 w-64 bg-deeper">
-            <SidebarContent pathname={pathname} onNavigate={() => setMobileOpen(false)} />
+            <SidebarContent pathname={pathname} onNavigate={() => setMobileOpen(false)} onLogout={handleLogout} />
           </aside>
         </div>
       )}
