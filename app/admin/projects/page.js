@@ -9,7 +9,7 @@ import {
   fetchProjects, createCategory, renameCategory, deleteCategory,
   createSubcategory, renameSubcategory, deleteSubcategory,
   addProjectImage, deleteProjectImage, uploadImage,
-} from "../../../lib/adminApi";
+} from "../../../backend/adminApi";
 
 /* ── A single photo tile with hover-remove ───────────────────── */
 function PhotoTile({ src, onRemove }) {

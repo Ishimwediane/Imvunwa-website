@@ -6,6 +6,7 @@ import Container from "../../components/ui/Container";
 import PageHero from "../../components/ui/PageHero";
 import SectionCta from "../../components/ui/SectionCta";
 import Eyebrow from "../../components/ui/Eyebrow";
+import Button from "../../components/ui/Button";
 import ArrowIcon from "../../components/ui/ArrowIcon";
 
 /* ── Stats ───────────────────────────────────────────────────── */
@@ -78,7 +79,7 @@ export default function AboutPage() {
       <section className="bg-white px-4 py-[70px] text-ink sm:px-6 lg:py-24 border-t border-line">
         <Container className="grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <Eyebrow>Our Story</Eyebrow>
+            <Eyebrow onLight>Our Story</Eyebrow>
             <h2 className="m-0 text-[26px] font-black leading-[1.06] text-ink sm:text-[34px] lg:text-[42px]">
               Transforming Spaces Across Rwanda.
             </h2>
@@ -93,13 +94,10 @@ export default function AboutPage() {
               product design, we bring together a complete range of capabilities under one roof — so homes,
               businesses, schools, and factories have a single, trusted partner for the work they need done.
             </p>
-            <Link
-              href="/services"
-              className="mt-8 inline-flex min-h-[48px] items-center gap-3 rounded-full bg-signal px-8 text-[13px] font-black text-ink transition-colors hover:bg-signal-hover"
-            >
+            <Button href="/services" className="mt-8 gap-3">
               Explore Our Services
               <ArrowIcon className="h-4 w-4" />
-            </Link>
+            </Button>
           </div>
 
           <div className="relative after:absolute after:-bottom-5 after:-right-5 after:-z-10 after:h-[44%] after:w-[44%] after:rounded-lg after:border after:border-signal">
@@ -121,7 +119,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {STATS.map((s) => (
               <div key={s.label} className="text-center">
-                <p className="text-[32px] font-black leading-none text-signal sm:text-[40px]">{s.value}</p>
+                <p className="text-[32px] font-black leading-none text-signal-ink sm:text-[40px]">{s.value}</p>
                 <p className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-muted">{s.label}</p>
               </div>
             ))}
@@ -169,7 +167,7 @@ export default function AboutPage() {
       <section className="bg-warm px-4 py-[70px] text-ink sm:px-6 lg:py-24 border-t border-line">
         <Container>
           <div className="mb-12 max-w-[620px]">
-            <Eyebrow>Our people, our strength</Eyebrow>
+            <Eyebrow onLight>Our people, our strength</Eyebrow>
             <h2 className="m-0 text-[26px] font-black leading-[1.06] text-ink sm:text-[34px] lg:text-[40px]">
               Meet the Team
             </h2>
@@ -215,7 +213,7 @@ export default function AboutPage() {
       <section className="bg-panel px-4 py-[70px] text-ink sm:px-6 lg:py-24 border-t border-line">
         <Container>
           <div className="mb-12 max-w-[560px]">
-            <Eyebrow>Why choose us</Eyebrow>
+            <Eyebrow onLight>Why choose us</Eyebrow>
             <h2 className="m-0 text-[26px] font-black leading-[1.06] text-ink sm:text-[34px] lg:text-[40px]">
               Built on Quality &amp; Trust
             </h2>
@@ -241,7 +239,7 @@ export default function AboutPage() {
         <Container>
           <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <Eyebrow>What we do</Eyebrow>
+              <Eyebrow onLight>What we do</Eyebrow>
               <h2 className="m-0 text-[26px] font-black leading-[1.06] text-ink sm:text-[34px] lg:text-[40px]">
                 Our Services
               </h2>

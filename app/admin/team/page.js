@@ -7,7 +7,7 @@ import {
 } from "../../../components/admin/ui";
 import {
   fetchTeam, createTeamMember, updateTeamMember, deleteTeamMember, uploadImage,
-} from "../../../lib/adminApi";
+} from "../../../backend/adminApi";
 
 const initialsOf = (name) =>
   (name || "").trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase() || "").join("") || "?";

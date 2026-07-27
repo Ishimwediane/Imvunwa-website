@@ -178,6 +178,8 @@ export default function Home() {
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: "20% center" }}
           src="/video-imvunwa/Create_an_second_cinematic_v (1).mp4"
+          poster="/image/hero-poster.webp"
+          preload="metadata"
           autoPlay muted loop playsInline aria-hidden="true"
         />
         <div className="absolute inset-0 bg-black/20" />
@@ -267,7 +269,7 @@ export default function Home() {
         <Container>
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <Eyebrow>Our Work</Eyebrow>
+              <Eyebrow onLight>Our Work</Eyebrow>
               <h2 className="m-0 text-[28px] font-black leading-[1.06] text-ink sm:text-[36px]">Portfolio & Projects</h2>
               <p className="mt-3 max-w-[500px] text-[14px] leading-[1.7] text-muted">
                 A showcase of precision-engineered products and completed projects spanning all our service categories.

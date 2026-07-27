@@ -105,7 +105,7 @@ export default function ServicesPage() {
             />
           </div>
           <div>
-            <Eyebrow>How we work</Eyebrow>
+            <Eyebrow onLight>How we work</Eyebrow>
             <h2 className="m-0 max-w-[760px] text-[26px] font-black leading-[1.02] tracking-normal text-ink sm:text-[34px] lg:text-[42px]">
               Our Process
             </h2>

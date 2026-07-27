@@ -19,7 +19,7 @@ are in place, the dashboard switches to **Live** and saves for real.
 ## 2. Create the database tables + seed data
 
 1. In your project, open **SQL Editor** (left sidebar) → **New query**.
-2. Open the file [`supabase/schema.sql`](supabase/schema.sql) from this
+2. Open the file [`backend/schema.sql`](backend/schema.sql) from this
    project, copy **all** of it, paste into the editor, and click **Run**.
 3. You should see “Success”. This creates the tables, security rules, the
    image storage bucket, and fills in your current website content.
@@ -75,11 +75,11 @@ When you deploy, add the same three environment variables in
 
 Uploaded images go to the Supabase **`images`** storage bucket (public, with
 a CDN). For heavy image use you can later switch uploads to Cloudinary — only
-`lib/adminApi.js` (`uploadImage`) would change.
+`backend/adminApi.js` (`uploadImage`) would change.
 
 ## Notes / what's next
 
-- **Public pages** currently read through `lib/data.js`, which falls back to
+- **Public pages** currently read through `backend/data.js`, which falls back to
   built-in defaults. Wiring each public page to read *live* from Supabase is
   the next step — best done now that the database exists so we can test it.
 - If Supabase is ever slow or down, the site keeps serving default/cached

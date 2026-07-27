@@ -89,7 +89,7 @@ function CategoryGrid({ sub, onOpen }) {
       <div className="mb-8 rounded-2xl border border-ink/10 bg-white px-6 py-5 shadow-card">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-signal">
+            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-signal-ink">
               Category
             </p>
             <h3 className="mt-1 text-[22px] font-black text-ink">{sub.name}</h3>
@@ -175,7 +175,7 @@ export default function ServiceProjects({
         {/* Section Header */}
         <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
           <div>
-            <Eyebrow>Portfolio & Categories</Eyebrow>
+            <Eyebrow onLight>Portfolio & Categories</Eyebrow>
             <h2 className="m-0 text-[26px] font-black text-ink sm:text-[34px]">{title}</h2>
             <p className="mt-3 max-w-[580px] text-[14px] leading-[1.7] text-muted">
               {subtitle ||

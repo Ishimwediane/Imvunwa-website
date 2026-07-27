@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
-import { SUPABASE_URL, SUPABASE_ANON_KEY, isSupabaseConfigured } from "./lib/supabase/config";
+import { SUPABASE_URL, SUPABASE_ANON_KEY, isSupabaseConfigured } from "./backend/supabase/config";
 
 /**
  * Runs on every /admin request. It (1) keeps the Supabase auth session

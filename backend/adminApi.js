@@ -13,6 +13,7 @@ import {
   SITE_CONTENT_DEFAULT,
   SERVICES_DEFAULT,
   TEAM_DEFAULT,
+  TESTIMONIALS_DEFAULT,
   PROJECTS_DEFAULT,
 } from "./defaults";
 
@@ -134,6 +135,40 @@ export async function deleteTeamMember(id) {
   const supabase = createClient();
   if (!supabase) return;
   const { error } = await supabase.from("team_members").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
+/* ── Testimonials ────────────────────────────────────────────── */
+export async function fetchTestimonials() {
+  const supabase = createClient();
+  if (!supabase) return clone(TESTIMONIALS_DEFAULT);
+  const { data, error } = await supabase
+    .from("testimonials")
+    .select("id, author, role, badge, quote, image_url, sort_order")
+    .order("sort_order", { ascending: true });
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
+export async function createTestimonial(row) {
+  const supabase = createClient();
+  if (!supabase) return { id: tempId(), ...row };
+  const { data, error } = await supabase.from("testimonials").insert(row).select().single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function updateTestimonial(id, patch) {
+  const supabase = createClient();
+  if (!supabase) return;
+  const { error } = await supabase.from("testimonials").update(patch).eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
+export async function deleteTestimonial(id) {
+  const supabase = createClient();
+  if (!supabase) return;
+  const { error } = await supabase.from("testimonials").delete().eq("id", id);
   if (error) throw new Error(error.message);
 }
 

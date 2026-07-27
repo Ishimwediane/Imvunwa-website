@@ -56,7 +56,7 @@ function SubCategory({ name, images }) {
       <div className="mb-6 flex items-center gap-4">
         <div className="flex items-center gap-3">
           <div className="h-[3px] w-8 rounded-full bg-signal" />
-          <h3 className="text-[13px] font-black uppercase tracking-[0.15em] text-signal">{name}</h3>
+          <h3 className="text-[13px] font-black uppercase tracking-[0.15em] text-signal-ink">{name}</h3>
         </div>
         <div className="h-px flex-1 bg-line" />
         <span className="text-[11px] font-bold uppercase tracking-wider text-muted">
@@ -177,7 +177,7 @@ function ProjectsContent() {
               { label: "Sub-categories", value: totalSubs },
             ].map(({ label, value }) => (
               <div key={label} className="text-center">
-                <p className="text-[28px] font-black text-signal leading-none">{value}+</p>
+                <p className="text-[28px] font-black text-signal-ink leading-none">{value}+</p>
                 <p className="mt-1 text-[11px] font-medium uppercase tracking-wider text-muted">{label}</p>
               </div>
             ))}

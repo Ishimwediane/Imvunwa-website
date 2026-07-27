@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Icon, ICONS } from "../../components/admin/ui";
-import { signOut } from "../../lib/adminApi";
+import { signOut } from "../../backend/adminApi";
 
 /* ── Navigation ──────────────────────────────────────────────── */
 const NAV = [
@@ -13,6 +13,7 @@ const NAV = [
   { href: "/admin/content",  label: "Site Text",        icon: ICONS.text },
   { href: "/admin/services", label: "Services",         icon: ICONS.wrench },
   { href: "/admin/projects", label: "Projects & Photos", icon: ICONS.image },
+  { href: "/admin/testimonials", label: "Testimonials",  icon: ICONS.chat },
   { href: "/admin/team",     label: "Team",             icon: ICONS.users },
 ];
 

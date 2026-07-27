@@ -8,6 +8,7 @@
 drop table if exists project_images       cascade;
 drop table if exists project_subcategories cascade;
 drop table if exists project_categories    cascade;
+drop table if exists testimonials          cascade;
 drop table if exists team_members          cascade;
 drop table if exists services              cascade;
 drop table if exists site_content          cascade;
@@ -34,6 +35,18 @@ create table team_members (
   id         uuid primary key default gen_random_uuid(),
   name       text not null,
   role       text,
+  image_url  text,
+  sort_order int  not null default 0,
+  created_at timestamptz not null default now()
+);
+
+-- ── Testimonials ────────────────────────────────────────────────
+create table testimonials (
+  id         uuid primary key default gen_random_uuid(),
+  author     text not null,
+  role       text,
+  badge      text,
+  quote      text,
   image_url  text,
   sort_order int  not null default 0,
   created_at timestamptz not null default now()
@@ -73,6 +86,7 @@ create table project_images (
 alter table site_content          enable row level security;
 alter table services              enable row level security;
 alter table team_members          enable row level security;
+alter table testimonials          enable row level security;
 alter table project_categories    enable row level security;
 alter table project_subcategories enable row level security;
 alter table project_images        enable row level security;
@@ -81,7 +95,7 @@ do $$
 declare t text;
 begin
   foreach t in array array[
-    'site_content','services','team_members',
+    'site_content','services','team_members','testimonials',
     'project_categories','project_subcategories','project_images'
   ]
   loop
@@ -141,6 +155,12 @@ insert into team_members (name, role, image_url, sort_order) values
   ('IRADUKUNDA Jean Michel', 'Co-Founder & Advertisement and Stock Manager', '/image/IRADUKUNDA.jpg', 2),
   ('Muhire Gaspard',         'Co-Founder & Production Manager',               '', 3),
   ('Claudine IMANIZABAYO',   'Co-Founder & Accountant',                      '', 4);
+
+-- Testimonials
+insert into testimonials (author, role, badge, quote, image_url, sort_order) values
+  ('Jean-Pierre Nkurunziza', 'Factory Manager, Kigali', 'Manufacturing of Machines', 'Imvunwa fabricated the custom machines for our production line on time and within budget. The quality is exceptional — we''ve had zero downtime since installation. Truly world-class work.', '/image/manifa.jpg', 1),
+  ('Emmanuel Habimana', 'Construction Contractor, Kigali', 'Welding Services', 'The welding work on our steel structure was absolutely flawless. Clean welds, precise measurements, and they finished two days ahead of schedule. I would not trust anyone else for structural work.', '/image/welding1.png', 2),
+  ('Vestine Iradukunda', 'Hotel Manager, Rubavu', 'Painting Services', 'The painting finish on our hotel facility is simply stunning. Very durable, applied with great care and attention to detail. Our guests always compliment how well-maintained the building looks.', '/image/painting.jpg', 3);
 
 -- Project categories
 insert into project_categories (name, slug, sort_order) values

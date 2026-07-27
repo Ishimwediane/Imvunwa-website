@@ -19,6 +19,7 @@ module.exports = {
         // ── Brand ────────────────────────────────────────────────
         signal:        "#F5A623",    // primary brand orange
         "signal-dark": "#bd5d11",    // dark orange (tag text)
+        "signal-ink":  "#b35810",    // accessible orange for text on white (>=4.5:1)
         "signal-hover":"#e09212",    // hover state for signal
 
         // ── Text / UI ────────────────────────────────────────────

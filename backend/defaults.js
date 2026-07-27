@@ -3,7 +3,7 @@
  * configured or a query fails — so the public website always renders,
  * even before the backend is set up or during a database outage.
  *
- * These values mirror the seed data in supabase/schema.sql.
+ * These values mirror the seed data in backend/schema.sql.
  */
 import { PORTFOLIO_DATA } from "../data/portfolioData";
 
@@ -42,6 +42,12 @@ export const TEAM_DEFAULT = [
   { id: "t2", name: "IRADUKUNDA Jean Michel", role: "Co-Founder & Advertisement and Stock Manager", image_url: "/image/IRADUKUNDA.jpg" },
   { id: "t3", name: "Muhire Gaspard", role: "Co-Founder & Production Manager", image_url: "" },
   { id: "t4", name: "Claudine IMANIZABAYO", role: "Co-Founder & Accountant", image_url: "" },
+];
+
+export const TESTIMONIALS_DEFAULT = [
+  { id: "tm1", author: "Jean-Pierre Nkurunziza", role: "Factory Manager, Kigali", badge: "Manufacturing of Machines", quote: "Imvunwa fabricated the custom machines for our production line on time and within budget. The quality is exceptional — we've had zero downtime since installation. Truly world-class work.", image_url: "/image/manifa.jpg" },
+  { id: "tm2", author: "Emmanuel Habimana", role: "Construction Contractor, Kigali", badge: "Welding Services", quote: "The welding work on our steel structure was absolutely flawless. Clean welds, precise measurements, and they finished two days ahead of schedule. I would not trust anyone else for structural work.", image_url: "/image/welding1.png" },
+  { id: "tm3", author: "Vestine Iradukunda", role: "Hotel Manager, Rubavu", badge: "Painting Services", quote: "The painting finish on our hotel facility is simply stunning. Very durable, applied with great care and attention to detail. Our guests always compliment how well-maintained the building looks.", image_url: "/image/painting.jpg" },
 ];
 
 /** Normalized project tree derived from the existing portfolio data. */

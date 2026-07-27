@@ -3,6 +3,7 @@ import {
   SITE_CONTENT_DEFAULT,
   SERVICES_DEFAULT,
   TEAM_DEFAULT,
+  TESTIMONIALS_DEFAULT,
   PROJECTS_DEFAULT,
 } from "./defaults";
 
@@ -61,6 +62,22 @@ export async function getTeam() {
     return data;
   } catch {
     return TEAM_DEFAULT;
+  }
+}
+
+export async function getTestimonials() {
+  const supabase = createClient();
+  if (!supabase) return TESTIMONIALS_DEFAULT;
+
+  try {
+    const { data, error } = await supabase
+      .from("testimonials")
+      .select("id, author, role, badge, quote, image_url")
+      .order("sort_order", { ascending: true });
+    if (error || !data?.length) return TESTIMONIALS_DEFAULT;
+    return data;
+  } catch {
+    return TESTIMONIALS_DEFAULT;
   }
 }
 

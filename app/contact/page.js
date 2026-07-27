@@ -2,6 +2,7 @@
 
 import Container from "../../components/ui/Container";
 import PageHero from "../../components/ui/PageHero";
+import Eyebrow from "../../components/ui/Eyebrow";
 
 /* ── Contact info items ──────────────────────────────────────── */
 const CONTACT_INFO = [
@@ -54,7 +55,7 @@ export default function ContactPage() {
 
           {/* Contact info */}
           <div>
-            <p className="mb-3.5 text-[10px] font-black uppercase tracking-[0.18em] text-signal">Contact</p>
+            <Eyebrow onLight>Contact</Eyebrow>
             <h2 className="m-0 text-[26px] font-black leading-none tracking-normal sm:text-[34px] lg:text-[40px] text-ink">
               Let&apos;s talk about your next project.
             </h2>

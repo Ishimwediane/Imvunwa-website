@@ -26,6 +26,13 @@ const SECTIONS = [
     stat: "7 categories",
   },
   {
+    href: "/admin/testimonials",
+    icon: ICONS.chat,
+    title: "Testimonials",
+    desc: "Add or edit the client reviews shown on your home page — quote, name, role, and photo.",
+    stat: "3 reviews",
+  },
+  {
     href: "/admin/team",
     icon: ICONS.users,
     title: "Team",

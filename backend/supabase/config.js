@@ -1,7 +1,7 @@
 /**
  * Central place to read Supabase env vars and know whether Supabase
  * has been configured yet. Before the owner adds their keys, the app
- * gracefully falls back to built-in default content (see lib/data.js).
+ * gracefully falls back to built-in default content (see backend/data.js).
  */
 export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 export const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";

@@ -7,7 +7,7 @@ import {
 } from "../../../components/admin/ui";
 import {
   fetchServices, createService, updateService, deleteService, uploadImage,
-} from "../../../lib/adminApi";
+} from "../../../backend/adminApi";
 
 export default function ServicesManager() {
   const [services, setServices] = useState([]);

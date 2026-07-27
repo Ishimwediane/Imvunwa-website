@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import {
   ModeBanner, PageHeader, Btn, EditableText, PreviewBlock, useSavedToast,
 } from "../../../components/admin/ui";
-import { SITE_CONTENT_DEFAULT } from "../../../lib/defaults";
-import { fetchSiteContent, saveSiteContent } from "../../../lib/adminApi";
+import { SITE_CONTENT_DEFAULT } from "../../../backend/defaults";
+import { fetchSiteContent, saveSiteContent } from "../../../backend/adminApi";
 
 /* Field keys map 1:1 to the site_content table keys */
 export default function ContentManager() {

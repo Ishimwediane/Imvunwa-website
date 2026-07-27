@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Field, TextInput, Btn } from "../../../components/admin/ui";
-import { signIn, configured } from "../../../lib/adminApi";
+import { signIn, configured } from "../../../backend/adminApi";
 
 export default function AdminLoginPage() {
   const router = useRouter();
