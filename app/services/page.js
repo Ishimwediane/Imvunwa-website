@@ -1,22 +1,29 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import Container from "../../components/ui/Container";
 import PageHero from "../../components/ui/PageHero";
 import SectionCta from "../../components/ui/SectionCta";
 import Eyebrow from "../../components/ui/Eyebrow";
+import { getServices } from "../../backend/data";
 
-/* ── Data ────────────────────────────────────────────────────── */
-const SERVICES = [
-  { title: "Manufacturing of Machines",       text: "Design and production of high-quality machines tailored to meet specific industrial needs, built with durable materials and dependable performance.", image: "/image/manufacturing.jpg", tag: "Fabrication",  id: "manufacturing", href: "/services/manufacturing" },
-  { title: "Machine Repairment",              text: "Comprehensive repair services for a wide range of machinery, with prompt diagnosis and effective solutions that reduce downtime.",                    image: "/image/repairement.jpg",   tag: "Maintenance",  id: "repair",         href: "/services/repair" },
-  { title: "Welding Services",                text: "Top-tier welding services for both structural and custom projects, delivered with precision and safety.",                                          image: "/image/welding1.png",      tag: "Metalwork",    id: "welding",        href: "/services/welding" },
-  { title: "Painting Services",               text: "Top-quality painting finishes for homes and businesses, with protective surface coating that lasts.",                                              image: "/image/paint.jpg",         tag: "Finishing",    id: "painting",       href: "/services/painting" },
-  { title: "Electricity Installation and Repair", text: "Professional electrical services including installation, repair, and maintenance by certified electricians.",                                    image: "/image/electricity.jpg",   tag: "Installation", id: "electricity",    href: "/services/electrical" },
-  { title: "Plumbing Services",               text: "Installations, repairs, and maintenance of water systems for residential and commercial spaces.",                                                  image: "/image/plumb.jpg",         tag: "Utilities",    id: "plumbing",       href: "/services/plumbing" },
-  { title: "Product Design",                  text: "Innovative product design services developed collaboratively using cutting-edge technology.",                                                     image: "/image/product1.jpg",      tag: "Design",       id: "design",         href: "/services/design" },
-];
+/* Fully static: read the backend only on admin save (via /api/revalidate),
+   never on a timer. Falls back to built-in defaults on outage. */
+export const revalidate = false;
+
+/**
+ * Presentation metadata (category tag + detail-page link) keyed by service
+ * name. The DB stores name/description/image only, so these UI-only bits
+ * live here; unknown names fall back to a generic tag + the services index.
+ */
+const SERVICE_META = {
+  "Manufacturing of Machines":          { tag: "Fabrication",  href: "/services/manufacturing" },
+  "Machine Repairment":                 { tag: "Maintenance",  href: "/services/repair" },
+  "Welding Services":                   { tag: "Metalwork",    href: "/services/welding" },
+  "Painting Services":                  { tag: "Finishing",    href: "/services/painting" },
+  "Electricity Installation and Repair":{ tag: "Installation", href: "/services/electrical" },
+  "Plumbing Services":                  { tag: "Utilities",    href: "/services/plumbing" },
+  "Product Design":                     { tag: "Design",       href: "/services/design" },
+};
 
 /* ── Image-based service card (services page layout) ─────────── */
 function ServiceArticle({ id, title, text, image, tag, href }) {
@@ -71,7 +78,9 @@ function ProcessStep({ number, title, text }) {
 }
 
 /* ── Page ─────────────────────────────────────────────────────── */
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServices();
+
   return (
     <div className="overflow-hidden">
       <PageHero
@@ -84,9 +93,20 @@ export default function ServicesPage() {
       <section className="bg-panel px-4 py-[70px] sm:px-6 lg:py-24">
         <Container>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map((s) => (
-              <ServiceArticle key={s.title} {...s} />
-            ))}
+            {services.map((s) => {
+              const meta = SERVICE_META[s.name] || { tag: "Service", href: "/services" };
+              return (
+                <ServiceArticle
+                  key={s.id}
+                  id={s.id}
+                  title={s.name}
+                  text={s.description}
+                  image={s.image_url}
+                  tag={meta.tag}
+                  href={meta.href}
+                />
+              );
+            })}
           </div>
         </Container>
       </section>

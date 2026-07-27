@@ -9,6 +9,7 @@
  */
 import { createClient } from "./supabase/client";
 import { isSupabaseConfigured, SUPABASE_BUCKET } from "./supabase/config";
+import { normalizeProjectTree, PROJECT_TREE_SELECT } from "./normalize";
 import {
   SITE_CONTENT_DEFAULT,
   SERVICES_DEFAULT,
@@ -19,16 +20,83 @@ import {
 
 export const configured = isSupabaseConfigured;
 
+/* ── Helpers ─────────────────────────────────────────────────── */
 const clone = (v) => JSON.parse(JSON.stringify(v));
 const tempId = () => `tmp-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+/** Await a Supabase query, throwing a plain Error on failure. */
+async function run(query) {
+  const { data, error } = await query;
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+/**
+ * Run `live(db)` when Supabase is configured; otherwise return the preview
+ * fallback so the dashboard keeps working offline. `fallback` may be a value
+ * or a function that produces one (use a function for fresh clones / temp ids).
+ */
+async function withDb(fallback, live) {
+  const supabase = createClient();
+  if (!supabase) return typeof fallback === "function" ? fallback() : fallback;
+  return live(supabase);
+}
+
+/**
+ * Ask the public site to rebuild its database-backed pages after a change,
+ * so the backend is read only when content actually updates (not on a timer).
+ * Best-effort, and only when Supabase is live.
+ */
+async function triggerRevalidate() {
+  if (!isSupabaseConfigured) return;
+  try {
+    await fetch("/api/revalidate", { method: "POST" });
+  } catch {
+    /* best-effort: pages still refresh on the next deploy/build */
+  }
+}
+
+/**
+ * CRUD for a standard table: `sort_order`-ordered list plus id-keyed
+ * create / update / delete. Each is preview-aware, and every write refreshes
+ * the public pages on success.
+ */
+function crudTable(table, columns, previewDefault) {
+  return {
+    list: () =>
+      withDb(
+        () => clone(previewDefault),
+        async (db) =>
+          (await run(db.from(table).select(columns).order("sort_order", { ascending: true }))) || []
+      ),
+    create: (row) =>
+      withDb(
+        () => ({ id: tempId(), ...row }),
+        async (db) => {
+          const created = await run(db.from(table).insert(row).select().single());
+          await triggerRevalidate();
+          return created;
+        }
+      ),
+    update: (id, patch) =>
+      withDb(undefined, async (db) => {
+        await run(db.from(table).update(patch).eq("id", id));
+        await triggerRevalidate();
+      }),
+    remove: (id) =>
+      withDb(undefined, async (db) => {
+        await run(db.from(table).delete().eq("id", id));
+        await triggerRevalidate();
+      }),
+  };
+}
 
 /* ── Auth ────────────────────────────────────────────────────── */
 export async function signIn(email, password) {
   const supabase = createClient();
   if (!supabase) return { ok: true, preview: true };
   const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return { ok: false, error: error.message };
-  return { ok: true };
+  return error ? { ok: false, error: error.message } : { ok: true };
 }
 
 export async function signOut() {
@@ -43,233 +111,133 @@ export async function uploadImage(file) {
 
   const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
   const path = `uploads/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const { error } = await supabase.storage.from(SUPABASE_BUCKET).upload(path, file, {
-    cacheControl: "3600",
-    upsert: false,
-  });
-  if (error) throw new Error(error.message);
-  const { data } = supabase.storage.from(SUPABASE_BUCKET).getPublicUrl(path);
-  return data.publicUrl;
+  await run(
+    supabase.storage.from(SUPABASE_BUCKET).upload(path, file, { cacheControl: "3600", upsert: false })
+  );
+  return supabase.storage.from(SUPABASE_BUCKET).getPublicUrl(path).data.publicUrl;
 }
 
 /* ── Site content ────────────────────────────────────────────── */
-export async function fetchSiteContent() {
-  const supabase = createClient();
-  if (!supabase) return { ...SITE_CONTENT_DEFAULT };
-  const { data, error } = await supabase.from("site_content").select("key, value");
-  if (error) throw new Error(error.message);
-  const fromDb = Object.fromEntries((data || []).map((r) => [r.key, r.value ?? ""]));
-  return { ...SITE_CONTENT_DEFAULT, ...fromDb };
+export function fetchSiteContent() {
+  return withDb(
+    () => ({ ...SITE_CONTENT_DEFAULT }),
+    async (db) => {
+      const rows = await run(db.from("site_content").select("key, value"));
+      const fromDb = Object.fromEntries((rows || []).map((r) => [r.key, r.value ?? ""]));
+      return { ...SITE_CONTENT_DEFAULT, ...fromDb };
+    }
+  );
 }
 
-export async function saveSiteContent(obj) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const rows = Object.entries(obj).map(([key, value]) => ({ key, value }));
-  const { error } = await supabase.from("site_content").upsert(rows, { onConflict: "key" });
-  if (error) throw new Error(error.message);
+export function saveSiteContent(obj) {
+  return withDb(undefined, async (db) => {
+    const rows = Object.entries(obj).map(([key, value]) => ({ key, value }));
+    await run(db.from("site_content").upsert(rows, { onConflict: "key" }));
+    await triggerRevalidate();
+  });
 }
 
-/* ── Services ────────────────────────────────────────────────── */
-export async function fetchServices() {
-  const supabase = createClient();
-  if (!supabase) return clone(SERVICES_DEFAULT);
-  const { data, error } = await supabase
-    .from("services")
-    .select("id, name, description, image_url, sort_order")
-    .order("sort_order", { ascending: true });
-  if (error) throw new Error(error.message);
-  return data || [];
-}
+/* ── Services / Team / Testimonials (standard CRUD) ──────────── */
+const services = crudTable("services", "id, name, description, image_url, sort_order", SERVICES_DEFAULT);
+export const fetchServices = services.list;
+export const createService = services.create;
+export const updateService = services.update;
+export const deleteService = services.remove;
 
-export async function createService(row) {
-  const supabase = createClient();
-  if (!supabase) return { id: tempId(), ...row };
-  const { data, error } = await supabase.from("services").insert(row).select().single();
-  if (error) throw new Error(error.message);
-  return data;
-}
+const team = crudTable("team_members", "id, name, role, image_url, sort_order", TEAM_DEFAULT);
+export const fetchTeam = team.list;
+export const createTeamMember = team.create;
+export const updateTeamMember = team.update;
+export const deleteTeamMember = team.remove;
 
-export async function updateService(id, patch) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("services").update(patch).eq("id", id);
-  if (error) throw new Error(error.message);
-}
-
-export async function deleteService(id) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("services").delete().eq("id", id);
-  if (error) throw new Error(error.message);
-}
-
-/* ── Team ────────────────────────────────────────────────────── */
-export async function fetchTeam() {
-  const supabase = createClient();
-  if (!supabase) return clone(TEAM_DEFAULT);
-  const { data, error } = await supabase
-    .from("team_members")
-    .select("id, name, role, image_url, sort_order")
-    .order("sort_order", { ascending: true });
-  if (error) throw new Error(error.message);
-  return data || [];
-}
-
-export async function createTeamMember(row) {
-  const supabase = createClient();
-  if (!supabase) return { id: tempId(), ...row };
-  const { data, error } = await supabase.from("team_members").insert(row).select().single();
-  if (error) throw new Error(error.message);
-  return data;
-}
-
-export async function updateTeamMember(id, patch) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("team_members").update(patch).eq("id", id);
-  if (error) throw new Error(error.message);
-}
-
-export async function deleteTeamMember(id) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("team_members").delete().eq("id", id);
-  if (error) throw new Error(error.message);
-}
-
-/* ── Testimonials ────────────────────────────────────────────── */
-export async function fetchTestimonials() {
-  const supabase = createClient();
-  if (!supabase) return clone(TESTIMONIALS_DEFAULT);
-  const { data, error } = await supabase
-    .from("testimonials")
-    .select("id, author, role, badge, quote, image_url, sort_order")
-    .order("sort_order", { ascending: true });
-  if (error) throw new Error(error.message);
-  return data || [];
-}
-
-export async function createTestimonial(row) {
-  const supabase = createClient();
-  if (!supabase) return { id: tempId(), ...row };
-  const { data, error } = await supabase.from("testimonials").insert(row).select().single();
-  if (error) throw new Error(error.message);
-  return data;
-}
-
-export async function updateTestimonial(id, patch) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("testimonials").update(patch).eq("id", id);
-  if (error) throw new Error(error.message);
-}
-
-export async function deleteTestimonial(id) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("testimonials").delete().eq("id", id);
-  if (error) throw new Error(error.message);
-}
+const testimonials = crudTable(
+  "testimonials",
+  "id, author, role, badge, quote, image_url, sort_order",
+  TESTIMONIALS_DEFAULT
+);
+export const fetchTestimonials = testimonials.list;
+export const createTestimonial = testimonials.create;
+export const updateTestimonial = testimonials.update;
+export const deleteTestimonial = testimonials.remove;
 
 /* ── Projects (categories / subcategories / images) ──────────── */
-export async function fetchProjects() {
-  const supabase = createClient();
-  if (!supabase) return clone(PROJECTS_DEFAULT);
-  const { data, error } = await supabase
-    .from("project_categories")
-    .select(
-      `id, name, slug, sort_order,
-       project_subcategories ( id, name, sort_order,
-         project_images ( id, image_url, caption, sort_order ) )`
-    )
-    .order("sort_order", { ascending: true });
-  if (error) throw new Error(error.message);
-  return (data || []).map((cat) => ({
-    id: cat.id,
-    name: cat.name,
-    slug: cat.slug,
-    subs: (cat.project_subcategories || [])
-      .slice()
-      .sort((a, b) => a.sort_order - b.sort_order)
-      .map((sub) => ({
-        id: sub.id,
-        name: sub.name,
-        images: (sub.project_images || [])
-          .slice()
-          .sort((a, b) => a.sort_order - b.sort_order)
-          .map((img) => ({ id: img.id, src: img.image_url, caption: img.caption || "" })),
-      })),
-  }));
+export function fetchProjects() {
+  return withDb(
+    () => clone(PROJECTS_DEFAULT),
+    async (db) => {
+      const rows = await run(
+        db.from("project_categories").select(PROJECT_TREE_SELECT).order("sort_order", { ascending: true })
+      );
+      return normalizeProjectTree(rows || []);
+    }
+  );
 }
 
-export async function createCategory(name, sort_order = 0) {
-  const supabase = createClient();
-  if (!supabase) return { id: tempId(), name, slug: null, subs: [] };
-  const { data, error } = await supabase
-    .from("project_categories")
-    .insert({ name, sort_order })
-    .select()
-    .single();
-  if (error) throw new Error(error.message);
-  return { id: data.id, name: data.name, slug: data.slug, subs: [] };
+export function createCategory(name, sort_order = 0) {
+  return withDb(
+    () => ({ id: tempId(), name, slug: null, subs: [] }),
+    async (db) => {
+      const cat = await run(
+        db.from("project_categories").insert({ name, sort_order }).select().single()
+      );
+      return { id: cat.id, name: cat.name, slug: cat.slug, subs: [] };
+    }
+  );
 }
 
-export async function renameCategory(id, name) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("project_categories").update({ name }).eq("id", id);
-  if (error) throw new Error(error.message);
+export const renameCategory = (id, name) =>
+  withDb(undefined, async (db) => {
+    await run(db.from("project_categories").update({ name }).eq("id", id));
+  });
+
+export const deleteCategory = (id) =>
+  withDb(undefined, async (db) => {
+    await run(db.from("project_categories").delete().eq("id", id));
+  });
+
+export function createSubcategory(categoryId, name, sort_order = 0) {
+  return withDb(
+    () => ({ id: tempId(), name, images: [] }),
+    async (db) => {
+      const sub = await run(
+        db
+          .from("project_subcategories")
+          .insert({ category_id: categoryId, name, sort_order })
+          .select()
+          .single()
+      );
+      return { id: sub.id, name: sub.name, images: [] };
+    }
+  );
 }
 
-export async function deleteCategory(id) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("project_categories").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+export const renameSubcategory = (id, name) =>
+  withDb(undefined, async (db) => {
+    await run(db.from("project_subcategories").update({ name }).eq("id", id));
+  });
+
+export const deleteSubcategory = (id) =>
+  withDb(undefined, async (db) => {
+    await run(db.from("project_subcategories").delete().eq("id", id));
+  });
+
+export function addProjectImage(subcategoryId, src, caption = "", sort_order = 0) {
+  return withDb(
+    () => ({ id: tempId(), src, caption }),
+    async (db) => {
+      const img = await run(
+        db
+          .from("project_images")
+          .insert({ subcategory_id: subcategoryId, image_url: src, caption, sort_order })
+          .select()
+          .single()
+      );
+      return { id: img.id, src: img.image_url, caption: img.caption || "" };
+    }
+  );
 }
 
-export async function createSubcategory(categoryId, name, sort_order = 0) {
-  const supabase = createClient();
-  if (!supabase) return { id: tempId(), name, images: [] };
-  const { data, error } = await supabase
-    .from("project_subcategories")
-    .insert({ category_id: categoryId, name, sort_order })
-    .select()
-    .single();
-  if (error) throw new Error(error.message);
-  return { id: data.id, name: data.name, images: [] };
-}
-
-export async function renameSubcategory(id, name) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("project_subcategories").update({ name }).eq("id", id);
-  if (error) throw new Error(error.message);
-}
-
-export async function deleteSubcategory(id) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("project_subcategories").delete().eq("id", id);
-  if (error) throw new Error(error.message);
-}
-
-export async function addProjectImage(subcategoryId, src, caption = "", sort_order = 0) {
-  const supabase = createClient();
-  if (!supabase) return { id: tempId(), src, caption };
-  const { data, error } = await supabase
-    .from("project_images")
-    .insert({ subcategory_id: subcategoryId, image_url: src, caption, sort_order })
-    .select()
-    .single();
-  if (error) throw new Error(error.message);
-  return { id: data.id, src: data.image_url, caption: data.caption || "" };
-}
-
-export async function deleteProjectImage(id) {
-  const supabase = createClient();
-  if (!supabase) return;
-  const { error } = await supabase.from("project_images").delete().eq("id", id);
-  if (error) throw new Error(error.message);
-}
+export const deleteProjectImage = (id) =>
+  withDb(undefined, async (db) => {
+    await run(db.from("project_images").delete().eq("id", id));
+  });

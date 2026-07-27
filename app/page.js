@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import Container from "../components/ui/Container";
@@ -7,6 +5,12 @@ import Eyebrow from "../components/ui/Eyebrow";
 import ServiceCard from "../components/ui/ServiceCard";
 import TestimonialCard from "../components/ui/TestimonialCard";
 import ArrowIcon from "../components/ui/ArrowIcon";
+import { getTestimonials } from "../backend/data";
+
+/* Fully static: the backend is read only when the admin saves a change
+   (which pings /api/revalidate) — never on a timer or per request. Falls
+   back to built-in defaults whenever the backend is unreachable. */
+export const revalidate = false;
 
 /* ── Services data ───────────────────────────────────────────── */
 const SERVICES = [
@@ -99,40 +103,6 @@ const STATS = [
   { value: "100%", label: "Satisfaction" },
 ];
 
-/* ── Testimonial data ────────────────────────────────────────── */
-const TESTIMONIALS = [
-  {
-    image:     "/image/manifa.jpg",
-    imageAlt:  "Custom machine manufactured for Jean-Pierre",
-    badge:     "Manufacturing of Machines",
-    quote:     "Imvunwa fabricated the custom machines for our production line on time and within budget. The quality is exceptional — we've had zero downtime since installation. Truly world-class work.",
-    author:    "Jean-Pierre Nkurunziza",
-    role:      "Factory Manager, Kigali",
-    initial:   "J",
-    animClass: "animate-float-1",
-  },
-  {
-    image:     "/image/welding1.png",
-    imageAlt:  "Steel structure welded for Emmanuel",
-    badge:     "Welding Services",
-    quote:     "The welding work on our steel structure was absolutely flawless. Clean welds, precise measurements, and they finished two days ahead of schedule. I would not trust anyone else for structural work.",
-    author:    "Emmanuel Habimana",
-    role:      "Construction Contractor, Kigali",
-    initial:   "E",
-    animClass: "animate-float-2",
-  },
-  {
-    image:     "/image/painting.jpg",
-    imageAlt:  "Painting project done for Vestine",
-    badge:     "Painting Services",
-    quote:     "The painting finish on our hotel facility is simply stunning. Very durable, applied with great care and attention to detail. Our guests always compliment how well-maintained the building looks.",
-    author:    "Vestine Iradukunda",
-    role:      "Hotel Manager, Rubavu",
-    initial:   "V",
-    animClass: "animate-float-3",
-  },
-];
-
 /* ── PortfolioCard ────────────────────────────────────────────── */
 function PortfolioCard({ src, alt, tag, title, desc }) {
   return (
@@ -168,7 +138,9 @@ function PortfolioCard({ src, alt, tag, title, desc }) {
 }
 
 /* ── Page ─────────────────────────────────────────────────────── */
-export default function Home() {
+export default async function Home() {
+  const testimonials = await getTestimonials();
+
   return (
     <div className="overflow-hidden">
 
@@ -317,8 +289,18 @@ export default function Home() {
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {TESTIMONIALS.map((t) => (
-              <TestimonialCard key={t.author} {...t} />
+            {testimonials.map((t, i) => (
+              <TestimonialCard
+                key={t.id || t.author}
+                image={t.image_url}
+                imageAlt={`${t.author} — ${t.badge}`}
+                badge={t.badge}
+                quote={t.quote}
+                author={t.author}
+                role={t.role}
+                initial={t.author?.charAt(0) || ""}
+                animClass={`animate-float-${(i % 3) + 1}`}
+              />
             ))}
           </div>
         </div>

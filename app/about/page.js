@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import Container from "../../components/ui/Container";
@@ -8,6 +6,15 @@ import SectionCta from "../../components/ui/SectionCta";
 import Eyebrow from "../../components/ui/Eyebrow";
 import Button from "../../components/ui/Button";
 import ArrowIcon from "../../components/ui/ArrowIcon";
+import { getTeam, getSiteContent } from "../../backend/data";
+
+/* Fully static: read the backend only on admin save (via /api/revalidate),
+   never on a timer. Falls back to built-in defaults on outage. */
+export const revalidate = false;
+
+/** Two-letter initials from a full name (avatar fallback). */
+const initialsOf = (name = "") =>
+  name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 
 /* ── Stats ───────────────────────────────────────────────────── */
 const STATS = [
@@ -45,14 +52,6 @@ const REASONS = [
   },
 ];
 
-/* ── Team ────────────────────────────────────────────────────── */
-const TEAM = [
-  { name: "NIYONZIMA Pascal",       role: "Co-Founder & CEO",                             initials: "NP" },
-  { name: "IRADUKUNDA Jean Michel", role: "Co-Founder & Advertisement and Stock Manager", initials: "IJ", image: "/image/IRADUKUNDA.jpg" },
-  { name: "Muhire Gaspard",         role: "Co-Founder & Production Manager",               initials: "MG" },
-  { name: "Claudine IMANIZABAYO",   role: "Co-Founder & Accountant",                      initials: "CI" },
-];
-
 /* ── Services summary ────────────────────────────────────────── */
 const SERVICES = [
   { name: "Manufacturing of Machines",        href: "/services/manufacturing" },
@@ -65,7 +64,9 @@ const SERVICES = [
 ];
 
 /* ── Page ─────────────────────────────────────────────────────── */
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [team, content] = await Promise.all([getTeam(), getSiteContent()]);
+
   return (
     <div className="overflow-hidden">
       <PageHero
@@ -84,10 +85,7 @@ export default function AboutPage() {
               Transforming Spaces Across Rwanda.
             </h2>
             <p className="mt-5 text-[14px] leading-[1.8] text-muted">
-              Imvunwa Business Group Ltd is a leading metal fabrication, painting, repair, and restoration
-              company, dedicated to delivering exceptional services to our clients. We specialise in
-              transforming spaces through industrial services and product manufacturing, with a constant
-              emphasis on precision engineering and quality finishes.
+              {content.about_story}
             </p>
             <p className="mt-4 text-[14px] leading-[1.8] text-muted">
               From designing and building custom machines to welding, painting, electrical, plumbing, and
@@ -139,9 +137,7 @@ export default function AboutPage() {
               </span>
               <h3 className="mt-5 text-[20px] font-black text-ink">Our Mission</h3>
               <p className="mt-3 text-[14px] leading-[1.8] text-muted">
-                To transform spaces and empower businesses across Rwanda through high-quality metal
-                fabrication, manufacturing, repair, and finishing — delivered with precision engineering
-                and dependable craftsmanship.
+                {content.mission}
               </p>
             </div>
 
@@ -154,9 +150,7 @@ export default function AboutPage() {
               </span>
               <h3 className="mt-5 text-[20px] font-black text-ink">Our Vision</h3>
               <p className="mt-3 text-[14px] leading-[1.8] text-muted">
-                To be Rwanda&apos;s most trusted one stop shop for industrial services and product
-                manufacturing — the first name businesses and homeowners think of when they want to
-                transform their space.
+                {content.vision}
               </p>
             </div>
           </div>
@@ -177,16 +171,16 @@ export default function AboutPage() {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {TEAM.map((member) => (
+            {team.map((member) => (
               <div
-                key={member.name}
+                key={member.id || member.name}
                 className="group flex flex-col items-center rounded-2xl border border-line bg-white p-7 text-center shadow-card transition-all hover:border-signal/50 hover:shadow-industrial"
               >
                 {/* Avatar */}
-                {member.image ? (
+                {member.image_url ? (
                   <div className="relative h-24 w-24 overflow-hidden rounded-full ring-2 ring-signal/30">
                     <Image
-                      src={member.image}
+                      src={member.image_url}
                       alt={member.name}
                       fill
                       quality={80}
@@ -196,7 +190,7 @@ export default function AboutPage() {
                   </div>
                 ) : (
                   <div className="grid h-24 w-24 place-items-center rounded-full bg-gradient-to-br from-signal to-signal-hover text-[26px] font-black text-ink ring-2 ring-signal/30">
-                    {member.initials}
+                    {initialsOf(member.name)}
                   </div>
                 )}
 
