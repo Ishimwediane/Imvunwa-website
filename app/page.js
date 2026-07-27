@@ -5,7 +5,7 @@ import Eyebrow from "../components/ui/Eyebrow";
 import ServiceCard from "../components/ui/ServiceCard";
 import TestimonialCard from "../components/ui/TestimonialCard";
 import ArrowIcon from "../components/ui/ArrowIcon";
-import { getTestimonials } from "../backend/data";
+import { getTestimonials, getSiteContent } from "../backend/data";
 
 /* Fully static: the backend is read only when the admin saves a change
    (which pings /api/revalidate) — never on a timer or per request. Falls
@@ -137,9 +137,25 @@ function PortfolioCard({ src, alt, tag, title, desc }) {
   );
 }
 
+/* ── Hero title ───────────────────────────────────────────────── */
+/* Renders the editable hero title from the DB while keeping the design:
+   the word "Transforming" stays in the brand colour, and any line breaks
+   the admin adds (newlines) are preserved. */
+function HeroTitle({ text }) {
+  return (text || "").split("\n").map((line, li) => (
+    <span key={li} className="block">
+      {line.split(/(Transforming)/i).map((part, pi) =>
+        part.toLowerCase() === "transforming"
+          ? <span key={pi} className="text-signal">{part}</span>
+          : part
+      )}
+    </span>
+  ));
+}
+
 /* ── Page ─────────────────────────────────────────────────────── */
 export default async function Home() {
-  const testimonials = await getTestimonials();
+  const [testimonials, content] = await Promise.all([getTestimonials(), getSiteContent()]);
 
   return (
     <div className="overflow-hidden">
@@ -161,16 +177,14 @@ export default async function Home() {
           style={{ background: "linear-gradient(to right, var(--color-dark-bg) 0%, var(--color-dark-bg) 55%, rgba(14,18,21,0) 100%)" }}
         >
           <div className="mb-5 h-[3px] w-10 rounded-full bg-signal" />
-          <Eyebrow>Imvunwa Business Group · Rwanda</Eyebrow>
+          <Eyebrow>{content.hero_eyebrow}</Eyebrow>
 
           <h1 className="m-0 text-[24px] font-black leading-[1.08] tracking-tight text-white sm:text-[30px] lg:text-[36px]">
-            Your One Stop Shop<br />
-            For <span className="text-signal">Transforming</span><br />
-            Your Space
+            <HeroTitle text={content.hero_title} />
           </h1>
 
           <p className="mt-4 max-w-[460px] text-[13px] leading-[1.7] text-white/60">
-            A leading metal fabrication, painting, repair, and restoration company — delivering exceptional services across Rwanda.
+            {content.hero_subtitle}
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">

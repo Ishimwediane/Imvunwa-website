@@ -9,7 +9,7 @@ import WhatsAppButton from "./WhatsAppButton";
  * SiteFrame — renders the public marketing chrome (Header / Footer / WhatsApp)
  * around the page, EXCEPT on /admin routes, which have their own layout.
  */
-export default function SiteFrame({ children }) {
+export default function SiteFrame({ children, content }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
 
@@ -19,7 +19,7 @@ export default function SiteFrame({ children }) {
     <>
       <Header />
       <main>{children}</main>
-      <Footer />
+      <Footer content={content} />
       <WhatsAppButton />
     </>
   );

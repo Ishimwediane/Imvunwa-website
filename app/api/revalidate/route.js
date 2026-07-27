@@ -10,8 +10,6 @@ import { createClient } from "../../../backend/supabase/server";
  * something actually changes — not on a timer. Guarded by the Supabase auth
  * session so only a logged-in admin can trigger it.
  */
-const PUBLIC_PATHS = ["/", "/about", "/services", "/contact"];
-
 export async function POST() {
   const supabase = createClient();
 
@@ -23,6 +21,8 @@ export async function POST() {
     }
   }
 
-  PUBLIC_PATHS.forEach((path) => revalidatePath(path));
-  return NextResponse.json({ ok: true, revalidated: PUBLIC_PATHS });
+  // Revalidate the whole site (every page shares the root layout, so this
+  // refreshes the hero, footer, and all DB-backed content at once).
+  revalidatePath("/", "layout");
+  return NextResponse.json({ ok: true, revalidated: "all" });
 }

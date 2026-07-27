@@ -39,7 +39,13 @@ function FooterHeading({ children }) {
 }
 
 /* ── Footer ──────────────────────────────────────────────────── */
-export default function Footer() {
+export default function Footer({ content = {} }) {
+  const phone = content.phone || "+250 787 782 226";
+  const email = content.email || "imvunwabusinessgroup@gmail.com";
+  const description =
+    content.description ||
+    "Imvunwa is a leading metal fabrication, painting, repair, and restoration company, dedicated to delivering exceptional services to our clients.";
+
   return (
     <footer className="bg-deeper text-white border-t border-white/10">
       <div className="mx-auto max-w-shell px-6 py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
@@ -48,8 +54,7 @@ export default function Footer() {
         <div>
           <strong className="text-white text-lg font-black tracking-wider uppercase">Imvunwa</strong>
           <p className="mt-4 text-sm leading-relaxed text-white/85">
-            Imvunwa is a leading metal fabrication, painting, repair, and restoration company,
-            dedicated to delivering exceptional services to our clients.
+            {description}
           </p>
         </div>
 
@@ -79,8 +84,8 @@ export default function Footer() {
           <address className="mt-4 not-italic text-sm grid gap-2.5 text-white/85">
             <span>Imvunwa Ltd</span>
             <span>P.O. Box 45, Kigali, Rwanda</span>
-            <a href="tel:+250787782226" className="hover:text-signal transition-colors">Phone: +250 787 782 226</a>
-            <a href="mailto:imvunwabusinessgroup@gmail.com" className="hover:text-signal transition-colors">Email: imvunwabusinessgroup@gmail.com</a>
+            <a href={`tel:${phone.replace(/\s+/g, "")}`} className="hover:text-signal transition-colors">Phone: {phone}</a>
+            <a href={`mailto:${email}`} className="hover:text-signal transition-colors">Email: {email}</a>
           </address>
         </div>
       </div>
