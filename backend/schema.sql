@@ -111,6 +111,12 @@ insert into storage.buckets (id, name, public)
 values ('images', 'images', true)
 on conflict (id) do nothing;
 
+-- Drop first so the whole script stays safe to re-run.
+drop policy if exists "public read images"   on storage.objects;
+drop policy if exists "admin upload images"  on storage.objects;
+drop policy if exists "admin update images"  on storage.objects;
+drop policy if exists "admin delete images"  on storage.objects;
+
 create policy "public read images"
   on storage.objects for select using (bucket_id = 'images');
 create policy "admin upload images"
